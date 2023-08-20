@@ -62,6 +62,12 @@ export default defineAppConfig({
       name: "订单详情",
       independent: false,
     },
+    {
+      root: "packages/login",
+      pages: ["index"],
+      name: "登录",
+      independent: false,
+    },
   ],
   window: {
     backgroundTextStyle: "light",

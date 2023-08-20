@@ -1,0 +1,33 @@
+.login {
+  height: 100vh;
+  padding-left: 48px;
+  padding-right: 48px;
+  padding-top: 190px;
+  &-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 400px;
+    &-logo {
+      width: 128px;
+      margin-bottom: 32px;
+    }
+    &-title {
+      font-size: 50px;
+      font-weight: bolder;
+      color: #3f3a3a;
+    }
+    &-slogen {
+      font-size: 24px;
+      color: #3f3a3a;
+    }
+  }
+  .nut-checkbox__label {
+    font-size: 12px;
+    margin-top: 16px;
+  }
+  .nut-icon::before {
+    font-size: 18px;
+  }
+}
