@@ -1,0 +1,21 @@
+.order-status {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding-top: 44px;
+  padding-bottom: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  color: #333;
+  &-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    &-icon {
+      width: 66px;
+    }
+  }
+}

@@ -25,7 +25,14 @@ const OrderItem = () => {
         <Text className="orderItem-title-time">下单时间：08-15 12:00</Text>
         <Text className="orderItem-title-status">待预约</Text>
       </View>
-      <View className="orderItem-good">
+      <View
+        className="orderItem-good"
+        onClick={() => {
+          Taro.navigateTo({
+            url: "/packages/orderDetail/index",
+          });
+        }}
+      >
         <Image src={bg} mode="widthFix" className="orderItem-good-img" />
         <View className="orderItem-good-detail">
           <Text className="orderItem-good-name">

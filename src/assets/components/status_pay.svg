@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="32px" viewBox="0 0 33 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="订单详情-待支付" transform="translate(-146.000000, -110.000000)" stroke-width="1.5">
+            <g id="more_order_1" transform="translate(146.666667, 110.000000)">
+                <g id="编组" transform="translate(5.000000, 5.000000)">
+                    <path d="M16.5,10 L22,10 L22,10 L22,17 L16.5,17 C14.5670034,17 13,15.4329966 13,13.5 C13,11.5670034 14.5670034,10 16.5,10 Z" id="矩形" stroke="#0092D8"></path>
+                    <rect id="矩形" stroke="#333333" x="0" y="5" width="22" height="17" rx="3"></rect>
+                    <circle id="椭圆形" stroke="#0092D8" fill="#333333" cx="16.5" cy="13.5" r="1"></circle>
+                    <path d="M8,5 L13.2984491,0.584625765 C13.6957756,0.253520342 14.2800224,0.28002237 14.6457403,0.645740263 L17.2928932,3.29289322 C17.6834175,3.68341751 17.6834175,4.31658249 17.2928932,4.70710678 L17,5 L17,5" id="路径-39" stroke="#333333"></path>
+                    <path d="M5,5 L7.52356091,0.794065151 C7.79240362,0.345993963 8.36089675,0.180448374 8.82826743,0.414133715 L12,2 L12,2" id="路径-40" stroke="#333333"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

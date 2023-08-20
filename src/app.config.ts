@@ -56,6 +56,12 @@ export default defineAppConfig({
       name: "订单预约",
       independent: false,
     },
+    {
+      root: "packages/orderDetail",
+      pages: ["index"],
+      name: "订单详情",
+      independent: false,
+    },
   ],
   window: {
     backgroundTextStyle: "light",

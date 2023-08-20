@@ -1,0 +1,40 @@
+.orderDetail {
+  background-color: #f8f8f8;
+  height: 100vh;
+  &-content {
+    padding: 20px 24px;
+  }
+  &-good {
+    display: flex;
+    background-color: #fff;
+    padding: 30px 24px;
+    &-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 8px;
+      margin-right: 20px;
+    }
+    &-detail {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    &-name {
+      font-size: 32px;
+      font-weight: 500;
+    }
+    &-info {
+      display: flex;
+      justify-content: space-between;
+    }
+    &-price {
+      font-size: 32px;
+      font-weight: 500;
+    }
+    &-num {
+      font-size: 24px;
+      color: #666;
+    }
+  }
+}

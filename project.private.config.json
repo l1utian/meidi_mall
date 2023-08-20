@@ -8,7 +8,7 @@
     "disablePrivate": false,
     "condition": {
         "miniprogram": {
-            "current": 1692512195327,
+            "current": 1692518495835,
             "list": [
                 {
                     "id": 1692171815804,
@@ -94,6 +94,16 @@
                     "id": 1692512195327,
                     "name": "packages/book/index",
                     "pathName": "packages/book/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692518495835,
+                    "name": "packages/orderDetail/index",
+                    "pathName": "packages/orderDetail/index",
                     "query": "",
                     "scene": "990001",
                     "launchFrom": "scan",
