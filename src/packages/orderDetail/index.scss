@@ -1,13 +1,77 @@
 .orderDetail {
   background-color: #f8f8f8;
   height: 100vh;
+  color: #333;
+  font-size: 28px;
+  padding-bottom: 100px;
   &-content {
     padding: 20px 24px;
+  }
+  &-address {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 24px;
+    margin-bottom: 20px;
+    &-img {
+      width: 32px;
+      margin-right: 16px;
+    }
+    &-info {
+      display: flex;
+      flex-direction: column;
+    }
+    &-top {
+      margin-bottom: 8px;
+    }
+    &-name {
+      font-size: 32px;
+    }
+  }
+  &-time {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  &-info {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    &-label {
+      width: 30%;
+    }
+    &-content {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+    }
   }
   &-good {
     display: flex;
     background-color: #fff;
     padding: 30px 24px;
+    margin-bottom: 20px;
     &-img {
       width: 160px;
       height: 160px;
@@ -36,5 +100,55 @@
       font-size: 24px;
       color: #666;
     }
+  }
+  &-price {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 38px 24px;
+    display: flex;
+    flex-direction: column;
+    &-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &-num {
+        font-size: 34px;
+      }
+    }
+    &-middle {
+      color: rgba(151, 151, 151, 0.32);
+      margin: 24px 0;
+    }
+    &-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      &-total {
+        color: #6c6c6c;
+        font-size: 24px;
+        margin-right: 30px;
+      }
+      &-num {
+        color: rgba(222, 36, 36, 1);
+        font-size: 34px;
+      }
+    }
+  }
+  &-bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    bottom: constant(safe-area-inset-bottom);
+    bottom: env(safe-area-inset-bottom);
+    width: 100%;
+    padding: 16px 32px 34px;
+    z-index: 999;
+    box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 }

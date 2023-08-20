@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { Divider } from "@nutui/nutui-react-taro";
 import bg from "@/assets/user/bg.png";
-import ButtonGroup from "./ButtonGroup";
+import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
 
 const OrderItem = () => {
