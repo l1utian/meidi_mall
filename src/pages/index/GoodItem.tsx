@@ -11,7 +11,7 @@ const GoodItem = ({ src, name, originPrice, countPrice }) => {
           <Text className="goodItem-price-symbol">￥</Text>
           <Text className="goodItem-price-origin">{originPrice}</Text>
         </View>
-        <Text className="goodItem-price-count">{countPrice}</Text>
+        <Text className="goodItem-price-count">￥{countPrice}</Text>
       </View>
     </View>
   );

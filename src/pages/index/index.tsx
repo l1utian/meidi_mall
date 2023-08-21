@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { SearchBar, Grid } from "@nutui/nutui-react-taro";
 import Taro from "@tarojs/taro";
-import bg from "@/assets/user/bg.png";
 import { View } from "@tarojs/components";
 import { getGoodsList } from "@/api";
+import { baseUrl } from "@/utils/request";
 import GoodItem from "./GoodItem";
 import { Datum } from "./index.d";
 import "./index.scss";
@@ -11,43 +11,11 @@ import "./index.scss";
 const Index = () => {
   const [name, setName] = useState<string>("");
   const [list, setList] = useState<Datum[]>([]);
-  const data = [
-    {
-      name: "电热水器全拆洗",
-      url: bg,
-      originPrice: "1980",
-      countPrice: "2000",
-    },
-    {
-      name: "电热水器全拆洗",
-      url: bg,
-      originPrice: "1980",
-      countPrice: "2000",
-    },
-    {
-      name: "电热水器全拆洗",
-      url: bg,
-      originPrice: "1980",
-      countPrice: "2000",
-    },
-    {
-      name: "电热水器全拆洗",
-      url: bg,
-      originPrice: "1980",
-      countPrice: "2000",
-    },
-    {
-      name: "电热水器全拆洗",
-      url: bg,
-      originPrice: "1980",
-      countPrice: "2000",
-    },
-  ];
   useEffect(() => {
     getGoodsList({
       name,
-    }).then((res) => {
-      console.log("res", res);
+    }).then((res: any) => {
+      setList(res.data);
     });
   }, [name]);
   return (
@@ -57,20 +25,20 @@ const Index = () => {
         onSearch={(value) => setName(value)}
       />
       <Grid columns={2}>
-        {data.map((v, i) => (
+        {list.map((v, i) => (
           <Grid.Item
             key={i}
             onClick={() =>
               Taro.navigateTo({
-                url: "/packages/detail/index",
+                url: `/packages/detail/index?id=${v.id}`,
               })
             }
           >
             <GoodItem
-              src={v.url}
+              src={baseUrl + v.picUrl}
               name={v.name}
-              originPrice={v.originPrice}
-              countPrice={v.countPrice}
+              originPrice={v.retailPrice}
+              countPrice={v.counterPrice}
             />
           </Grid.Item>
         ))}
