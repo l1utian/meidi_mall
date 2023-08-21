@@ -1,11 +1,14 @@
+import { useState, useEffect } from "react";
 import { SearchBar, Grid } from "@nutui/nutui-react-taro";
 import Taro from "@tarojs/taro";
 import bg from "@/assets/user/bg.png";
 import { View } from "@tarojs/components";
+import { getGoodsList } from "@/api";
 import GoodItem from "./GoodItem";
 import "./index.scss";
 
 const Index = () => {
+  const [name, setName] = useState<string>("");
   const data = [
     {
       name: "电热水器全拆洗",
@@ -38,9 +41,19 @@ const Index = () => {
       countPrice: "2000",
     },
   ];
+  useEffect(() => {
+    getGoodsList({
+      name,
+    }).then((res) => {
+      console.log("res", res);
+    });
+  }, [name]);
   return (
     <View className="home">
-      <SearchBar placeholder="请输入关键字" />
+      <SearchBar
+        placeholder="请输入关键字"
+        onSearch={(value) => setName(value)}
+      />
       <Grid columns={2}>
         {data.map((v, i) => (
           <Grid.Item
