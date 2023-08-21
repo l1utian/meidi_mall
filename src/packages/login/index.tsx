@@ -38,8 +38,6 @@ const Login = () => {
                 title: "登录成功",
                 icon: "success",
                 duration: 1000,
-              })?.then(() => {
-                // 跳转
               });
             }
           }

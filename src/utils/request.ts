@@ -59,8 +59,8 @@ const request = (
 const get = <T extends {}>(url: string, options?: T) => {
   return request(url, { method: "GET", data: options });
 };
-const post = <T extends {}>(url: string, options: T) => {
-  return request(url, { method: "POST", data: options });
+const post = <T extends {}>(url: string, options: T, isFormData = false) => {
+  return request(url, { method: "POST", data: options }, isFormData);
 };
 
 const formDataPost = <T extends {}>(url: string, options: T) => {
