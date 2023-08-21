@@ -1,7 +1,7 @@
 import { View, Text, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Checkbox, Button } from "@nutui/nutui-react-taro";
-
+import { login } from "@/api/login";
 import { loginAndGetPhoneNumber } from "@/utils/TTUtil";
 import logo from "@/assets/public/logo.png";
 import "./index.scss";
@@ -21,18 +21,28 @@ const Login = () => {
   };
 
   const handleGetPhoneNumber = (e) => {
-    Taro.showLoading({
-      title: "登录中...",
-    });
-
     loginAndGetPhoneNumber(e)
       ?.then((res) => {
         console.log(res);
-        Taro.hideLoading();
-        Taro.showToast({
-          title: "登录成功",
-          icon: "success",
-          duration: 1000,
+        Taro.showLoading({
+          title: "登录中...",
+        });
+        login(res)?.then((data) => {
+          Taro.hideLoading();
+          console.log(data);
+          if (data?.code === 200) {
+            const token = data?.token;
+            if (token) {
+              Taro.setStorageSync("token", token);
+              Taro.showToast({
+                title: "登录成功",
+                icon: "success",
+                duration: 1000,
+              })?.then(() => {
+                // 跳转
+              });
+            }
+          }
         });
       })
       .catch((err) => {
@@ -66,7 +76,7 @@ const Login = () => {
         抖音手机号授权快捷登录
       </Button>
       <Checkbox
-        label="已阅读并同意《洗悦家用户注册协议》、《洗悦家隐私政策》，若您的手机号未注册，将为您直接注册苏宁账号"
+        label="已阅读并同意《洗悦家用户注册协议》、《洗悦家隐私政策》，若您的手机号未注册，将为您直接注册美的洗悦家账号"
         checked={checked}
         onChange={setChecked}
       />

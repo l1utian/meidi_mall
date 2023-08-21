@@ -1,7 +1,7 @@
 import { get, post } from "@/utils/request";
 
 //登录
-export const login = (params) => {
+export const login = (params): Promise<any> => {
   return post("/login", params);
 };
 
