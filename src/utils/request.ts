@@ -33,7 +33,8 @@ const request = (
         token: token,
       },
       success(res: any) {
-        if (res.data.code === 200 || res.data.code === 401) {
+        console.log(res);
+        if (res.data.code === 200) {
           resolve(res.data);
           return;
         } else {

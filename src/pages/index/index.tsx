@@ -5,10 +5,12 @@ import bg from "@/assets/user/bg.png";
 import { View } from "@tarojs/components";
 import { getGoodsList } from "@/api";
 import GoodItem from "./GoodItem";
+import { Datum } from "./index.d";
 import "./index.scss";
 
 const Index = () => {
   const [name, setName] = useState<string>("");
+  const [list, setList] = useState<Datum[]>([]);
   const data = [
     {
       name: "电热水器全拆洗",
