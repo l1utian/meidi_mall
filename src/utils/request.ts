@@ -75,11 +75,4 @@ const remove = (url: string, options = {}) => {
   return request(url, { method: "DELETE", data: options });
 };
 
-export const CustomRequest = {
-  request,
-  get,
-  post,
-  formDataPost,
-  put,
-  remove,
-};
+export { request, get, post, formDataPost, put, remove };
