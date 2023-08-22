@@ -1,0 +1,17 @@
+.order-empty {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &-icon {
+    width: 280px;
+    height: 280px;
+    margin-bottom: 32px;
+  }
+  &-text {
+    font-size: 28px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 40px;
+  }
+}

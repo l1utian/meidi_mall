@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="140px" height="140px" viewBox="0 0 140 140" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>tip_order</title>
+    <defs>
+        <linearGradient x1="53.26356%" y1="48.2543163%" x2="53.2547%" y2="51.7456837%" id="linearGradient-1">
+            <stop stop-color="#E9EBF0" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#EAECF1" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="缺省图-暂无订单" transform="translate(-118.000000, -236.000000)" fill-rule="nonzero">
+            <g id="tip_order" transform="translate(118.000000, 236.000000)">
+                <g id="Group-4" transform="translate(70.349976, 30.149903) scale(-1, 1) translate(-70.349976, -30.149903) translate(13.699951, 15.299805)" fill="#C3CAD4">
+                    <circle id="椭圆形" cx="4" cy="25.7001946" r="4"></circle>
+                    <g id="Group-10" transform="translate(99.300050, 0.000000)">
+                        <rect id="矩形" x="0" y="4.99999957" width="14" height="4"></rect>
+                        <rect id="矩形备份-18" transform="translate(6.999999, 7.000000) rotate(-90.000000) translate(-6.999999, -7.000000) " x="-1e-06" y="5" width="14" height="4"></rect>
+                    </g>
+                </g>
+                <rect id="Rectangle-3" fill-opacity="0" fill="#D3D3D3" x="0" y="0" width="140" height="140"></rect>
+                <ellipse id="Ellipse" fill="url(#linearGradient-1)" opacity="0.602778843" cx="69.840757" cy="112.438263" rx="53.05853" ry="9.914093"></ellipse>
+                <rect id="矩形" fill="#DCE0E6" x="39" y="34" width="62" height="78" rx="5"></rect>
+                <rect id="矩形" fill="#FFFFFF" x="45" y="42" width="50" height="62" rx="4"></rect>
+                <rect id="矩形" fill="#C3CAD4" x="51" y="31" width="38" height="7" rx="3.5"></rect>
+                <rect id="矩形" fill="#C3CAD4" x="65" y="27" width="10" height="7" rx="3.5"></rect>
+                <rect id="矩形" fill="#EAEDF1" x="51" y="54" width="38" height="6" rx="3"></rect>
+                <rect id="矩形" fill="#EAEDF1" x="58" y="65" width="25" height="6" rx="3"></rect>
+                <rect id="矩形" fill="#EAEDF1" x="51" y="76" width="38" height="6" rx="3"></rect>
+                <rect id="矩形" fill="#EAEDF1" x="60" y="87" width="20" height="6" rx="3"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

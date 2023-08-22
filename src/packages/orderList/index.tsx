@@ -3,6 +3,7 @@ import { View } from "@tarojs/components";
 import { Tabs } from "@nutui/nutui-react-taro";
 import OrderItem from "@/components/OrderItem";
 import { getOrderList } from "@/api/order";
+import Empty from "./Empty";
 import "./index.scss";
 
 const OrderList = () => {
@@ -42,13 +43,20 @@ const OrderList = () => {
       >
         {tabs.map((v) => (
           <Tabs.TabPane title={v.title}>
-            {list.map((v, i) => (
-              <OrderItem
-                info={v}
-                key={i}
-                onClick={(key) => handleClick(key, v)}
-              />
-            ))}
+            {list?.length ? (
+              list.map((v, i) => (
+                <OrderItem
+                  info={v}
+                  key={i}
+                  onClick={(key) => handleClick(key, v)}
+                />
+              ))
+            ) : (
+              // 这里需要修改，不能仅判断list, 还需要判断loading效果
+              <View className="orderListEmpty">
+                <Empty />
+              </View>
+            )}
           </Tabs.TabPane>
         ))}
       </Tabs>
