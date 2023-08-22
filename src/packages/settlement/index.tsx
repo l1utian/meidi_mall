@@ -23,8 +23,22 @@ const Settlement = () => {
           tt.pay({
             orderInfo: res.data.options.orderInfo,
             service: 5,
-            success: function (res) {
-              console.log(res);
+            success: function (res: any) {
+              // 0：支付成功
+              // 1：支付超时
+              // 2：支付失败
+              // 3：支付关闭
+              // 4：支付取消
+              if (res.code === 0) {
+                Taro.showToast({
+                  title: "支付成功",
+                  icon: "success",
+                  duration: 1000,
+                });
+              }
+              Taro.navigateTo({
+                url: `/packages/orderDetail/index?outOrderNo=${res.data.outOrderNo}`,
+              });
             },
             fail: function (err) {
               console.log("支付失败", err);

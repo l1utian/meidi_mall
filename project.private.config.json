@@ -8,7 +8,7 @@
     "disablePrivate": false,
     "condition": {
         "miniprogram": {
-            "current": 1692693570123,
+            "current": 1692374119961,
             "list": [
                 {
                     "id": 1692171815804,
@@ -78,8 +78,7 @@
                     "scene": "990001",
                     "launchFrom": "scan",
                     "location": "qr_code",
-                    "mockUpdateType": "Noupdate",
-                    "addType": "manual"
+                    "mockUpdateType": "Noupdate"
                 },
                 {
                     "id": 1692666216058,
