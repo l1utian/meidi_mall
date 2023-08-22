@@ -1,29 +1,22 @@
 import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { Divider } from "@nutui/nutui-react-taro";
-import bg from "@/assets/user/bg.png";
+import { orderStatus } from "@/constants/order";
 import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
 
-const OrderItem = () => {
+const OrderItem = ({ info, onClick }) => {
+  console.log(info);
   const handleAction = (key) => {
-    switch (key) {
-      case "book": //预约
-        Taro.navigateTo({
-          url: "/packages/book/index",
-        });
-        break;
-      case "refund": //退款
-        break;
-      default:
-        break;
-    }
+    onClick && onClick(key);
   };
   return (
     <View className="orderItem-container">
       <View className="orderItem-title">
-        <Text className="orderItem-title-time">下单时间：08-15 12:00</Text>
-        <Text className="orderItem-title-status">待预约</Text>
+        <Text className="orderItem-title-time">下单时间：{info.orderTime}</Text>
+        <Text className="orderItem-title-status">
+          {orderStatus[info.orderStatus]}
+        </Text>
       </View>
       <View
         className="orderItem-good"
@@ -33,27 +26,35 @@ const OrderItem = () => {
           });
         }}
       >
-        <Image src={bg} mode="widthFix" className="orderItem-good-img" />
+        <Image
+          src={info.picUrl}
+          mode="widthFix"
+          className="orderItem-good-img"
+        />
         <View className="orderItem-good-detail">
-          <Text className="orderItem-good-name">
-            【全拆洗】波轮洗衣机清洗波轮洗衣机清洗波轮洗衣机清洗
-          </Text>
+          <Text className="orderItem-good-name">{info.productName}</Text>
           <View className="orderItem-good-info">
-            <Text className="orderItem-good-price">￥39.00</Text>
-            <Text className="orderItem-good-num">×1</Text>
+            <Text className="orderItem-good-price">￥{info.price}</Text>
+            <Text className="orderItem-good-num">×{info.number}</Text>
           </View>
         </View>
       </View>
       <View className="orderItem-total">
-        <Text className="orderItem-total-num">共1件</Text>
+        <Text className="orderItem-total-num">共{info.number}件</Text>
         <Text className="orderItem-total-label">合计：</Text>
-        <Text className="orderItem-total-price">￥39.00</Text>
+        <Text className="orderItem-total-price">￥{info.orderPrice}</Text>
       </View>
-      <Divider style={{ color: "rgba(209, 209, 209, 0.60)" }} />
+      <Divider className="orderItem-divider" style={{ color: "" }} />
       <View className="orderItem-bottom">
-        <Text className="orderItem-bottom-time">上门时间：08-15 </Text>
         <View>
-          <ButtonGroup onClick={handleAction} />
+          {info.orderStatus !== 201 && info.orderStatus !== 101 ? (
+            <Text className="orderItem-bottom-time">
+              上门时间：{info.appointmentDate}
+            </Text>
+          ) : null}
+        </View>
+        <View>
+          <ButtonGroup onClick={handleAction} status={info.orderStatus} />
         </View>
       </View>
     </View>

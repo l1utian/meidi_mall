@@ -1,12 +1,19 @@
-import { useState } from "react";
-import Taro from "@tarojs/taro";
-import { View, Image, Text } from "@tarojs/components";
-import { Swiper, SwiperItem, Divider, Button } from "@nutui/nutui-react-taro";
-import { Button as TaroButton } from "@tarojs/components";
 import { CUSTOMER_SERVICE_DY_ID } from "@/config/base";
+import useRequireLogin from "@/hooks/useRequireLogin";
+import { useState, useEffect } from "react";
+import { useRouter } from "@tarojs/taro";
+import { View, Text, Button as TaroButton } from "@tarojs/components";
+import {
+  Swiper,
+  SwiperItem,
+  Divider,
+  Button,
+  Image,
+} from "@nutui/nutui-react-taro";
 import right from "@/assets/public/right.svg";
 import message from "@/assets/public/message.svg";
-import useRequireLogin from "@/hooks/useRequireLogin";
+import { getGoodsInfo } from "@/api/index";
+import { baseUrl } from "@/utils/request";
 import GoodModal from "./GoodModal";
 import "./index.scss";
 
@@ -14,39 +21,50 @@ function Detail() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
 
+  const { params } = useRouter();
+  const { id } = params;
   const [visible, setVisible] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>({});
+  const [goodDetail, setGoodDetail] = useState<any>({});
+
+  useEffect(() => {
+    getGoodsInfo({ id }).then((res: any) => {
+      setGoodDetail(res.data);
+      setSelectedProduct(res.data.goodsProductList[0]);
+    });
+  }, [id]);
+
+  const handleClose = (selected) => {
+    setVisible(false);
+    setSelectedProduct(selected);
+  };
+
   return (
     <View className="detail-container">
       <GoodModal
+        selected={selectedProduct}
+        productList={goodDetail.goodsProductList || []}
         visible={visible}
-        onClose={() => setVisible(false)}
-        onConfirm={() => {
-          Taro.navigateTo({
-            url: "/packages/settlement/index",
-          });
-        }}
+        onClose={handleClose}
       />
       <Swiper defaultValue={0} indicator height={224}>
-        <SwiperItem>
-          <Image
-            mode="heightFix"
-            src="https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg"
-          />
-        </SwiperItem>
-        <SwiperItem>
-          <Image
-            mode="heightFix"
-            src="https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg"
-          />
-        </SwiperItem>
+        {goodDetail.gallery?.split(",").map((v, i) => (
+          <SwiperItem key={i}>
+            <Image mode="scaleToFill" src={baseUrl + v} height={224} />
+          </SwiperItem>
+        ))}
       </Swiper>
       <View className="detail-intro">
         <View className="detail-intro-top">
-          <Text className="detail-intro-price">￥1980</Text>
-          <Text className="detail-intro-price-u">¥2080</Text>
+          <Text className="detail-intro-price">
+            ￥{selectedProduct.retailPrice}
+          </Text>
+          <Text className="detail-intro-price-u">
+            ¥{selectedProduct.counterPrice}
+          </Text>
         </View>
         <View className="detail-intro-bottom">
-          【抖音专属】电热水器全拆洗 美的家电清洗上门服务 家政保洁
+          {selectedProduct.productName || "-"}
         </View>
       </View>
       <View className="detail-selected">
@@ -55,7 +73,7 @@ function Detail() {
           className="detail-selected-right"
           onClick={() => setVisible(true)}
         >
-          <Text>【全拆洗】 1台电热水器清洗</Text>
+          <Text>{selectedProduct.productName}</Text>
           <Image
             src={right}
             className="detail-selected-right-img"
@@ -67,21 +85,7 @@ function Detail() {
         <Divider className="detail-divider">
           <Text style={{ color: "#333" }}>服务详情</Text>
         </Divider>
-        <img
-          style={{ width: "100%" }}
-          src="https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg"
-          alt=""
-        />
-        <img
-          style={{ width: "100%" }}
-          src="https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg"
-          alt=""
-        />
-        <img
-          style={{ width: "100%" }}
-          src="https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg"
-          alt=""
-        />
+        <View dangerouslySetInnerHTML={{ __html: goodDetail.detail }}></View>
       </View>
       <View className="detail-bottom">
         <TaroButton

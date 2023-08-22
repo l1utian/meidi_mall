@@ -1,11 +1,11 @@
 .orderItem-container {
-  width: 100%;
   background: #ffffff;
   border-radius: 16px;
   display: flex;
   color: #333;
   flex-direction: column;
   margin-top: 20px;
+  padding: 32px 24px 24px;
 }
 
 .orderItem-title {
@@ -24,6 +24,7 @@
 }
 .orderItem-good {
   display: flex;
+  margin-bottom: 24px;
   &-img {
     width: 160px;
     height: 160px;
@@ -63,7 +64,9 @@
     font-size: 24px;
     color: rgba(51, 51, 51, 0.5);
   }
-
+  &-num {
+    margin-right: 10px;
+  }
   &-price {
     font-size: 36px;
     font-weight: 600;
@@ -78,4 +81,10 @@
     font-size: 28px;
     font-weight: 400;
   }
+}
+
+.orderItem-divider {
+  color: rgba(209, 209, 209, 0.6);
+  margin-top: 24px;
+  margin-bottom: 22px;
 }

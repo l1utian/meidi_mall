@@ -15,7 +15,7 @@ export const postOrderContinuePay = (params) => {
 };
 
 //订单列表
-export const getOrderList = (params) => {
+export const getOrderList = (params?: any) => {
   return get("/order/list", params);
 };
 
