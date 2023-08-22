@@ -42,7 +42,7 @@ const OrderList = () => {
       >
         {tabs.map((v) => (
           <Tabs.TabPane title={v.title}>
-            {[...list, ...list].map((v, i) => (
+            {list.map((v, i) => (
               <OrderItem
                 info={v}
                 key={i}

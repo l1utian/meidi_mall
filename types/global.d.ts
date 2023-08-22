@@ -36,4 +36,10 @@ declare namespace tt {
     success: (res: { encryptedData: string; iv: string }) => void;
     fail: (err: any) => void;
   }): void;
+  export function pay(obj: {
+    orderInfo?: any;
+    service: number;
+    success: (res: { code: string }) => void;
+    fail: (err: any) => void;
+  }): void;
 }

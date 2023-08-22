@@ -20,8 +20,15 @@ const Settlement = () => {
     postOrderCreate({ message, number, orderPrice, productCode }).then(
       (res: any) => {
         if (res.code === 200) {
-          Taro.navigateTo({
-            url: "/packages/orderList/index",
+          tt.pay({
+            orderInfo: res.data.options.orderInfo,
+            service: 5,
+            success: function (res) {
+              console.log(res);
+            },
+            fail: function (err) {
+              console.log("支付失败", err);
+            },
           });
         }
       }
