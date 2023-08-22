@@ -17,7 +17,7 @@ import { useRequest } from "ahooks";
 import { formatLocation } from "@/utils/tool";
 import useAddress from "@/hooks/useAddress";
 import { ArrowRight } from "@nutui/icons-react-taro";
-import "./index.scss";
+import "../addAddress/index.scss";
 
 function EditAddress() {
   const router = useRouter();

@@ -6,6 +6,7 @@ import { Button, Dialog } from "@nutui/nutui-react-taro";
 import { postAddressRemove, getAddressList } from "@/api/address";
 import { useRequest } from "ahooks";
 import { formatLocation } from "@/utils/tool";
+import Empty from "./Empty";
 import "./index.scss";
 
 function AddressList() {
@@ -53,9 +54,16 @@ function AddressList() {
   };
   return (
     <View className="address-list-container">
-      {list?.map((v, i) => (
-        <AddressItem info={v} key={i} onClick={handleClick} />
-      ))}
+      {list?.length ? (
+        list?.map((v, i) => (
+          <AddressItem info={v} key={i} onClick={handleClick} />
+        ))
+      ) : (
+        <View className="address-list-empty">
+          <Empty />
+        </View>
+      )}
+
       <View className="address-list-bottom">
         <Button
           block
