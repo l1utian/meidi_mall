@@ -36,8 +36,4 @@ declare namespace tt {
     success: (res: { encryptedData: string; iv: string }) => void;
     fail: (err: any) => void;
   }): void;
-  export function getUserInfo(obj: {
-    success: (res: { userInfo: any }) => void;
-    fail: (err: any) => void;
-  }): void;
 }

@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 
-export const baseUrl = "https://78kj749809.goho.co/h5api";
+export const baseUrl = "http://nj.cirscn.com:15581/h5api";
 
 export const REG_CDN_FILE_ORIGIN = (url: string) => {
   const reg = /^http.*/;
