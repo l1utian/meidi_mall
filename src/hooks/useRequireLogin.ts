@@ -7,9 +7,17 @@ const useRequireLogin = () => {
 
   useDidShow(() => {
     if (!isLoggedIn) {
-      const returnUrl = encodeURIComponent(router.path);
+      // 手动构建查询参数字符串，忽略$taroTimestamp
+      const queryParams = router.params
+        ? Object.keys(router.params)
+            .filter((key) => key !== "$taroTimestamp")
+            .map((key) => `${key}=${router.params[key]}`)
+            .join("&")
+        : "";
+      const returnUrl = encodeURIComponent(
+        router.path + (queryParams ? `?${queryParams}` : "")
+      );
       console.log("returnUrl", returnUrl);
-
       router
         ? Taro.navigateTo({
             url: `/packages/login/index?returnUrl=${returnUrl}`,
