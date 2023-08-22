@@ -80,11 +80,20 @@
     justify-content: space-between;
     align-items: center;
     &-service {
+      position: relative;
+      padding: 0;
+      line-height: auto;
+      background-color: transparent;
+      margin: 0;
+      border: none;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       font-size: 20px;
+      &::after {
+        border: none !important;
+      }
     }
     &-message {
       width: 36px;

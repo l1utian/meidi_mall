@@ -18,9 +18,23 @@ const config = {
   },
   sourceRoot: "src",
   outputRoot: "dist",
-  plugins: ["@tarojs/plugin-html"],
+  plugins: [
+    "@tarojs/plugin-html",
+    [
+      "@tarojs/plugin-inject",
+      {
+        components: {
+          //给button 添加im客服能力
+          Button: {
+            dataImId: "",
+          },
+        },
+      },
+    ],
+  ],
   defineConstants: {},
   alias: {
+    "@/config": path.resolve(__dirname, "..", "src/config"),
     "@/assets": path.resolve(__dirname, "..", "src/assets"),
     "@/components": path.resolve(__dirname, "..", "src/components"),
     "@/utils": path.resolve(__dirname, "..", "src/utils"),

@@ -2,6 +2,8 @@ import { useState } from "react";
 import Taro from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import { Swiper, SwiperItem, Divider, Button } from "@nutui/nutui-react-taro";
+import { Button as TaroButton } from "@tarojs/components";
+import { CUSTOMER_SERVICE_DY_ID } from "@/config/base";
 import right from "@/assets/public/right.svg";
 import message from "@/assets/public/message.svg";
 import useRequireLogin from "@/hooks/useRequireLogin";
@@ -82,14 +84,18 @@ function Detail() {
         />
       </View>
       <View className="detail-bottom">
-        <View className="detail-bottom-service">
+        <TaroButton
+          className="detail-bottom-service"
+          open-type="im"
+          dataImId={CUSTOMER_SERVICE_DY_ID}
+        >
           <Image
             src={message}
             mode="widthFix"
             className="detail-bottom-message"
           />
           <Text>联系客服</Text>
-        </View>
+        </TaroButton>
 
         <Button
           className="detail-bottom-btn"
