@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { View } from "@tarojs/components";
+import { useRouter } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
 import OrderItem from "@/components/OrderItem";
+import { useRequest } from "ahooks";
 import { getOrderList } from "@/api/order";
 import Empty from "./Empty";
 import "./index.scss";
@@ -15,44 +17,50 @@ const OrderList = () => {
   // 302 退款完成
   // 303 退款失败
   // 401 已取消
-  const [list, setList] = useState<any>([]);
+  const { params } = useRouter();
+  const { type } = params;
+
   const tabs = [
-    { title: "全部订单", key: "1", orderStatus: "" },
-    { title: "待支付", key: "2", orderStatus: "101" },
-    { title: "服务中", key: "3", orderStatus: "201,202" },
-    { title: "已完成", key: "4", orderStatus: "203,301,302" },
+    { title: "全部订单", key: "0", orderStatus: "" },
+    { title: "待支付", key: "1", orderStatus: "101" },
+    { title: "服务中", key: "2", orderStatus: "201" },
+    { title: "退款", key: "3", orderStatus: "301" },
   ];
-  const [activeTab, setActiveTab] = useState<any>("0");
-  useEffect(() => {
-    getOrderList().then((res: any) => {
-      if (res.code === 200) {
-        setList(res.data);
-      }
-    });
-  }, []);
+  const [activeTab, setActiveTab] = useState<any>(type || "0");
+  const { data }: any = useRequest(
+    () =>
+      getOrderList({
+        orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
+      }),
+    {
+      refreshDeps: [activeTab],
+    }
+  );
   const handleClick = (key, order) => {
     console.log(key, order);
   };
+  console.log("data", data);
   return (
     <View className="orderList">
       <Tabs
         value={activeTab}
         onChange={(value) => {
-          setActiveTab(value);
+          console.log(value);
+          setActiveTab(String(value));
         }}
       >
         {tabs.map((v) => (
-          <Tabs.TabPane title={v.title}>
-            {list?.length ? (
-              list.map((v, i) => (
+          <Tabs.TabPane title={v.title} key={v.key}>
+            {data?.data && data?.data.length ? (
+              data.data.map((v, i) => (
                 <OrderItem
                   info={v}
                   key={i}
-                  onClick={(key) => handleClick(key, v)}
+                  onAction={(key) => handleClick(key, v)}
                 />
               ))
             ) : (
-              // 这里需要修改，不能仅判断list, 还需要判断loading效果
+              //  缺少loading效果
               <View className="orderListEmpty">
                 <Empty />
               </View>

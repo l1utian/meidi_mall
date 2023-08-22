@@ -8,7 +8,7 @@
     "disablePrivate": false,
     "condition": {
         "miniprogram": {
-            "current": 1692374119961,
+            "current": -1,
             "list": [
                 {
                     "id": 1692171815804,
@@ -65,16 +65,6 @@
                     "name": "packages/addAddress/index",
                     "pathName": "packages/addAddress/index",
                     "query": "",
-                    "scene": "990001",
-                    "launchFrom": "scan",
-                    "location": "qr_code",
-                    "mockUpdateType": "Noupdate"
-                },
-                {
-                    "id": 1692693570123,
-                    "name": "packages/orderList/index",
-                    "pathName": "packages/orderList/index",
-                    "query": "type=all",
                     "scene": "990001",
                     "launchFrom": "scan",
                     "location": "qr_code",

@@ -5,10 +5,9 @@ import { orderStatus } from "@/constants/order";
 import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
 
-const OrderItem = ({ info, onClick }) => {
-  console.log(info);
+const OrderItem = ({ info, onAction }) => {
   const handleAction = (key) => {
-    onClick && onClick(key);
+    onAction && onAction(key);
   };
   return (
     <View className="orderItem-container">
