@@ -3,10 +3,14 @@ import { get, post } from "@/utils/request";
 /**
  *  地址管理
  */
+// 可用地址列表
+export const getAvailableAddressList = () => {
+  return get("/address/areaList");
+};
 
 //地址列表
-export const getAddressList = (params) => {
-  return get("/address/list", params);
+export const getAddressList = (): Promise<any> => {
+  return get("/address/list");
 };
 
 //查看地址
@@ -25,6 +29,6 @@ export const postAddressEdit = (params) => {
 };
 
 //删除地址
-export const postAddressRemove = (params) => {
-  return post("/address/remove", params);
+export const postAddressRemove = (params): Promise<any> => {
+  return get("/address/remove", params);
 };

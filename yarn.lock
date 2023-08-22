@@ -1372,10 +1372,10 @@
   dependencies:
     classnames "^2.3.2"
 
-"@nutui/nutui-react-taro@^2.0.13":
-  version "2.0.13"
-  resolved "https://registry.npmjs.org/@nutui/nutui-react-taro/-/nutui-react-taro-2.0.13.tgz"
-  integrity sha512-FKYlVqbScIOfohBumt6Ay9TJ6bTkXA572Air3oINEhM3eNUGb0qlOcT2QQCGtHArvabR26boqo3LFbWuf2N6Rg==
+"@nutui/nutui-react-taro@^2.0.14":
+  version "2.0.14"
+  resolved "https://registry.npmmirror.com/@nutui/nutui-react-taro/-/nutui-react-taro-2.0.14.tgz#eb3d32c755fc5f287dd9872fe854fe6bff8acd0b"
+  integrity sha512-HDAdw02pflsHliMAICqNADIzHbfw4CYNw/cj97tTLIWhH/Bn+DKAdep8Y6O6q41dZ3TG0nTp9LPAZRybsYYX3A==
   dependencies:
     "@babel/runtime" "^7.21.0"
     "@nutui/icons-react-taro" "0.0.1"
