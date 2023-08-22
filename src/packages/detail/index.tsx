@@ -4,10 +4,14 @@ import { View, Image, Text } from "@tarojs/components";
 import { Swiper, SwiperItem, Divider, Button } from "@nutui/nutui-react-taro";
 import right from "@/assets/public/right.svg";
 import message from "@/assets/public/message.svg";
+import useRequireLogin from "@/hooks/useRequireLogin";
 import GoodModal from "./GoodModal";
 import "./index.scss";
 
 function Detail() {
+  // 判断是否是登录状态，如果未登录会跳转到登录页面
+  useRequireLogin();
+
   const [visible, setVisible] = useState<boolean>(false);
   return (
     <View className="detail-container">

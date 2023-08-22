@@ -1,15 +1,18 @@
 import { View, Text, Image } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { Checkbox, Button } from "@nutui/nutui-react-taro";
 import { login } from "@/api/login";
 import { loginAndGetPhoneNumber } from "@/utils/TTUtil";
 import logo from "@/assets/public/logo.png";
 import "./index.scss";
 import { useState } from "react";
+import { navigateToPage } from "@/utils/route";
+import useGetUserInfo from "@/hooks/useGetUserInfo";
 
 const Login = () => {
+  const { fetchUserInfo } = useGetUserInfo();
+  const router = useRouter();
   const [checked, setChecked] = useState(false);
-
   const handleErrorToast = () => {
     if (!checked) {
       Taro.showToast({
@@ -29,15 +32,25 @@ const Login = () => {
         });
         login(res)?.then((data) => {
           Taro.hideLoading();
-          console.log(data);
           if (data?.code === 200) {
             const token = data?.token;
+            const returnUrl = decodeURIComponent(router.params.returnUrl || "");
             if (token) {
               Taro.setStorageSync("token", token);
-              Taro.showToast({
-                title: "登录成功",
-                icon: "success",
-                duration: 1000,
+              fetchUserInfo()?.then(() => {
+                Taro.showToast({
+                  title: "登录成功",
+                  icon: "success",
+                  duration: 1000,
+                });
+                if (returnUrl) {
+                  navigateToPage(returnUrl);
+                } else {
+                  // 如果没有返回的 URL，则跳转到默认页面
+                  Taro.switchTab({
+                    url: "/pages/index/index",
+                  });
+                }
               });
             }
           }

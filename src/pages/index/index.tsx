@@ -11,6 +11,13 @@ import "./index.scss";
 const Index = () => {
   const [name, setName] = useState<string>("");
   const [list, setList] = useState<Datum[]>([]);
+
+  const handleClick = (id) => {
+    Taro.navigateTo({
+      url: `/packages/detail/index?id=${id}`,
+    });
+  };
+
   useEffect(() => {
     getGoodsList({
       name,
@@ -18,6 +25,7 @@ const Index = () => {
       setList(res.data);
     });
   }, [name]);
+
   return (
     <View className="home">
       <SearchBar
@@ -26,14 +34,7 @@ const Index = () => {
       />
       <Grid columns={2}>
         {list.map((v, i) => (
-          <Grid.Item
-            key={i}
-            onClick={() =>
-              Taro.navigateTo({
-                url: `/packages/detail/index?id=${v.id}`,
-              })
-            }
-          >
+          <Grid.Item key={i} onClick={() => handleClick(v.id)}>
             <GoodItem
               src={baseUrl + v.picUrl}
               name={v.name}

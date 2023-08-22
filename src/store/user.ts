@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { isObject } from "lodash-es";
-
+import Taro from "@tarojs/taro";
 export interface User {
   avatarUrl: string;
   nickName: string;
@@ -14,21 +14,23 @@ export interface User {
 
 export type UserState = {
   userProfile: User | null;
-  isLoggedIn: boolean;
 };
 
 export type UserActions = {
   setUserProfile(userProfile: any): void;
   removeUserProfile(): void;
+  isLoggedIn: () => boolean;
 };
 
 /**
  * 创建并暴露用户状态存储对象
  */
-export const userStore = create<UserState & UserActions>((set) => ({
+export const userStore = create<UserState & UserActions>((set, get) => ({
   // 用户的信息
   userProfile: null,
-  isLoggedIn: false,
+  isLoggedIn: () => {
+    return !!get()?.userProfile?.phone && !!Taro.getStorageSync("token");
+  },
 
   /**
    * 设置用户信息

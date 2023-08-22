@@ -33,10 +33,12 @@ const request = (
         token: token,
       },
       success(res: any) {
-        console.log(res);
         if (res.data.code === 200) {
           resolve(res.data);
           return;
+        } else if (res?.data?.code === 401) {
+          Taro.removeStorageSync("token");
+          resolve(null);
         } else {
           // 其他各种各样的状态码统统返回
           if (res.data.msg) {
