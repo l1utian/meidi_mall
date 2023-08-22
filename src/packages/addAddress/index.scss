@@ -15,6 +15,10 @@
       font-size: 28px;
       color: #333;
     }
+    &-value {
+      display: flex;
+      align-items: center;
+    }
     &:last-child {
       margin-bottom: 0;
     }

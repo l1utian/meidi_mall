@@ -4,7 +4,7 @@ import { get, post } from "@/utils/request";
  *  地址管理
  */
 // 可用地址列表
-export const getAvailableAddressList = () => {
+export const getAvailableAddressList = (): Promise<any> => {
   return get("/address/areaList");
 };
 
@@ -14,17 +14,17 @@ export const getAddressList = (): Promise<any> => {
 };
 
 //查看地址
-export const getAddressInfo = (params) => {
-  return get("/address/getInfo", params);
+export const getAddressInfo = (id): Promise<any> => {
+  return get(`/address/getInfo?id=${id}`);
 };
 
 //新增地址
-export const postAddressAdd = (params) => {
+export const postAddressAdd = (params): Promise<any> => {
   return post("/address/add", params);
 };
 
 //编辑地址
-export const postAddressEdit = (params) => {
+export const postAddressEdit = (params): Promise<any> => {
   return post("/address/edit", params);
 };
 

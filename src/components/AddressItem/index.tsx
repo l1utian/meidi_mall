@@ -6,9 +6,9 @@ import "./index.scss";
 
 type Props = {
   name: string;
-  phone: string;
+  tel: string;
   location: string;
-  isDefault: boolean;
+  isDefault: number;
   id: string | number;
 };
 interface IProps {
@@ -16,7 +16,7 @@ interface IProps {
   onClick?: any;
 }
 const AddressItem = ({ info, onClick }: IProps) => {
-  const { name, phone, location, isDefault, id } = info || {};
+  const { name, tel, location, isDefault, id } = info || {};
   const handleClick = (key) => {
     onClick && onClick({ key, id });
   };
@@ -25,14 +25,14 @@ const AddressItem = ({ info, onClick }: IProps) => {
       <Cell className="address-item-cell">
         <View className="address-item-top">
           <Text className="address-item-name">{name}</Text>
-          <Text className="address-item-phone">{phone}</Text>
+          <Text className="address-item-phone">{tel}</Text>
         </View>
         <Text className="address-item-middle">{location}</Text>
         <Divider
           style={{ color: "#d1d1d1", marginTop: "12px", marginBottom: "8px" }}
         />
         <View className="address-item-bottom">
-          <Checkbox defaultChecked={isDefault} label="默认地址" />
+          <Checkbox checked={isDefault === 1} label="默认地址" />
           <View className="address-item-action">
             <View
               className="address-item-icon"

@@ -1,16 +1,4 @@
-import { message } from "@/assets/public/message.svg";
-import { useEffect, useState } from "react";
-import { View, Text } from "@tarojs/components";
-import {
-  Input,
-  Checkbox,
-  Address,
-  TextArea,
-  Button,
-} from "@nutui/nutui-react-taro";
-import { getAvailableAddressList, postAddressAdd } from "@/api/address";
 import { useSetState } from "ahooks";
-import "./index.scss";
 interface FormState {
   name: string;
   tel: string;
@@ -33,7 +21,11 @@ const useAddress = () => {
   });
 
   const handleChange = (key, value) => {
-    setFormState({ [key]: value } as any);
+    if (key === "isDefault") {
+      setFormState({ [key]: value ? 1 : 0 } as any);
+    } else {
+      setFormState({ [key]: value } as any);
+    }
   };
   const handleAddressChange = (value) => {
     const [province, city, county] = value;
@@ -41,46 +33,49 @@ const useAddress = () => {
   };
 
   const validate = () => {
-    const { name, tel, province, city, county, addressDetail } = formState;
-    if (!name) {
-      return {
-        status: "error",
-        message: "请填写姓名",
-      };
-    }
-    if (!tel) {
-      return {
-        status: "error",
-        message: "请填写手机号码",
-      };
-    }
-    if (!/^1[3-9]\d{9}$/g.test(tel)) {
-      return {
-        status: "error",
-        message: "手机号码格式不正确",
-      };
-    }
-    if (!province || !city || !county) {
-      return {
-        status: "error",
-        message: "请选择省市区",
-      };
-    }
-    if (!addressDetail) {
-      return {
-        status: "error",
-        message: "请填写详细地址",
-      };
-    }
-    return {
-      status: "success",
-      message: "校验通过",
-      data: formState,
-    };
+    return new Promise<any>((resolve, reject) => {
+      const { name, tel, province, city, county, addressDetail } = formState;
+      if (!name) {
+        reject({
+          status: "error",
+          message: "请填写姓名",
+        });
+      }
+      if (!tel) {
+        reject({
+          status: "error",
+          message: "请填写手机号码",
+        });
+      }
+      if (!/^1[3-9]\d{9}$/g.test(tel)) {
+        reject({
+          status: "error",
+          message: "手机号码格式不正确",
+        });
+      }
+      if (!province || !city) {
+        reject({
+          status: "error",
+          message: "请选择所在地区",
+        });
+      }
+      if (!addressDetail) {
+        reject({
+          status: "error",
+          message: "请填写详细地址",
+        });
+      }
+      resolve({
+        status: "success",
+        message: "校验通过",
+        data: formState,
+      });
+    });
   };
 
   return {
     formState,
+    setFormState,
     handleChange,
     handleAddressChange,
     validate,

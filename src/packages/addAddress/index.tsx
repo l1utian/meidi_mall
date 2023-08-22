@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import {
   Input,
@@ -7,46 +7,64 @@ import {
   TextArea,
   Button,
 } from "@nutui/nutui-react-taro";
+import Taro from "@tarojs/taro";
 import { getAvailableAddressList, postAddressAdd } from "@/api/address";
-import { useSetState } from "ahooks";
+import { useRequest } from "ahooks";
+import { formatLocation } from "@/utils/tool";
+import useAddress from "@/hooks/useAddress";
+import { ArrowRight } from "@nutui/icons-react-taro";
 import "./index.scss";
 
-interface FormState {
-  name: string;
-  tel: string;
-  province: string;
-  city: string;
-  county: string;
-  addressDetail: string;
-  isDefault: number;
-}
-
 function AddAddress() {
-  const [formState, setFormState] = useSetState<FormState>({
-    name: "",
-    tel: "",
-    province: "",
-    city: "",
-    county: "",
-    addressDetail: "",
-    isDefault: 0,
+  const { runAsync, loading } = useRequest(postAddressAdd, {
+    manual: true,
   });
 
-  const handleChange = (key, value) => {
-    console.log(key, value);
-    setFormState({ [key]: value } as any);
+  const { formState, handleChange, handleAddressChange, validate } =
+    useAddress();
+
+  const address = useMemo(() => {
+    return formState?.province
+      ? formatLocation(
+          [formState.province, formState.city, formState.county],
+          " "
+        )
+      : "请选择";
+  }, [formState]);
+
+  const handleSave = () => {
+    validate()
+      .then((res) => {
+        if (res?.data) {
+          runAsync(formState).then((res) => {
+            if (res?.code === 200) {
+              Taro.navigateTo({
+                url: "/packages/addressList/index",
+              });
+            } else {
+              Taro.showToast({
+                title: res.msg || "地址添加失败",
+              });
+            }
+          });
+        }
+      })
+      ?.catch((err) => {
+        if (err?.message) {
+          Taro.showToast({
+            title: err.message,
+            icon: "none",
+          });
+        }
+      });
   };
-  const handleAddressChange = (value) => {
-    const [province, city, county] = value;
-    setFormState({ province, city, county } as any);
-  };
+
   useEffect(() => {
     getAvailableAddressList().then((res) => {
       console.log(res);
     });
   }, []);
 
-  const [text, setText] = useState<any>("请选择");
   const [visible, setVisible] = useState<boolean>(false);
   const [optionsDemo1] = useState([
     {
@@ -131,7 +149,10 @@ function AddAddress() {
       </View>
       <View className="addAddress-input" onClick={() => setVisible(true)}>
         <Text className="addAddress-input-label">所在地区</Text>
-        <Text className="addAddress-input-label">{text}</Text>
+        <View className="addAddress-input-value">
+          <Text className="addAddress-input-label">{address}</Text>
+          <ArrowRight size="small" />
+        </View>
       </View>
       <TextArea onChange={(value) => handleChange("addressDetail", value)} />
       <View className="addAddress-textarea">
@@ -146,7 +167,7 @@ function AddAddress() {
           提醒：每次下单时会使用该地址，实际下单地址会根据您的历史订单进行智能判断，请在下单时确认哦！
         </Text>
       </View>
-      <Button block type="primary">
+      <Button block type="primary" onClick={handleSave} loading={loading}>
         保存
       </Button>
       <Address

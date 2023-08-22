@@ -5,48 +5,25 @@ import AddressItem from "@/components/AddressItem";
 import { Button, Dialog } from "@nutui/nutui-react-taro";
 import { postAddressRemove, getAddressList } from "@/api/address";
 import { useRequest } from "ahooks";
+import { formatLocation } from "@/utils/tool";
 import "./index.scss";
 
-const fakerData = [
-  {
-    id: 3,
-    name: "张静",
-    phone: "123****4567",
-    isDefault: true,
-    location: "北京亦庄经济技术开发区科创十一街18号院",
-  },
-  {
-    id: 4,
-    name: "张静",
-    phone: "123****4567",
-    isDefault: false,
-    location: "北京亦庄经济技术开发区科创十一街18号院",
-  },
-  {
-    id: 5,
-    name: "张静",
-    phone: "123****4567",
-    isDefault: false,
-    location: "北京亦庄经济技术开发区科创十一街18号院",
-  },
-  {
-    id: 6,
-    name: "张静",
-    phone: "123****4567",
-    isDefault: false,
-    location: "北京亦庄经济技术开发区科创十一街18号院",
-  },
-];
 function AddressList() {
-  const { data, loading, runAsync } = useRequest(getAddressList);
+  const { data, runAsync } = useRequest(getAddressList);
 
   const list = useMemo(() => {
-    return data?.data ?? [];
+    return (data?.data ?? [])?.map((v) => {
+      return {
+        ...v,
+        location: formatLocation(
+          [v?.province, v?.city, v?.county, v?.addressDetail],
+          " "
+        ),
+      };
+    });
   }, [data]);
 
   const handleClick = ({ key, id }) => {
-    console.log(key, id);
-
     switch (key) {
       case "edit":
         Taro.navigateTo({
@@ -59,8 +36,8 @@ function AddressList() {
           onConfirm: () => {
             return postAddressRemove({ id })?.then((res) => {
               if (res?.code === 200) {
-                runAsync();
                 Dialog.close("delete");
+                return runAsync();
               }
               return res;
             });
@@ -76,7 +53,7 @@ function AddressList() {
   };
   return (
     <View className="address-list-container">
-      {fakerData?.map((v, i) => (
+      {list?.map((v, i) => (
         <AddressItem info={v} key={i} onClick={handleClick} />
       ))}
       <View className="address-list-bottom">

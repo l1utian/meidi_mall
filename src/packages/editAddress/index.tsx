@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import {
   Input,
@@ -7,10 +7,90 @@ import {
   TextArea,
   Button,
 } from "@nutui/nutui-react-taro";
+import Taro, { useRouter } from "@tarojs/taro";
+import {
+  getAddressInfo,
+  getAvailableAddressList,
+  postAddressEdit,
+} from "@/api/address";
+import { useRequest } from "ahooks";
+import { formatLocation } from "@/utils/tool";
+import useAddress from "@/hooks/useAddress";
+import { ArrowRight } from "@nutui/icons-react-taro";
 import "./index.scss";
 
 function EditAddress() {
-  const [text, setText] = useState<any>("请选择");
+  const router = useRouter();
+  const id = router?.params?.id;
+  const {
+    formState,
+    handleChange,
+    handleAddressChange,
+    validate,
+    setFormState,
+  } = useAddress();
+
+  useRequest(() => getAddressInfo(id), {
+    refreshDeps: [id],
+    onSuccess(res) {
+      console.log(res, id);
+      if (res?.code === 200 && res?.data) {
+        setFormState({
+          ...res?.data,
+        });
+      }
+    },
+  });
+
+  const { runAsync, loading } = useRequest(postAddressEdit, {
+    manual: true,
+  });
+
+  const address = useMemo(() => {
+    return formState?.province
+      ? formatLocation(
+          [formState.province, formState.city, formState.county],
+          " "
+        )
+      : "请选择";
+  }, [formState]);
+
+  const handleSave = () => {
+    validate()
+      .then((res) => {
+        if (res?.data) {
+          runAsync({
+            ...formState,
+            id,
+          }).then((res) => {
+            if (res?.code === 200) {
+              Taro.navigateTo({
+                url: "/packages/addressList/index",
+              });
+            } else {
+              Taro.showToast({
+                title: res.msg || "地址修改失败",
+              });
+            }
+          });
+        }
+      })
+      ?.catch((err) => {
+        if (err?.message) {
+          Taro.showToast({
+            title: err.message,
+            icon: "none",
+          });
+        }
+      });
+  };
+
+  useEffect(() => {
+    getAvailableAddressList().then((res) => {
+      console.log(res);
+    });
+  }, []);
+
   const [visible, setVisible] = useState<boolean>(false);
   const [optionsDemo1] = useState([
     {
@@ -79,36 +159,53 @@ function EditAddress() {
     <View className="addAddress">
       <View className="addAddress-input">
         <Text className="addAddress-input-label">收货人</Text>
-        <Input placeholder="请输入" align="right" />
+        <Input
+          placeholder="请输入"
+          align="right"
+          value={formState?.name}
+          onChange={(value) => handleChange("name", value)}
+        />
       </View>
       <View className="addAddress-input">
         <Text className="addAddress-input-label">联系电话</Text>
-        <Input placeholder="请输入" align="right" />
+        <Input
+          placeholder="请输入"
+          align="right"
+          value={formState?.tel}
+          onChange={(value) => handleChange("tel", value)}
+        />
       </View>
       <View className="addAddress-input" onClick={() => setVisible(true)}>
         <Text className="addAddress-input-label">所在地区</Text>
-        <Text className="addAddress-input-label">{text}</Text>
+        <View className="addAddress-input-value">
+          <Text className="addAddress-input-label">{address}</Text>
+          <ArrowRight size="small" />
+        </View>
       </View>
-      <TextArea />
+      <TextArea
+        onChange={(value) => handleChange("addressDetail", value)}
+        value={formState?.addressDetail}
+      />
       <View className="addAddress-textarea">
         <View className="addAddress-textarea-top">
           <Text className="addAddress-textarea-label">设为默认地址</Text>
-          <Checkbox defaultChecked={true} />
+          <Checkbox
+            checked={!!formState.isDefault}
+            onChange={(value) => handleChange("isDefault", value)}
+          />
         </View>
         <Text className="addAddress-textarea-desc">
           提醒：每次下单时会使用该地址，实际下单地址会根据您的历史订单进行智能判断，请在下单时确认哦！
         </Text>
       </View>
-      <Button block type="primary">
+      <Button block type="primary" onClick={handleSave} loading={loading}>
         保存
       </Button>
       <Address
         visible={visible}
         options={optionsDemo1}
         title="详细地址"
-        onChange={(value) => {
-          setText(value);
-        }}
+        onChange={handleAddressChange}
         onClose={() => setVisible(false)}
       />
     </View>
