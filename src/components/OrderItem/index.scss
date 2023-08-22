@@ -18,7 +18,7 @@
   }
   &-status {
     font-size: 28px;
-    font-weight: 500;
+    font-weight: bold;
     color: #db1b22;
   }
 }
@@ -39,15 +39,19 @@
   }
   &-name {
     font-size: 28px;
-    font-weight: 500;
+    font-weight: bold;
   }
   &-info {
     display: flex;
     justify-content: space-between;
   }
-  &-price {
+  &-symbol {
     font-size: 24px;
-    font-weight: 500;
+    font-weight: bold;
+  }
+  &-price {
+    font-size: 32px;
+    font-weight: bold;
   }
   &-num {
     font-size: 24px;
@@ -67,9 +71,13 @@
   &-num {
     margin-right: 10px;
   }
+  &-symbol {
+    font-size: 24px;
+    font-weight: bold;
+  }
   &-price {
     font-size: 36px;
-    font-weight: 600;
+    font-weight: bold;
   }
 }
 

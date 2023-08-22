@@ -1,126 +1,127 @@
 {
-  "setting": {
-    "urlCheck": false,
-    "IDEPreviewHotRestartCache": true,
-    "mockLogin": false,
-    "bigPackageSizeSupport": false
-  },
-  "disablePrivate": false,
-  "condition": {
-    "miniprogram": {
-      "current": 1692339209209,
-      "list": [
-        {
-          "id": 1692171815804,
-          "name": "detail",
-          "pathName": "packages/detail/index",
-          "query": "",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692681556861,
-          "name": "packages/settlement/index",
-          "pathName": "packages/settlement/index",
-          "query": "url=%252Fprofile%252Fupload%252F2023%252F08%252F18%252F%25E5%2595%2586%25E5%2593%2581%25E5%259B%25BE%25E7%2589%25871_20230818195744A004.jpg&productCode=KTQX-001&productName=%25E7%25A9%25BA%25E8%25B0%2583%25E6%25B8%2585%25E6%25B4%2597-001&retailPrice=0.01",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692252864800,
-          "name": "pages/user/index",
-          "pathName": "pages/user/index",
-          "query": "",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692279934136,
-          "name": "packages/addressList/index",
-          "pathName": "packages/addressList/index",
-          "query": "",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692374119961,
-          "name": "pages/index/index",
-          "pathName": "pages/index/index",
-          "query": "",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692329640895,
-          "name": "packages/addAddress/index",
-          "pathName": "packages/addAddress/index",
-          "query": "",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692339209209,
-          "name": "packages/orderList/index",
-          "pathName": "packages/orderList/index",
-          "query": "type=all",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692666216058,
-          "name": "packages/detail/index",
-          "pathName": "packages/detail/index",
-          "query": "id=1",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692512195327,
-          "name": "packages/book/index",
-          "pathName": "packages/book/index",
-          "query": "",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692518495835,
-          "name": "packages/orderDetail/index",
-          "pathName": "packages/orderDetail/index",
-          "query": "",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
-        },
-        {
-          "id": 1692534797392,
-          "name": "packages/login/index",
-          "pathName": "packages/login/index",
-          "query": "",
-          "scene": "990001",
-          "launchFrom": "scan",
-          "location": "qr_code",
-          "mockUpdateType": "Noupdate"
+    "setting": {
+        "urlCheck": false,
+        "IDEPreviewHotRestartCache": true,
+        "mockLogin": false,
+        "bigPackageSizeSupport": false
+    },
+    "disablePrivate": false,
+    "condition": {
+        "miniprogram": {
+            "current": 1692693570123,
+            "list": [
+                {
+                    "id": 1692171815804,
+                    "name": "detail",
+                    "pathName": "packages/detail/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692681556861,
+                    "name": "packages/settlement/index",
+                    "pathName": "packages/settlement/index",
+                    "query": "url=%252Fprofile%252Fupload%252F2023%252F08%252F18%252F%25E5%2595%2586%25E5%2593%2581%25E5%259B%25BE%25E7%2589%25871_20230818195744A004.jpg&productCode=KTQX-001&productName=%25E7%25A9%25BA%25E8%25B0%2583%25E6%25B8%2585%25E6%25B4%2597-001&retailPrice=0.01",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692252864800,
+                    "name": "pages/user/index",
+                    "pathName": "pages/user/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692279934136,
+                    "name": "packages/addressList/index",
+                    "pathName": "packages/addressList/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692374119961,
+                    "name": "pages/index/index",
+                    "pathName": "pages/index/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692329640895,
+                    "name": "packages/addAddress/index",
+                    "pathName": "packages/addAddress/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692693570123,
+                    "name": "packages/orderList/index",
+                    "pathName": "packages/orderList/index",
+                    "query": "type=all",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate",
+                    "addType": "manual"
+                },
+                {
+                    "id": 1692666216058,
+                    "name": "packages/detail/index",
+                    "pathName": "packages/detail/index",
+                    "query": "id=1",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692512195327,
+                    "name": "packages/book/index",
+                    "pathName": "packages/book/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692518495835,
+                    "name": "packages/orderDetail/index",
+                    "pathName": "packages/orderDetail/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                },
+                {
+                    "id": 1692534797392,
+                    "name": "packages/login/index",
+                    "pathName": "packages/login/index",
+                    "query": "",
+                    "scene": "990001",
+                    "launchFrom": "scan",
+                    "location": "qr_code",
+                    "mockUpdateType": "Noupdate"
+                }
+            ]
         }
-      ]
     }
-  }
 }

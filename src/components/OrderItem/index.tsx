@@ -34,15 +34,27 @@ const OrderItem = ({ info, onClick }) => {
         <View className="orderItem-good-detail">
           <Text className="orderItem-good-name">{info.productName}</Text>
           <View className="orderItem-good-info">
-            <Text className="orderItem-good-price">￥{info.price}</Text>
-            <Text className="orderItem-good-num">×{info.number}</Text>
+            <View>
+              <Text className="orderItem-good-symbol">￥</Text>
+              <Text className="orderItem-good-price">{info.price}</Text>
+            </View>
+            <View>
+              <Text className="orderItem-good-num">×{info.number}</Text>
+            </View>
           </View>
         </View>
       </View>
       <View className="orderItem-total">
-        <Text className="orderItem-total-num">共{info.number}件</Text>
-        <Text className="orderItem-total-label">合计：</Text>
-        <Text className="orderItem-total-price">￥{info.orderPrice}</Text>
+        <View>
+          <Text className="orderItem-total-num">共{info.number}件</Text>
+        </View>
+        <View>
+          <Text className="orderItem-total-label">合计：</Text>
+        </View>
+        <View>
+          <Text className="orderItem-total-symbol">￥</Text>
+          <Text className="orderItem-total-price">{info.orderPrice}</Text>
+        </View>
       </View>
       <Divider className="orderItem-divider" style={{ color: "" }} />
       <View className="orderItem-bottom">
