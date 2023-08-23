@@ -102,6 +102,21 @@ function AddAddress() {
       ],
     },
     {
+      value: "江苏省",
+      text: "江苏省",
+      children: [
+        {
+          value: "南京市",
+          text: "南京市",
+          disabled: true,
+          children: [
+            { value: "鼓楼区", text: "鼓楼区", disabled: true },
+            { value: "浦口区", text: "浦口区" },
+          ],
+        },
+      ],
+    },
+    {
       value: "湖南",
       text: "湖南",
       disabled: true,

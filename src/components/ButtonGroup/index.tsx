@@ -15,7 +15,7 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
     //待支付
     101: [
       {
-        text: "继续支付",
+        text: "继续付款",
         key: "continuePay",
         type: "primary",
       },
@@ -35,13 +35,22 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
     //待服务
     202: [
       {
-        text: "取消预约",
-        key: "cancel",
-        type: "primary",
+        text: "退款/售后",
+        key: "refund",
       },
     ],
     //已完成
-    203: [],
+    203: [
+      {
+        text: "退款/售后",
+        key: "refund",
+      },
+      {
+        text: "确认服务完成",
+        key: "confirm",
+        type: "primary",
+      },
+    ],
     //服务中
     204: [],
     //退款中
@@ -55,7 +64,7 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
   };
   return (
     <View className="button-group">
-      {data[status].map((v, i) => (
+      {(data[status] || []).map((v, i) => (
         <Button
           key={i}
           size={size}

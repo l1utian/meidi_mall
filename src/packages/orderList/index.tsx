@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { View } from "@tarojs/components";
-import { useRouter } from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
 import OrderItem from "@/components/OrderItem";
 import { useRequest } from "ahooks";
-import { getOrderList } from "@/api/order";
+import { getOrderList, postOrderContinuePay } from "@/api/order";
 import Empty from "./Empty";
 import "./index.scss";
 
@@ -36,16 +36,64 @@ const OrderList = () => {
       refreshDeps: [activeTab],
     }
   );
+
+  const { runAsync } = useRequest(postOrderContinuePay, {
+    manual: true,
+  });
   const handleClick = (key, order) => {
-    console.log(key, order);
+    switch (key) {
+      // 继续支付
+      case "continuePay":
+        runAsync({ outOrderNo: order.outOrderNo }).then((res) => {
+          if (res?.code === 200) {
+            // tt.pay({
+            //   orderInfo: res.data.options.orderInfo,
+            //   service: 5,
+            //   success(res) {
+            //     console.log(res);
+            //   },
+            //   fail(res) {
+            //     console.log(res);
+            //   },
+            // });
+            tt.continueToPay({
+              outOrderNo: order.outOrderNo,
+              success(res) {
+                console.log(res);
+              },
+              fail(err) {
+                console.log(err);
+              },
+            });
+          }
+        });
+        break;
+      // 售后/退款
+      case "refund":
+        break;
+      // 预约
+      case "book":
+        Taro.navigateTo({
+          url: `/packages/book/index?outOrderNo=${order.outOrderNo}`,
+        });
+        break;
+      // 确认完成
+      case "confirm":
+        break;
+      default:
+        break;
+    }
   };
-  console.log("data", data);
+  const handleDetail = (v) => {
+    Taro.navigateTo({
+      url: `/packages/orderDetail/index?outOrderNo=${v.outOrderNo}`,
+    });
+  };
   return (
     <View className="orderList">
       <Tabs
         value={activeTab}
         onChange={(value) => {
-          console.log(value);
           setActiveTab(String(value));
         }}
       >
@@ -57,6 +105,7 @@ const OrderList = () => {
                   info={v}
                   key={i}
                   onAction={(key) => handleClick(key, v)}
+                  onClick={() => handleDetail(v)}
                 />
               ))
             ) : (

@@ -7,22 +7,22 @@ import "./index.scss";
 
 const OrderStatus = ({ status }) => {
   const statusInfo = {
-    1: {
+    201: {
       status: "待预约",
       tip: "订单未预约，请尽快预约哦",
       icon: status_book,
     },
-    2: {
+    101: {
       status: "待支付",
       tip: "请完成支付，00：00：00后将取消订单",
       icon: status_pay,
     },
-    3: {
+    202: {
       status: "待服务",
       tip: "请耐心等待",
       icon: status_service,
     },
-    4: {
+    203: {
       status: "已完成",
       tip: "订单已完成，致力于为您提供更好的服务",
       icon: status_finish,
@@ -38,13 +38,13 @@ const OrderStatus = ({ status }) => {
       <View className="order-status-top">
         <Image
           className="order-status-top-icon"
-          src={statusInfo[status].icon}
+          src={statusInfo[status]?.icon}
           mode="widthFix"
         />
-        <Text>{statusInfo[status].status}</Text>
+        <Text>{statusInfo[status]?.status}</Text>
       </View>
       <View className="order-status-bottom">
-        <Text>{statusInfo[status].tip}</Text>
+        <Text>{statusInfo[status]?.tip}</Text>
       </View>
     </View>
   );

@@ -1,43 +1,112 @@
 import { Divider, Button } from "@nutui/nutui-react-taro";
 import { View, Image, Text } from "@tarojs/components";
-import bg from "@/assets/user/bg.png";
+import Taro, { useRouter } from "@tarojs/taro";
+import { getOrderInfo, postOrderContinuePay } from "@/api/order";
+import { useRequest } from "ahooks";
 import OrderStatus from "@/components/OrderStatus";
 import location from "@/assets/user/location.svg";
 import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
 
 const OrderList = () => {
+  const { params } = useRouter();
+  const { outOrderNo } = params;
+  const { data } = useRequest(() => getOrderInfo({ outOrderNo }), {
+    refreshDeps: [outOrderNo],
+  });
+  const { runAsync } = useRequest(postOrderContinuePay, {
+    manual: true,
+  });
+  const handleClick = (key) => {
+    switch (key) {
+      // 继续支付
+      case "continuePay":
+        runAsync({ outOrderNo }).then((res) => {
+          if (res?.code === 200) {
+            // tt.pay({
+            //   orderInfo: res.data.options.orderInfo,
+            //   service: 5,
+            //   success(res) {
+            //     console.log(res);
+            //   },
+            //   fail(res) {
+            //     console.log(res);
+            //   },
+            // });
+            tt.continueToPay({
+              outOrderNo: outOrderNo,
+              success(res) {
+                console.log(res);
+              },
+              fail(err) {
+                console.log(err);
+              },
+            });
+          }
+        });
+        break;
+      // 售后/退款
+      case "refund":
+        break;
+      // 预约
+      case "book":
+        Taro.navigateTo({
+          url: `/packages/book/index?outOrderNo=${outOrderNo}`,
+        });
+        break;
+      // 确认完成
+      case "confirm":
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <View className="orderDetail">
-      <OrderStatus status={1} />
+      <OrderStatus status={data?.data.orderStatus} />
       <View className="orderDetail-content">
-        <View className="orderDetail-address">
-          <Image
-            src={location}
-            mode="widthFix"
-            className="orderDetail-address-img"
-          />
-          <View className="orderDetail-address-info">
-            <View className="orderDetail-address-top">
-              <Text className="orderDetail-address-name">张静</Text>
-              <Text>156****3795</Text>
+        {data?.data.orderStatus !== 101 && data?.data.orderStatus !== 201 && (
+          <View className="orderDetail-address">
+            <Image
+              src={location}
+              mode="widthFix"
+              className="orderDetail-address-img"
+            />
+            <View className="orderDetail-address-info">
+              <View className="orderDetail-address-top">
+                <Text className="orderDetail-address-name">张静</Text>
+                <Text>156****3795</Text>
+              </View>
+              <Text>
+                江苏省南京市宝安区石岩街道塘头一号路口创维科技工业园2号楼333
+              </Text>
             </View>
-            <Text>
-              江苏省南京市宝安区石岩街道塘头一号路口创维科技工业园2号楼333
-            </Text>
           </View>
-        </View>
-        <View className="orderDetail-time">
-          <Text>预约服务时间</Text>
-          <Text>08-15 13:00-15:00</Text>
-        </View>
+        )}
+        {data?.data.orderStatus !== 101 && data?.data.orderStatus !== 201 && (
+          <View className="orderDetail-time">
+            <Text>预约服务时间</Text>
+            <Text>08-15 13:00-15:00</Text>
+          </View>
+        )}
         <View className="orderDetail-good">
-          <Image src={bg} className="orderDetail-good-img" />
+          <Image src={data?.data.picUrl} className="orderDetail-good-img" />
           <View className="orderDetail-good-detail">
-            <Text className="orderDetail-good-name">【全拆洗】波轮洗衣机</Text>
+            <Text className="orderDetail-good-name">
+              {data?.data.productName}
+            </Text>
             <View className="orderDetail-good-info">
-              <Text className="orderDetail-good-price">￥39.00</Text>
-              <Text className="orderDetail-good-num">×1</Text>
+              <View>
+                <Text className="orderDetail-good-symbol">￥</Text>
+                <Text className="orderDetail-good-price">
+                  {data?.data.price}
+                </Text>
+              </View>
+              <View>
+                <Text className="orderDetail-good-num">
+                  ×{data?.data.number}
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -45,7 +114,7 @@ const OrderList = () => {
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">订单编号</View>
             <View className="orderDetail-info-content">
-              YHG8912345678
+              <Text>{data?.data.outOrderNo}</Text>
               <Button size="small" style={{ marginLeft: "12px" }}>
                 复制
               </Button>
@@ -54,7 +123,7 @@ const OrderList = () => {
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">下单时间</View>
             <View className="orderDetail-info-content">
-              2023-08-15 12:00:16
+              {data?.data.orderTime}
             </View>
           </View>
           <View className="orderDetail-info-item">
@@ -64,24 +133,32 @@ const OrderList = () => {
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">备注留言</View>
             <View className="orderDetail-info-content">
-              这里是备注留言这里是备注留言这里是备注留言
+              {data?.data.message}
             </View>
           </View>
         </View>
         <View className="orderDetail-price">
           <View className="orderDetail-price-top">
             <Text>商品总额</Text>
-            <Text className="orderDetail-price-top-num">¥30</Text>
+            <Text className="orderDetail-price-top-num">
+              ¥{data?.data.orderPrice}
+            </Text>
           </View>
           <Divider className="orderDetail-price-middle" />
           <View className="orderDetail-price-bottom">
             <Text className="orderDetail-price-bottom-total">总计：</Text>
-            <Text className="orderDetail-price-bottom-num">¥30</Text>
+            <Text className="orderDetail-price-bottom-num">
+              ¥{data?.data.orderPrice}
+            </Text>
           </View>
         </View>
       </View>
       <View className="orderDetail-bottom">
-        <ButtonGroup onClick={console.log} size="normal" />
+        <ButtonGroup
+          onClick={handleClick}
+          size="normal"
+          status={data?.data.orderStatus}
+        />
       </View>
     </View>
   );

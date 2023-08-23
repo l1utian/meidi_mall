@@ -59,7 +59,7 @@
     &-item {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       margin-bottom: 32px;
 
       &:last-child {
@@ -84,21 +84,30 @@
       flex-direction: column;
       justify-content: space-between;
     }
-    &-name {
-      font-size: 32px;
-      font-weight: 500;
-    }
+
     &-info {
       display: flex;
       justify-content: space-between;
     }
-    &-price {
+    &-name {
       font-size: 32px;
-      font-weight: 500;
+      font-weight: bold;
+    }
+    &-num,
+    &-label {
+      font-size: 24px;
+      color: rgba(51, 51, 51, 0.5);
     }
     &-num {
+      margin-right: 10px;
+    }
+    &-symbol {
       font-size: 24px;
-      color: #666;
+      font-weight: bold;
+    }
+    &-price {
+      font-size: 32px;
+      font-weight: bold;
     }
   }
   &-price {

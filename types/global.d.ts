@@ -42,4 +42,10 @@ declare namespace tt {
     success: (res: { code: string }) => void;
     fail: (err: any) => void;
   }): void;
+  export function continueToPay(obj: {
+    orderId?: any;
+    outOrderNo?: any;
+    success: (res: { code: string }) => void;
+    fail: (err: any) => void;
+  }): void;
 }
