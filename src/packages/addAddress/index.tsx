@@ -136,6 +136,7 @@ function AddAddress() {
         <Input
           placeholder="请输入"
           align="right"
+          maxLength={25}
           onChange={(value) => handleChange("name", value)}
         />
       </View>
@@ -154,14 +155,20 @@ function AddAddress() {
           <ArrowRight size="small" />
         </View>
       </View>
-      <TextArea onChange={(value) => handleChange("addressDetail", value)} />
-      <View className="addAddress-textarea">
+      <TextArea
+        onChange={(value) => handleChange("addressDetail", value)}
+        placeholder="详细地址"
+        maxLength={200}
+      />
+      <View
+        className="addAddress-textarea"
+        onClick={() => {
+          handleChange("isDefault", formState.isDefault ? 0 : 1);
+        }}
+      >
         <View className="addAddress-textarea-top">
           <Text className="addAddress-textarea-label">设为默认地址</Text>
-          <Checkbox
-            checked={!!formState.isDefault}
-            onChange={(value) => handleChange("isDefault", value)}
-          />
+          <Checkbox checked={!!formState.isDefault} />
         </View>
         <Text className="addAddress-textarea-desc">
           提醒：每次下单时会使用该地址，实际下单地址会根据您的历史订单进行智能判断，请在下单时确认哦！

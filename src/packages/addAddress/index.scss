@@ -47,6 +47,10 @@
   }
   .nut-textarea {
     border-radius: 8px;
+    padding: 16px !important;
+    .nut-textarea__textarea {
+      height: 68px !important;
+    }
   }
   .nut-input {
     padding: 0;

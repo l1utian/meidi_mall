@@ -83,7 +83,7 @@ function Detail() {
       </View>
       <View className="detail-service">
         <Divider className="detail-divider">
-          <Text style={{ color: "#333" }}>服务详情</Text>
+          <Text style={{ color: "#333", fontWeight: 400 }}>服务详情</Text>
         </Divider>
         <View dangerouslySetInnerHTML={{ __html: goodDetail.detail }}></View>
       </View>
@@ -98,7 +98,7 @@ function Detail() {
             mode="widthFix"
             className="detail-bottom-message"
           />
-          <Text>联系客服</Text>
+          <Text className="detail-bottom-text">联系客服</Text>
         </TaroButton>
 
         <Button

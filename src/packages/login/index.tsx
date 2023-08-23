@@ -89,6 +89,7 @@ const Login = () => {
       <Checkbox
         label="已阅读并同意《洗悦家用户注册协议》、《洗悦家隐私政策》，若您的手机号未注册，将为您直接注册美的洗悦家账号"
         checked={checked}
+        className="login-checkbox"
         onChange={setChecked}
       />
     </View>

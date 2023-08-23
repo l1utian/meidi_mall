@@ -18,7 +18,7 @@ function AddressList() {
         ...v,
         location: formatLocation(
           [v?.province, v?.city, v?.county, v?.addressDetail],
-          " "
+          ""
         ),
       };
     });

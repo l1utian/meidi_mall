@@ -28,9 +28,11 @@ const Index = () => {
   return (
     <View className="home">
       <SearchBar
+        className="search-bar"
         placeholder="请输入关键字"
         onChange={(value) => setName(value)}
       />
+
       <Grid columns={2}>
         {list.map((v, i) => (
           <Grid.Item key={i} onClick={() => handleClick(v.id)}>

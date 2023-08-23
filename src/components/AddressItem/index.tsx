@@ -39,14 +39,14 @@ const AddressItem = ({ info, onClick }: IProps) => {
               style={{ marginRight: "16px" }}
               onClick={() => handleClick("edit")}
             >
-              <Image src={del} mode="widthFix" style={{ width: "16px" }} />
+              <Image src={edit} mode="widthFix" style={{ width: "16px" }} />
               <Text>编辑</Text>
             </View>
             <View
               className="address-item-icon"
               onClick={() => handleClick("delete")}
             >
-              <Image src={edit} mode="widthFix" style={{ width: "16px" }} />
+              <Image src={del} mode="widthFix" style={{ width: "16px" }} />
               <Text>删除</Text>
             </View>
           </View>

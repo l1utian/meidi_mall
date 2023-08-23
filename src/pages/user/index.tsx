@@ -78,7 +78,7 @@ function User() {
                 className="user-group-icon"
                 mode="widthFix"
               />
-              <Text>服务地址</Text>
+              <Text className="user-group-text">服务地址</Text>
             </View>
           }
           extra={
@@ -90,7 +90,7 @@ function User() {
           title={
             <View className="user-group-title">
               <Image src={kefu} className="user-group-icon" mode="widthFix" />
-              <Text>联系客服</Text>
+              <Text className="user-group-text">联系客服</Text>
             </View>
           }
           extra={
@@ -101,7 +101,7 @@ function User() {
           title={
             <View className="user-group-title">
               <Image src={about} className="user-group-icon" mode="widthFix" />
-              <Text>关于我们</Text>
+              <Text className="user-group-text">关于我们</Text>
             </View>
           }
           extra={
@@ -112,7 +112,7 @@ function User() {
           title={
             <View className="user-group-title">
               <Image src={safe} className="user-group-icon" mode="widthFix" />
-              <Text>资质展示</Text>
+              <Text className="user-group-text">资质展示</Text>
             </View>
           }
           extra={
@@ -120,7 +120,9 @@ function User() {
           }
         />
       </CellGroup>
-      <Cell align="center">退出登录</Cell>
+      <Cell align="center" className="user-exit">
+        退出登录
+      </Cell>
     </View>
   );
 }
