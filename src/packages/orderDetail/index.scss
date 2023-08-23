@@ -56,6 +56,13 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      &-copy {
+        width: 64px;
+        height: 32px;
+        font-size: 20px;
+        margin-left: 12px;
+        padding: 0;
+      }
     }
 
     &-item {

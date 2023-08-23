@@ -115,7 +115,7 @@ const OrderList = () => {
             <View className="orderDetail-info-label">订单编号</View>
             <View className="orderDetail-info-content">
               <Text>{data?.data.outOrderNo}</Text>
-              <Button size="small" style={{ marginLeft: "12px" }}>
+              <Button size="small" className="orderDetail-info-content-copy">
                 复制
               </Button>
             </View>
