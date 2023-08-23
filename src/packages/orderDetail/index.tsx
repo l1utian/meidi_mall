@@ -74,19 +74,19 @@ const OrderList = () => {
             />
             <View className="orderDetail-address-info">
               <View className="orderDetail-address-top">
-                <Text className="orderDetail-address-name">张静</Text>
-                <Text>156****3795</Text>
+                <Text className="orderDetail-address-name">
+                  {data?.data.consignee}
+                </Text>
+                <Text>{data?.data.mobile}</Text>
               </View>
-              <Text>
-                江苏省南京市宝安区石岩街道塘头一号路口创维科技工业园2号楼333
-              </Text>
+              <Text>{data?.data.address}</Text>
             </View>
           </View>
         )}
         {data?.data.orderStatus !== 101 && data?.data.orderStatus !== 201 && (
           <View className="orderDetail-time">
             <Text>预约服务时间</Text>
-            <Text>08-15 13:00-15:00</Text>
+            <Text>{`${data?.data.appointmentDate} ${data?.data.appointmentTime}`}</Text>
           </View>
         )}
         <View className="orderDetail-good">

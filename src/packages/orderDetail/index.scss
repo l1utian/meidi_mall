@@ -28,6 +28,8 @@
     }
     &-name {
       font-size: 32px;
+      margin-right: 8px;
+      font-weight: bold;
     }
   }
   &-time {
@@ -88,6 +90,7 @@
     &-info {
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
     &-name {
       font-size: 32px;

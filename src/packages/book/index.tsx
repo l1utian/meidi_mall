@@ -64,7 +64,7 @@ const Book = () => {
         Taro.showToast({
           title: "预约成功",
           icon: "success",
-          duration: 1000,
+          duration: 2000,
         }).then(() => {
           Taro.navigateTo({
             url: `/packages/orderDetail/index?outOrderNo=${outOrderNo}`,
