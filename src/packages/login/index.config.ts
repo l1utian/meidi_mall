@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: "美的洗悦家",
+  navigationBarTitleText: "登录",
 });

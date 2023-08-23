@@ -19,10 +19,10 @@ const useRequireLogin = () => {
       );
       console.log("returnUrl", returnUrl);
       router
-        ? Taro.navigateTo({
+        ? Taro.redirectTo({
             url: `/packages/login/index?returnUrl=${returnUrl}`,
           })
-        : Taro.navigateTo({
+        : Taro.redirectTo({
             url: "/packages/login/index",
           });
       return null;

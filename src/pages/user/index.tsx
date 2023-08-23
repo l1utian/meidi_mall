@@ -17,11 +17,29 @@ import pay from "@/assets/user/pay.svg";
 import service from "@/assets/user/service.svg";
 import back from "@/assets/user/back.svg";
 import right from "@/assets/public/right.svg";
+import bg from "@/assets/user/bg.png";
 import "./index.scss";
 import { maskPhoneNumber } from "@/utils/tool";
 
 function User() {
-  const { userProfile } = userStore();
+  const { userProfile, isLoggedIn, setUserProfile } = userStore();
+  const login = () => {
+    if (!isLoggedIn()) {
+      Taro.navigateTo({
+        url: `/packages/login/index?returnUrl=${encodeURIComponent(
+          "/packages/user/index"
+        )}`,
+      });
+    }
+  };
+
+  // 退出登录
+  const logout = () => {
+    Taro.removeStorage({
+      key: "token",
+    });
+    setUserProfile(null);
+  };
   const handleClick = (key) => {
     switch (key) {
       case "address":
@@ -46,16 +64,24 @@ function User() {
           backgroundImage: `url(./assets/user/bg.png)`,
         }}
       >
-        <View className="user-info">
+        <Image
+          src={bg}
+          style={{
+            display: "none",
+          }}
+        ></Image>
+        <View className="user-info" onClick={login}>
           <Avatar
             size="large"
             icon="https://img12.360buyimg.com/imagetools/jfs/t1/143702/31/16654/116794/5fc6f541Edebf8a57/4138097748889987.png"
           />
-          <Text className="user-info-name">
-            {userProfile?.phone
-              ? maskPhoneNumber(String(userProfile?.phone))
-              : ""}
-          </Text>
+          {userProfile?.phone ? (
+            <Text className="user-info-name">
+              {maskPhoneNumber(String(userProfile?.phone))}
+            </Text>
+          ) : (
+            <Text className="user-info-name">登录/注册</Text>
+          )}
         </View>
       </View>
       <View className="user-grid">
@@ -137,9 +163,11 @@ function User() {
           }
         />
       </CellGroup>
-      <Cell align="center" className="user-exit">
-        退出登录
-      </Cell>
+      {isLoggedIn() && (
+        <Cell align="center" className="user-exit" onClick={logout}>
+          退出登录
+        </Cell>
+      )}
     </View>
   );
 }
