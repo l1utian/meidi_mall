@@ -13,8 +13,11 @@
     padding: 32px 24px;
     border-radius: 16px;
     &-title {
-      font-weight: 500;
       margin-bottom: 34px;
+      font-size: 28px;
+      font-weight: 500;
+      color: #333333;
+      line-height: 24px;
     }
     &-detail {
       display: flex;
@@ -23,7 +26,7 @@
       width: 160px;
       height: 160px;
       border-radius: 8px;
-      margin-right: 20px;
+      margin-right: 16px;
     }
     &-right {
       flex: 1;
@@ -32,12 +35,41 @@
       justify-content: space-between;
     }
     &-name {
-      font-weight: 600;
+      font-size: 32px;
+      font-weight: 500;
+      color: #333333;
+      line-height: 44px;
     }
     &-num {
       display: flex;
       justify-content: space-between;
-      font-weight: 600;
+      &-left {
+        display: flex;
+        justify-content: flex-start;
+        align-items: baseline;
+      }
+      &-prefix {
+        font-size: 24px;
+        font-weight: 500;
+        color: #333333;
+        line-height: 34px;
+      }
+      &-text {
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+        line-height: 44px;
+      }
+      &-right {
+        font-size: 28px !important;
+
+        .nut-inputnumber__text--readonly {
+          width: 48px;
+          height: 48px;
+          background: #e8e8e8;
+          border-radius: 8px;
+        }
+      }
     }
   }
   .settlement-group {
@@ -78,13 +110,29 @@
     align-items: center;
     &-price {
       font-size: 28px;
+      font-weight: 500;
+      color: #333333;
+      line-height: 40px;
     }
     &-num {
       font-size: 44px;
       font-weight: 600;
+      color: #333333;
+      line-height: 60px;
     }
   }
   .nut-input {
     padding: 0;
+  }
+}
+.settlement-price {
+  color: #de2424;
+  .nut-price__symbol,
+  .nut-price__integer,
+  .nut-price__decimal {
+    font-size: 17px;
+    font-weight: 400;
+    color: #de2424;
+    line-height: 24px;
   }
 }

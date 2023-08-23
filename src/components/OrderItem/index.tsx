@@ -25,11 +25,7 @@ const OrderItem = ({ info, onAction }) => {
           });
         }}
       >
-        <Image
-          src={info.picUrl}
-          mode="widthFix"
-          className="orderItem-good-img"
-        />
+        <Image src={info.picUrl} className="orderItem-good-img" />
         <View className="orderItem-good-detail">
           <Text className="orderItem-good-name">{info.productName}</Text>
           <View className="orderItem-good-info">

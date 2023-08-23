@@ -22,11 +22,14 @@
     }
     &-icon {
       width: 32px;
-      margin-right: 6px;
+      margin-right: 8px;
     }
     &-detail {
       color: #27282b;
       font-size: 32px;
+      font-weight: 400;
+      color: #27282b;
+      line-height: 44px;
     }
     &-bottom {
       .book-address-selected {

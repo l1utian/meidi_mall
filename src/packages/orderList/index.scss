@@ -4,6 +4,12 @@
   .nut-tabs__titles {
     background-color: #fff;
   }
+  .nut-tabs__titles-item--active .nut-tabs__titles-item__line {
+    display: none;
+  }
+  .nut-tabs__titles-item__text {
+    font-size: 16px;
+  }
   .nut-tabpane {
     background-color: #f8f8f8;
     padding: 0 12px;

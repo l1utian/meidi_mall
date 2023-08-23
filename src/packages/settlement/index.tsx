@@ -57,8 +57,13 @@ const Settlement = () => {
           <View className="settlement-info-right">
             <Text className="settlement-info-name">{productName}</Text>
             <View className="settlement-info-num">
-              <Text>￥{retailPrice}</Text>
+              <View className="settlement-info-num-left">
+                <Text className="settlement-info-num-prefix">￥</Text>
+                <Text className="settlement-info-num-text">{retailPrice}</Text>
+              </View>
+
               <InputNumber
+                className="settlement-info-num-right"
                 defaultValue={number}
                 onChange={(v) => setNumber(v)}
               />
@@ -70,6 +75,7 @@ const Settlement = () => {
         <View className="settlement-remark">
           <Text className="settlement-remark-label">备注留言</Text>
           <Input
+            maxLength={200}
             placeholder="如有特殊需求可留言给服务人员"
             align="right"
             onChange={(value) => setMessage(value)}
@@ -82,7 +88,12 @@ const Settlement = () => {
       </View>
       <View className="settlement-total">
         <Text>商品总额</Text>
-        <Price price={orderPrice} size="normal" thousands />
+        <Price
+          price={orderPrice}
+          size="normal"
+          thousands
+          className="settlement-price"
+        />
       </View>
       <View className="settlement-bottom">
         <View>
