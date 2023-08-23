@@ -7,3 +7,9 @@ export function formatLocation(
     .join(separator);
   return location;
 }
+
+export function maskPhoneNumber(phoneNumber?: string): string {
+  return phoneNumber
+    ? phoneNumber.replace(/(\d{3})\d{4}(\d+)/, "$1****$2")
+    : "";
+}

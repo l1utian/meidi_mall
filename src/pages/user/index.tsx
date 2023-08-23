@@ -7,6 +7,7 @@ import {
   Grid,
   GridItem,
 } from "@nutui/nutui-react-taro";
+import { userStore } from "@/store/user";
 import location from "@/assets/user/location.svg";
 import kefu from "@/assets/user/kefu.svg";
 import safe from "@/assets/user/safe.svg";
@@ -17,8 +18,10 @@ import service from "@/assets/user/service.svg";
 import back from "@/assets/user/back.svg";
 import right from "@/assets/public/right.svg";
 import "./index.scss";
+import { maskPhoneNumber } from "@/utils/tool";
 
 function User() {
+  const { userProfile } = userStore();
   const handleClick = (key) => {
     switch (key) {
       case "address":
@@ -48,7 +51,11 @@ function User() {
             size="large"
             icon="https://img12.360buyimg.com/imagetools/jfs/t1/143702/31/16654/116794/5fc6f541Edebf8a57/4138097748889987.png"
           />
-          <Text className="user-info-name">156****3795</Text>
+          <Text className="user-info-name">
+            {userProfile?.phone
+              ? maskPhoneNumber(String(userProfile?.phone))
+              : ""}
+          </Text>
         </View>
       </View>
       <View className="user-grid">

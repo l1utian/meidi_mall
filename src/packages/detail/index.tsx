@@ -11,11 +11,20 @@ import {
   Image,
 } from "@nutui/nutui-react-taro";
 import right from "@/assets/public/right.svg";
+import Taro from "@tarojs/taro";
 import message from "@/assets/public/message.svg";
 import { getGoodsInfo } from "@/api/index";
 import { baseUrl } from "@/utils/request";
 import GoodModal from "./GoodModal";
 import "./index.scss";
+
+// 给所有 img 标签添加 mode
+(Taro as any).options.html.transformElement = (el) => {
+  if (el.nodeName === "image") {
+    el.setAttribute("mode", "widthFix");
+  }
+  return el;
+};
 
 function Detail() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -85,7 +94,11 @@ function Detail() {
         <Divider className="detail-divider">
           <Text style={{ color: "#333", fontWeight: 400 }}>服务详情</Text>
         </Divider>
-        <View dangerouslySetInnerHTML={{ __html: goodDetail.detail }}></View>
+        <View
+          dangerouslySetInnerHTML={{
+            __html: `<div id="detail">${goodDetail.detail}</div>`,
+          }}
+        ></View>
       </View>
       <View className="detail-bottom">
         <TaroButton

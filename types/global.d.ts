@@ -48,4 +48,16 @@ declare namespace tt {
     success: (res: { code: string }) => void;
     fail: (err: any) => void;
   }): void;
+  export function downloadFile(obj: {
+    url: string;
+    success: (res: { tempFilePath: string }) => void;
+    fail: (err: any) => void;
+  }): void;
+  export function openDocument(obj: {
+    filePath: string;
+    fileType: string;
+    fileName: string;
+    success: (res: { code: string }) => void;
+    fail?: (err: any) => void;
+  }): void;
 }
