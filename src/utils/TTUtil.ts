@@ -79,3 +79,34 @@ export const loginAndGetPhoneNumber = (e) => {
       });
   });
 };
+
+// 预览文件
+export const previewFile = ({
+  url,
+  fileName,
+  fileType,
+}: {
+  url: string;
+  fileName: string;
+  fileType: string;
+}): void => {
+  tt.downloadFile({
+    // 仅为示例 url，并非真实地址
+    url,
+    success: function (res) {
+      console.log(res);
+      const filePath = res.tempFilePath;
+      tt.openDocument({
+        filePath: filePath,
+        fileType,
+        fileName,
+        success: function (res) {
+          console.log("打开文档成功");
+        },
+      });
+    },
+    fail(res) {
+      console.log(`downloadFile 调用失败`, res);
+    },
+  });
+};

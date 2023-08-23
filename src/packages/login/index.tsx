@@ -2,13 +2,12 @@ import { View, Text, Image } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { Checkbox, Button } from "@nutui/nutui-react-taro";
 import { login } from "@/api/login";
-import { loginAndGetPhoneNumber } from "@/utils/TTUtil";
+import { loginAndGetPhoneNumber, previewFile } from "@/utils/TTUtil";
 import logo from "@/assets/public/logo.png";
 import "./index.scss";
 import { useState } from "react";
 import { navigateToPage } from "@/utils/route";
 import useGetUserInfo from "@/hooks/useGetUserInfo";
-
 const Login = () => {
   const { fetchUserInfo } = useGetUserInfo();
   const router = useRouter();
@@ -87,7 +86,43 @@ const Login = () => {
         抖音手机号授权快捷登录
       </Button>
       <Checkbox
-        label="已阅读并同意《洗悦家用户注册协议》、《洗悦家隐私政策》，若您的手机号未注册，将为您直接注册美的洗悦家账号"
+        label={
+          <View>
+            已阅读并同意
+            <Text
+              onClick={(e) => {
+                e.stopPropagation();
+                previewFile({
+                  url: "https://qianxun001.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E7%9A%84%E5%B9%B3%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE.docx",
+                  fileName: "洗悦家用户注册协议",
+                  fileType: "docx",
+                });
+              }}
+              style={{
+                color: "#3D6CFE",
+              }}
+            >
+              《洗悦家用户注册协议》
+            </Text>
+            、
+            <Text
+              style={{
+                color: "#3D6CFE",
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                previewFile({
+                  url: "https://qianxun001.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E7%9A%84%E5%B9%B3%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE.docx",
+                  fileName: "洗悦家用户注册协议",
+                  fileType: "docx",
+                });
+              }}
+            >
+              《洗悦家隐私政策》
+            </Text>
+            ，若您的手机号未注册，将为您直接注册美的洗悦家账号
+          </View>
+        }
         checked={checked}
         className="login-checkbox"
         onChange={setChecked}
