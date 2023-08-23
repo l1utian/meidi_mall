@@ -4,11 +4,43 @@ import { Checkbox, Button } from "@nutui/nutui-react-taro";
 import { login } from "@/api/login";
 import { loginAndGetPhoneNumber, previewFile } from "@/utils/TTUtil";
 import logo from "@/assets/public/logo.png";
-import "./index.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { navigateToPage } from "@/utils/route";
 import useGetUserInfo from "@/hooks/useGetUserInfo";
+import { getDoc } from "@/api/assets";
+import { useSetState } from "ahooks";
+import "./index.scss";
+
 const Login = () => {
+  const [assetsUrl, setAssetsUrl] = useSetState({
+    // 注册协议
+    registerAgreement: "",
+    // 政策
+    policy: "",
+  });
+
+  useEffect(() => {
+    Promise.all([
+      getDoc({
+        type: "1",
+      }),
+      getDoc({
+        type: "2",
+      }),
+    ])?.then(([res1, res2]) => {
+      if (res1?.code === 200) {
+        setAssetsUrl({
+          registerAgreement: res1?.data?.url,
+        });
+      }
+      if (res2?.code === 200) {
+        setAssetsUrl({
+          policy: res2?.data?.url,
+        });
+      }
+    });
+  }, []);
+
   const { fetchUserInfo } = useGetUserInfo();
   const router = useRouter();
   const [checked, setChecked] = useState(false);
@@ -93,7 +125,7 @@ const Login = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 previewFile({
-                  url: "https://qianxun001.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E7%9A%84%E5%B9%B3%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE.docx",
+                  url: assetsUrl.registerAgreement,
                   fileName: "洗悦家用户注册协议",
                   fileType: "docx",
                 });
@@ -112,8 +144,8 @@ const Login = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 previewFile({
-                  url: "https://qianxun001.oss-cn-hangzhou.aliyuncs.com/%E7%BE%8E%E7%9A%84%E5%B9%B3%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE.docx",
-                  fileName: "洗悦家用户注册协议",
+                  url: assetsUrl.policy,
+                  fileName: "洗悦家隐私政策",
                   fileType: "docx",
                 });
               }}

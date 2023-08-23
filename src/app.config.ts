@@ -63,6 +63,18 @@ export default defineAppConfig({
       independent: false,
     },
     {
+      root: "packages/aboutPage",
+      pages: ["index"],
+      name: "关于我们",
+      independent: false,
+    },
+    {
+      root: "packages/qualificationPage",
+      pages: ["index"],
+      name: "资质展示",
+      independent: false,
+    },
+    {
       root: "packages/login",
       pages: ["index"],
       name: "登录",

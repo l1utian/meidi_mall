@@ -98,6 +98,11 @@ function User() {
           }
         />
         <Cell
+          onClick={() => {
+            Taro.navigateTo({
+              url: "/packages/aboutPage/index",
+            });
+          }}
           title={
             <View className="user-group-title">
               <Image src={about} className="user-group-icon" mode="widthFix" />
@@ -109,6 +114,11 @@ function User() {
           }
         />
         <Cell
+          onClick={() => {
+            Taro.navigateTo({
+              url: "/packages/qualificationPage/index",
+            });
+          }}
           title={
             <View className="user-group-title">
               <Image src={safe} className="user-group-icon" mode="widthFix" />
