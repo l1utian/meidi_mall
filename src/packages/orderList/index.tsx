@@ -70,6 +70,9 @@ const OrderList = () => {
         break;
       // 售后/退款
       case "refund":
+        Taro.navigateTo({
+          url: `/packages/refund/index?outOrderNo=${order.outOrderNo}`,
+        });
         break;
       // 预约
       case "book":

@@ -68,6 +68,12 @@ export default defineAppConfig({
       name: "登录",
       independent: false,
     },
+    {
+      root: "packages/refund",
+      pages: ["index"],
+      name: "售后/退款",
+      independent: false,
+    },
   ],
   window: {
     backgroundTextStyle: "light",
