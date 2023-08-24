@@ -1,12 +1,6 @@
 import { View, Image, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import {
-  CellGroup,
-  Cell,
-  Avatar,
-  Grid,
-  GridItem,
-} from "@nutui/nutui-react-taro";
+import { CellGroup, Cell, Grid, GridItem } from "@nutui/nutui-react-taro";
 import { userStore } from "@/store/user";
 import location from "@/assets/user/location.svg";
 import kefu from "@/assets/user/kefu.svg";

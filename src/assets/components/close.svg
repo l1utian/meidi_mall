@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="订单详情-待服务-取消服务弹窗" transform="translate(-323.000000, -377.000000)" stroke="#86909C" stroke-width="1.5">
+            <g id="编组-4" transform="translate(24.000000, 365.000000)">
+                <g id="关闭" transform="translate(299.000000, 12.000000)">
+                    <g id="编组" transform="translate(1.119757, 1.119757)">
+                        <line x1="-2.26105493" y1="6.5049345" x2="15.2709239" y2="6.5049345" id="路径-9" transform="translate(6.504935, 6.504935) rotate(-315.000000) translate(-6.504935, -6.504935) "></line>
+                        <line x1="6.5049345" y1="15.2709239" x2="6.5049345" y2="-2.26105493" id="路径-9" transform="translate(6.504935, 6.504935) scale(1, -1) rotate(315.000000) translate(-6.504935, -6.504935) "></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
