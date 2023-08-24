@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
@@ -27,7 +27,7 @@ const OrderList = () => {
     { title: "退款", key: "3", orderStatus: "301" },
   ];
   const [activeTab, setActiveTab] = useState<any>(type || "0");
-  const { data }: any = useRequest(
+  const { data, loading }: any = useRequest(
     () =>
       getOrderList({
         orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
@@ -92,6 +92,17 @@ const OrderList = () => {
       url: `/packages/orderDetail/index?outOrderNo=${v.outOrderNo}`,
     });
   };
+
+  useEffect(() => {
+    if (loading) {
+      Taro.showLoading({
+        title: "加载中",
+      });
+    } else {
+      Taro.hideLoading();
+    }
+  }, [loading]);
+
   return (
     <View className="orderList">
       <Tabs
@@ -111,8 +122,7 @@ const OrderList = () => {
                   onClick={() => handleDetail(v)}
                 />
               ))
-            ) : (
-              //  缺少loading效果
+            ) : loading ? null : (
               <View className="orderListEmpty">
                 <Empty />
               </View>

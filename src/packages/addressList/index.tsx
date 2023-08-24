@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import AddressItem from "@/components/AddressItem";
@@ -10,7 +10,7 @@ import Empty from "./Empty";
 import "./index.scss";
 
 function AddressList() {
-  const { data, runAsync } = useRequest(getAddressList);
+  const { data, runAsync, loading } = useRequest(getAddressList);
 
   const list = useMemo(() => {
     return (data?.data ?? [])?.map((v) => {
@@ -52,6 +52,16 @@ function AddressList() {
         break;
     }
   };
+  useEffect(() => {
+    if (loading) {
+      Taro.showLoading({
+        title: "加载中",
+      });
+    } else {
+      Taro.hideLoading();
+    }
+  }, [loading]);
+
   return (
     <View className="address-list-container">
       {list?.length ? (

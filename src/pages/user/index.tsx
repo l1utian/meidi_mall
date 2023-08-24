@@ -18,6 +18,7 @@ import service from "@/assets/user/service.svg";
 import back from "@/assets/user/back.svg";
 import right from "@/assets/public/right.svg";
 import bg from "@/assets/user/bg.png";
+import logo from "@/assets/public/logo.png";
 import "./index.scss";
 import { maskPhoneNumber } from "@/utils/tool";
 
@@ -27,7 +28,7 @@ function User() {
     if (!isLoggedIn()) {
       Taro.navigateTo({
         url: `/packages/login/index?returnUrl=${encodeURIComponent(
-          "/packages/user/index"
+          "/pages/user/index"
         )}`,
       });
     }
@@ -40,6 +41,7 @@ function User() {
     });
     setUserProfile(null);
   };
+
   const handleClick = (key) => {
     switch (key) {
       case "address":
@@ -71,10 +73,9 @@ function User() {
           }}
         ></Image>
         <View className="user-info" onClick={login}>
-          <Avatar
-            size="large"
-            icon="https://img12.360buyimg.com/imagetools/jfs/t1/143702/31/16654/116794/5fc6f541Edebf8a57/4138097748889987.png"
-          />
+          <View className="avatar">
+            <Image src={logo} className="avatar-asset"></Image>
+          </View>
           {userProfile?.phone ? (
             <Text className="user-info-name">
               {maskPhoneNumber(String(userProfile?.phone))}

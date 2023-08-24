@@ -3,25 +3,21 @@ import { SearchBar, Grid } from "@nutui/nutui-react-taro";
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { getGoodsList } from "@/api";
-import { useRequest, useDebounceFn } from "ahooks";
-import { debounce } from "lodash-es";
+import { useRequest } from "ahooks";
+import { debounce } from "@/utils/tool";
 import GoodItem from "./GoodItem";
 import "./index.scss";
 
 const Index = () => {
   const [name, setName] = useState<string>("");
+
   const { data }: any = useRequest(() => getGoodsList({ name }), {
     refreshDeps: [name],
   });
-  // const handleSearch = debounce((value) => {
-  //   console.log(233);
-  //   setName(value);
-  // }, 300);
 
-  const handleSearch = (value) => {
-    console.log(233);
+  const handleSearch = debounce((value) => {
     setName(value);
-  };
+  }, 300);
 
   const handleClick = (id) => {
     Taro.navigateTo({
@@ -32,6 +28,7 @@ const Index = () => {
   return (
     <View className="home">
       <SearchBar
+        onClear={() => setName("")}
         className="search-bar"
         placeholder="请输入关键字"
         onChange={handleSearch}
