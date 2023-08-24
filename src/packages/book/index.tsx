@@ -7,6 +7,7 @@ import { useRequest } from "ahooks";
 import { getAddressList } from "@/api/address";
 import { postOrderAppointment } from "@/api/order";
 import TimeSelectModal from "./TimeSelectModal";
+import ConfirmModal from "@/components/ConfirmModal";
 import location from "@/assets/user/location.svg";
 import { Check } from "@nutui/icons-react-taro";
 import { formatLocation } from "@/utils/tool";
@@ -19,8 +20,13 @@ const Book = () => {
   const { runAsync } = useRequest(postOrderAppointment, {
     manual: true,
   });
+
   const [address, setAddress] = useState<any>({});
   const [visible, setVisible] = useState<boolean>(false);
+
+  // 新增tip弹窗提示
+  const [tipModalVisible, setTipModalVisible] = useState<boolean>(false);
+
   const [appointmentDate, setAppointmentDate] = useState<string>("");
   const [appointmentTime, setAppointmentTime] = useState<string>("");
   const list = useMemo(() => {
@@ -133,6 +139,14 @@ const Book = () => {
         onClose={() => setVisible(false)}
       />
       <Dialog id="tip" />
+      <ConfirmModal
+        visible={visible}
+        title="提示"
+        content="具体上门服务时间以工程师电话预约为准"
+        onConfirm={() => {
+          Dialog.close("tip");
+        }}
+      />
     </View>
   );
 };
