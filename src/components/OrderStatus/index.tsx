@@ -30,31 +30,31 @@ const OrderStatus = ({ status }) => {
     },
     204: {
       status: "服务中",
-      tip: "订单正在服务中",
+      tip: "",
       icon: status_service,
     },
     301: {
       status: "退款中",
-      tip: "请耐心等待",
+      tip: "",
       icon: status_service,
     },
     //退款完成
     302: {
       status: "退款完成",
-      tip: "订单退款已完成",
-      icon: status_service,
+      tip: "",
+      icon: status_finish,
     },
     //退款失败
     303: {
       status: "退款失败",
-      tip: "订单退款失败",
+      tip: "",
       icon: status_pay,
     },
     //已取消
     401: {
       status: "已取消",
-      tip: "订单已取消",
-      icon: status_service,
+      tip: "",
+      icon: status_pay,
     },
   };
   return (

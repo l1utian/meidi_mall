@@ -6,6 +6,7 @@ import OrderItem from "@/components/OrderItem";
 import { useRequest } from "ahooks";
 import { getOrderList, postOrderContinuePay } from "@/api/order";
 import useLoading from "@/hooks/useLoading";
+import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
 import "./index.scss";
 
@@ -14,6 +15,7 @@ const OrderList = () => {
   // 201 待预约
   // 202 待服务
   // 203 已完成
+  // 204 服务中
   // 301 退款中
   // 302 退款完成
   // 303 退款失败
@@ -24,14 +26,23 @@ const OrderList = () => {
   const tabs = [
     { title: "全部订单", key: "0", orderStatus: "" },
     { title: "待支付", key: "1", orderStatus: "101" },
-    { title: "服务中", key: "2", orderStatus: "201" },
-    { title: "退款", key: "3", orderStatus: "301" },
+    { title: "服务中", key: "2", orderStatus: "203" },
+    { title: "退款", key: "3" },
   ];
   const [activeTab, setActiveTab] = useState<any>(type || "0");
-  const { data, loading }: any = useRequest(
+  const [visible, setVisible] = useState<boolean>(false);
+  const {
+    data,
+    loading,
+    runAsync: getOrderListRun,
+  }: any = useRequest(
     () =>
       getOrderList({
-        orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
+        orderStatus:
+          activeTab === "3"
+            ? ""
+            : tabs.find((v) => v.key === activeTab)?.orderStatus,
+        refund: activeTab === "3" ? 1 : "",
       }),
     {
       refreshDeps: [activeTab],
@@ -61,6 +72,10 @@ const OrderList = () => {
               outOrderNo: order.outOrderNo,
               success(res) {
                 console.log(res);
+                getOrderListRun({
+                  orderStatus: tabs.find((v) => v.key === activeTab)
+                    ?.orderStatus,
+                });
               },
               fail(err) {
                 console.log(err);
@@ -83,6 +98,7 @@ const OrderList = () => {
         break;
       // 确认完成
       case "confirm":
+        setVisible(true);
         break;
       default:
         break;
@@ -107,6 +123,13 @@ const OrderList = () => {
       >
         {tabs.map((v) => (
           <Tabs.TabPane title={v.title} key={v.key}>
+            <ConfirmModal
+              visible={visible}
+              content="确认服务已完成吗？"
+              title="确认"
+              onConfirm={console.log}
+              onCancel={() => setVisible(false)}
+            />
             {data?.data && data?.data.length ? (
               data.data.map((v, i) => (
                 <OrderItem
