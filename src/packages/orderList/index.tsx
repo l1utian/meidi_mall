@@ -115,6 +115,13 @@ const OrderList = () => {
 
   return (
     <View className="orderList">
+      <ConfirmModal
+        visible={visible}
+        content="确认服务已完成吗？"
+        title="确认"
+        onConfirm={console.log}
+        onCancel={() => setVisible(false)}
+      />
       <Tabs
         value={activeTab}
         onChange={(value) => {
@@ -123,13 +130,6 @@ const OrderList = () => {
       >
         {tabs.map((v) => (
           <Tabs.TabPane title={v.title} key={v.key}>
-            <ConfirmModal
-              visible={visible}
-              content="确认服务已完成吗？"
-              title="确认"
-              onConfirm={console.log}
-              onCancel={() => setVisible(false)}
-            />
             {data?.data && data?.data.length ? (
               data.data.map((v, i) => (
                 <OrderItem
