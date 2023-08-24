@@ -4,7 +4,11 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
 import OrderItem from "@/components/OrderItem";
 import { useRequest } from "ahooks";
-import { getOrderList, postOrderContinuePay } from "@/api/order";
+import {
+  getOrderList,
+  postOrderContinuePay,
+  postOrderConfirmOrder,
+} from "@/api/order";
 import useLoading from "@/hooks/useLoading";
 import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
@@ -29,6 +33,7 @@ const OrderList = () => {
     { title: "服务中", key: "2", orderStatus: "203" },
     { title: "退款", key: "3" },
   ];
+  const [currentOrder, setCurrentOrder] = useState<any>({});
   const [activeTab, setActiveTab] = useState<any>(type || "0");
   const [visible, setVisible] = useState<boolean>(false);
   const {
@@ -52,7 +57,11 @@ const OrderList = () => {
   const { runAsync } = useRequest(postOrderContinuePay, {
     manual: true,
   });
+  const { runAsync: confirmRun } = useRequest(postOrderConfirmOrder, {
+    manual: true,
+  });
   const handleClick = (key, order) => {
+    setCurrentOrder(order);
     switch (key) {
       // 继续支付
       case "continuePay":
@@ -113,13 +122,23 @@ const OrderList = () => {
   // 页面加载时显示 loading
   useLoading(loading);
 
+  const handleConfirm = () => {
+    confirmRun({
+      outOrderNo: currentOrder?.outOrderNo,
+    }).then((res) => {
+      if (res.code === 200) {
+        getOrderListRun();
+        setVisible(false);
+      }
+    });
+  };
   return (
     <View className="orderList">
       <ConfirmModal
         visible={visible}
         content="确认服务已完成吗？"
         title="确认"
-        onConfirm={console.log}
+        onConfirm={handleConfirm}
         onCancel={() => setVisible(false)}
       />
       <Tabs
