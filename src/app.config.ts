@@ -86,6 +86,12 @@ export default defineAppConfig({
       name: "售后/退款",
       independent: false,
     },
+    {
+      root: "packages/chooseReason",
+      pages: ["index"],
+      name: "选择退款原因",
+      independent: false,
+    },
   ],
   window: {
     backgroundTextStyle: "light",
