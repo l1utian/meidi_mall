@@ -5,16 +5,17 @@ import {
   Form,
   Button,
 } from "@nutui/nutui-react-taro";
+import { useState } from "react";
 import { View, Image } from "@tarojs/components";
-import Taro, { useRouter, useDidShow } from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import top from "@/assets/public/top.svg";
 import { data } from "./data";
 import "./index.scss";
 
 const ChooseReason = () => {
-  const router = useRouter();
+  const form: any = Form.useForm();
   const handleChange = (value) => {
-    if (!value?.reason && !value?.remark) {
+    if (!value?.reason && !value?.other) {
       Taro.showToast({
         icon: "none",
         title: "请选择退款原因",
@@ -22,14 +23,33 @@ const ChooseReason = () => {
       });
       return;
     }
-    console.log(router);
+    Taro.setStorage({
+      key: "refund",
+      data: {
+        reason:
+          value?.reason && value?.reason.length ? value?.reason.join(";") : "",
+        other: value?.other || "",
+      },
+    });
+    Taro.navigateBack({
+      delta: 1,
+    });
   };
-  useDidShow(() => {
-    console.log(Taro.getCurrentInstance());
-  });
+  //   useDidShow(() => {
+  //     Taro.getStorage({
+  //       key: "refund",
+  //       success(result) {
+  //         form?.setFieldsValue({
+  //           ...result.data,
+  //           reason: result.data.split(";"),
+  //         });
+  //       },
+  //     });
+  //   });
   return (
     <View className="choose-reason">
       <Form
+        // form={form}
         onFinish={handleChange}
         footer={
           <View className="choose-reason-bottom">
@@ -58,7 +78,7 @@ const ChooseReason = () => {
                   </Checkbox.Group>
                 </Form.Item>
               ) : (
-                <Form.Item name="remark">
+                <Form.Item name="other">
                   <TextArea />
                 </Form.Item>
               )}

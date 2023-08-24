@@ -161,13 +161,18 @@ const OrderList = () => {
           </View>
         </View>
       </View>
-      <View className="orderDetail-bottom">
-        <ButtonGroup
-          onClick={handleClick}
-          size="normal"
-          status={data?.data.orderStatus}
-        />
-      </View>
+      {(data?.data.orderStatus === 101 ||
+        data?.data.orderStatus === 201 ||
+        data?.data.orderStatus === 202 ||
+        data?.data.orderStatus === 203) && (
+        <View className="orderDetail-bottom">
+          <ButtonGroup
+            onClick={handleClick}
+            size="normal"
+            status={data?.data.orderStatus}
+          />
+        </View>
+      )}
     </View>
   );
 };

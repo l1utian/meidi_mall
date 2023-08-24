@@ -78,9 +78,14 @@
   &-selected-right {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    width: 80%;
     &-text {
       font-size: 28px;
       color: #999;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     &-img {
       width: 24px;
