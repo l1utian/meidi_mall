@@ -5,6 +5,7 @@ import AddressItem from "@/components/AddressItem";
 import { Button } from "@nutui/nutui-react-taro";
 import { postAddressRemove, getAddressList } from "@/api/address";
 import { useRequest } from "ahooks";
+import useLoading from "@/hooks/useLoading";
 import { formatLocation } from "@/utils/tool";
 import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
@@ -65,15 +66,8 @@ function AddressList() {
     }
   };
 
-  useEffect(() => {
-    if (loading) {
-      Taro.showLoading({
-        title: "加载中",
-      });
-    } else {
-      Taro.hideLoading();
-    }
-  }, [loading]);
+  // 页面加载时显示 loading
+  useLoading(loading);
 
   return (
     <View className="address-list-container">

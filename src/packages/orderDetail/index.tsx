@@ -4,6 +4,7 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { getOrderInfo, postOrderContinuePay } from "@/api/order";
 import { useRequest } from "ahooks";
 import OrderStatus from "@/components/OrderStatus";
+import useLoading from "@/hooks/useLoading";
 import location from "@/assets/user/location.svg";
 import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
@@ -14,9 +15,13 @@ const OrderList = () => {
   const { data } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
   });
-  const { runAsync } = useRequest(postOrderContinuePay, {
+  const { runAsync, loading } = useRequest(postOrderContinuePay, {
     manual: true,
   });
+
+  // 页面加载时显示 loading
+  useLoading(loading);
+
   const handleClick = (key) => {
     switch (key) {
       // 继续支付

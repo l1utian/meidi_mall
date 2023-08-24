@@ -10,6 +10,7 @@ const GoodItem = ({ src, name, retailPrice, counterPrice }) => {
         src={src}
         mode="widthFix"
         radius={4}
+        fadeIn
         lazyLoad
       />
       <Text className="goodItem-name">{name}</Text>

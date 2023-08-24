@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
 import OrderItem from "@/components/OrderItem";
 import { useRequest } from "ahooks";
 import { getOrderList, postOrderContinuePay } from "@/api/order";
+import useLoading from "@/hooks/useLoading";
 import Empty from "./Empty";
 import "./index.scss";
 
@@ -93,15 +94,8 @@ const OrderList = () => {
     });
   };
 
-  useEffect(() => {
-    if (loading) {
-      Taro.showLoading({
-        title: "加载中",
-      });
-    } else {
-      Taro.hideLoading();
-    }
-  }, [loading]);
+  // 页面加载时显示 loading
+  useLoading(loading);
 
   return (
     <View className="orderList">

@@ -18,7 +18,7 @@ import { maskPhoneNumber } from "@/utils/tool";
 import { CUSTOMER_SERVICE_DY_ID } from "@/config/base";
 
 function User() {
-  const { userProfile, isLoggedIn, setUserProfile } = userStore();
+  const { userProfile, isLoggedIn, removeUserProfile } = userStore();
   const login = () => {
     if (!isLoggedIn()) {
       Taro.navigateTo({
@@ -34,7 +34,7 @@ function User() {
     Taro.removeStorage({
       key: "token",
     });
-    setUserProfile(null);
+    removeUserProfile();
   };
 
   const handleClick = (key) => {

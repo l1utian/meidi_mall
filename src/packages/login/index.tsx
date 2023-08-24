@@ -93,11 +93,14 @@ const Login = () => {
           return;
         }
         Taro.hideLoading();
-        Taro.showToast({
-          title: errMsg,
-          icon: "none",
-          duration: 2000,
-        });
+
+        errMsg &&
+          typeof errMsg === "string" &&
+          Taro.showToast({
+            title: errMsg,
+            icon: "none",
+            duration: 2000,
+          });
       });
   };
 

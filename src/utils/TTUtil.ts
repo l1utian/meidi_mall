@@ -65,9 +65,13 @@ export const loginAndGetPhoneNumber = (e) => {
                 });
               }
             })
-            .catch(() => {
+            .catch((err) => {
+              // 用户未授权
+              if (err === "getPhoneNumber:fail auth deny") {
+                return;
+              }
               reject({
-                errMsg: "",
+                errMsg: "登录发生未知错误，请重试",
               });
             });
         }

@@ -43,7 +43,7 @@ const request = (
           // 其他各种各样的状态码统统返回
           if (res.data.msg) {
             Taro.showToast({
-              title: res.data.msg,
+              title: res.data.msg || "请求失败",
               icon: "none",
               duration: 2000,
             });

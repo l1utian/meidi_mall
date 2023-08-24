@@ -1,6 +1,6 @@
 import { CUSTOMER_SERVICE_DY_ID } from "@/config/base";
 import useRequireLogin from "@/hooks/useRequireLogin";
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "@tarojs/taro";
 import { View, Text, Button as TaroButton } from "@tarojs/components";
 import {
@@ -14,14 +14,18 @@ import right from "@/assets/public/right.svg";
 import Taro from "@tarojs/taro";
 import message from "@/assets/public/message.svg";
 import { getGoodsInfo } from "@/api/index";
+import { useRequest } from "ahooks";
 import { baseUrl } from "@/utils/request";
 import GoodModal from "./GoodModal";
+import useLoading from "@/hooks/useLoading";
 import "./index.scss";
 
 // 给所有 img 标签添加 mode
 (Taro as any).options.html.transformElement = (el) => {
   if (el.nodeName === "image") {
     el.setAttribute("mode", "widthFix");
+    el.setAttribute("lazyLoad", true);
+    el.setAttribute("fadeIn", true);
   }
   return el;
 };
@@ -32,16 +36,20 @@ function Detail() {
 
   const { params } = useRouter();
   const { id } = params;
-  const [visible, setVisible] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<any>({});
-  const [goodDetail, setGoodDetail] = useState<any>({});
+  const [visible, setVisible] = useState<boolean>(false);
 
-  useEffect(() => {
-    getGoodsInfo({ id }).then((res: any) => {
-      setGoodDetail(res.data);
+  const { loading, data } = useRequest(() => getGoodsInfo({ id }), {
+    refreshDeps: [id],
+    onSuccess: (res) => {
       setSelectedProduct(res.data.goodsProductList[0]);
-    });
-  }, [id]);
+    },
+  });
+
+  // 页面加载时显示 loading
+  useLoading(loading);
+
+  const goodDetail = useMemo(() => data?.data || {}, [data]);
 
   const handleClose = (selected) => {
     setVisible(false);
