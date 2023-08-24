@@ -79,7 +79,7 @@ const ChooseReason = () => {
                 </Form.Item>
               ) : (
                 <Form.Item name="other">
-                  <TextArea />
+                  <TextArea maxLength={200} />
                 </Form.Item>
               )}
             </Collapse.Item>

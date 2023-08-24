@@ -1,6 +1,29 @@
 import Taro from "@tarojs/taro";
+import { apiAppId, apiAppKey } from "@/config/base";
+import CryptoJS from "crypto-js";
 
 export const baseUrl = "http://nj.cirscn.com:15581/h5api";
+
+// 计算get请求的加密数据
+export const getGetSign = () => {
+  const timestamp = new Date().getTime();
+  const siginOrigin = `appid=${apiAppId}&appkey=${apiAppKey}&timestamp=${timestamp}&req=`;
+  return {
+    timestamp,
+    sign: CryptoJS.MD5(siginOrigin).toString()?.toUpperCase(),
+  };
+};
+// 计算post请求的加密数据
+export const getPostSign = (data: any) => {
+  const timestamp = new Date().getTime();
+  const siginOrigin = `appid=${apiAppId}&appkey=${apiAppKey}&timestamp=${timestamp}&req=${JSON.stringify(
+    data
+  )}`;
+  return {
+    timestamp,
+    sign: CryptoJS.MD5(siginOrigin).toString()?.toUpperCase(),
+  };
+};
 
 export const REG_CDN_FILE_ORIGIN = (url: string) => {
   const reg = /^http.*/;
@@ -18,6 +41,13 @@ const request = (
   },
   isFormData?: boolean
 ) => {
+  let sign;
+  if (options.method === "GET") {
+    sign = getGetSign();
+  } else if (options.method === "POST") {
+    sign = getPostSign(options.data);
+  }
+
   return new Promise((resolve, reject) => {
     const token = Taro.getStorageSync("token");
     Taro.request({
@@ -31,6 +61,9 @@ const request = (
           : "application/json;charset=UTF-8",
         Authorization: token,
         token: token,
+        appid: apiAppId,
+        timestamp: sign.timestamp,
+        sign: sign.sign,
       },
       success(res: any) {
         if (res.data.code === 200) {
