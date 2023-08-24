@@ -1,0 +1,118 @@
+.refund {
+  background-color: #f8f8f8;
+  height: 100vh;
+  color: #333;
+  font-size: 28px;
+  padding: 20px 24px;
+  padding-bottom: 100px;
+  &-good {
+    display: flex;
+    background-color: #fff;
+    padding: 30px 24px;
+    margin-bottom: 20px;
+    &-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 8px;
+      margin-right: 20px;
+    }
+    &-detail {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    &-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &-name {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    &-num,
+    &-label {
+      font-size: 24px;
+      color: rgba(51, 51, 51, 0.5);
+    }
+    &-num {
+      margin-right: 10px;
+    }
+    &-symbol {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    &-price {
+      font-size: 32px;
+      font-weight: bold;
+    }
+  }
+  &-info {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    &-label {
+      width: 30%;
+    }
+    &-content {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      &-copy {
+        width: 64px;
+        height: 32px;
+        font-size: 20px;
+        margin-left: 12px;
+        padding: 0;
+      }
+    }
+
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 68px;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+    }
+  }
+  &-selected-right {
+    display: flex;
+    align-items: center;
+    &-text {
+      font-size: 28px;
+      color: #999;
+    }
+    &-img {
+      width: 24px;
+      margin-left: 16px;
+    }
+  }
+  &-num {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    &-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &-subLabel {
+      color: #999999;
+      font-size: 24px;
+    }
+  }
+}
