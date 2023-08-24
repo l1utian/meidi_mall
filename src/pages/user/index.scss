@@ -100,3 +100,15 @@
   border-radius: 50%;
   object-fit: cover;
 }
+.user-hide-button {
+  position: relative;
+  padding: 0;
+  line-height: auto;
+  background-color: transparent;
+  margin: 0;
+  border: none;
+
+  &::after {
+    border: none !important;
+  }
+}

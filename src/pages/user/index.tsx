@@ -1,4 +1,4 @@
-import { View, Image, Text } from "@tarojs/components";
+import { View, Image, Text, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { CellGroup, Cell, Grid, GridItem } from "@nutui/nutui-react-taro";
 import { userStore } from "@/store/user";
@@ -15,6 +15,7 @@ import bg from "@/assets/user/bg.png";
 import logo from "@/assets/public/logo.png";
 import "./index.scss";
 import { maskPhoneNumber } from "@/utils/tool";
+import { CUSTOMER_SERVICE_DY_ID } from "@/config/base";
 
 function User() {
   const { userProfile, isLoggedIn, setUserProfile } = userStore();
@@ -114,17 +115,24 @@ function User() {
           }
           onClick={() => handleClick("address")}
         />
-        <Cell
-          title={
-            <View className="user-group-title">
-              <Image src={kefu} className="user-group-icon" mode="widthFix" />
-              <Text className="user-group-text">联系客服</Text>
-            </View>
-          }
-          extra={
-            <Image src={right} className="user-right-icon" mode="widthFix" />
-          }
-        />
+        <Button
+          className="user-hide-button"
+          open-type="im"
+          dataImId={CUSTOMER_SERVICE_DY_ID}
+        >
+          <Cell
+            title={
+              <View className="user-group-title">
+                <Image src={kefu} className="user-group-icon" mode="widthFix" />
+                <Text className="user-group-text">联系客服</Text>
+              </View>
+            }
+            extra={
+              <Image src={right} className="user-right-icon" mode="widthFix" />
+            }
+          />
+        </Button>
+
         <Cell
           onClick={() => {
             Taro.navigateTo({
