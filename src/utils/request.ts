@@ -74,7 +74,7 @@ const request = (
           resolve(null);
         } else {
           // 其他各种各样的状态码统统返回
-          if (res.data.msg) {
+          if (res?.data?.msg) {
             Taro.showToast({
               title: res.data.msg || "请求失败",
               icon: "none",

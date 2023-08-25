@@ -17,7 +17,6 @@ const useRequireLogin = () => {
       const returnUrl = encodeURIComponent(
         router.path + (queryParams ? `?${queryParams}` : "")
       );
-      console.log("returnUrl", returnUrl);
       router
         ? Taro.redirectTo({
             url: `/packages/login/index?returnUrl=${returnUrl}`,

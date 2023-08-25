@@ -37,10 +37,15 @@ function EditAddress() {
   useRequest(() => getAddressInfo(id), {
     refreshDeps: [id],
     onSuccess(res) {
-      console.log(res, id);
       if (res?.code === 200 && res?.data) {
         setFormState({
-          ...res?.data,
+          name: res?.data?.name,
+          tel: res?.data?.tel,
+          province: res?.data?.province,
+          city: res?.data?.city,
+          county: res?.data?.county,
+          addressDetail: res?.data?.addressDetail,
+          isDefault: res?.data?.isDefault,
         });
       }
     },
@@ -67,14 +72,9 @@ function EditAddress() {
             ...formState,
             id,
           }).then((res) => {
+            console.log(res);
             if (res?.code === 200) {
-              Taro.navigateTo({
-                url: "/packages/addressList/index",
-              });
-            } else {
-              Taro.showToast({
-                title: res.msg || "地址修改失败",
-              });
+              Taro.navigateBack();
             }
           });
         }

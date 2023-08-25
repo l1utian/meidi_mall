@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import Taro, { useRouter } from "@tarojs/taro";
+import Taro, { useRouter, useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import AddressItem from "@/components/AddressItem";
 import { Button } from "@nutui/nutui-react-taro";
@@ -17,9 +17,16 @@ function AddressList() {
   useRequireLogin();
   const { params } = useRouter();
   const { fromPage } = params || {};
+
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState(null);
-  const { data, runAsync, loading } = useRequest(getAddressList);
+  const { data, runAsync, loading } = useRequest(getAddressList, {
+    manual: true,
+  });
+
+  useDidShow(() => {
+    runAsync();
+  });
 
   const { runAsync: removeRun, loading: removeLoading } = useRequest(
     postAddressRemove,
