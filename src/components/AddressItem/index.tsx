@@ -14,14 +14,18 @@ type Props = {
 interface IProps {
   info: Props;
   onClick?: any;
+  onSelect?: any;
 }
-const AddressItem = ({ info, onClick }: IProps) => {
+const AddressItem = ({ info, onClick, onSelect }: IProps) => {
   const { name, tel, location, isDefault, id } = info || {};
   const handleClick = (key) => {
     onClick && onClick({ key, id });
   };
+  const handleSelect = () => {
+    onSelect && onSelect();
+  };
   return (
-    <View className="address-item">
+    <View className="address-item" onClick={handleSelect}>
       <Cell className="address-item-cell">
         <View className="address-item-top">
           <Text className="address-item-name">{name}</Text>
@@ -37,14 +41,20 @@ const AddressItem = ({ info, onClick }: IProps) => {
             <View
               className="address-item-icon"
               style={{ marginRight: "16px" }}
-              onClick={() => handleClick("edit")}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClick("edit");
+              }}
             >
               <Image src={edit} mode="widthFix" style={{ width: "16px" }} />
               <Text>编辑</Text>
             </View>
             <View
               className="address-item-icon"
-              onClick={() => handleClick("delete")}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClick("delete");
+              }}
             >
               <Image src={del} mode="widthFix" style={{ width: "16px" }} />
               <Text>删除</Text>

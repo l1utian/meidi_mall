@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import AddressItem from "@/components/AddressItem";
 import { Button } from "@nutui/nutui-react-taro";
@@ -12,6 +12,8 @@ import Empty from "./Empty";
 import "./index.scss";
 
 function AddressList() {
+  const { params } = useRouter();
+  const { fromPage } = params || {};
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState(null);
   const { data, runAsync, loading } = useRequest(getAddressList);
@@ -69,11 +71,22 @@ function AddressList() {
   // 页面加载时显示 loading
   useLoading(loading);
 
+  const handleSelect = (v) => {
+    if (fromPage === "book") {
+      Taro.setStorageSync("address", v);
+      Taro.navigateBack();
+    }
+  };
   return (
     <View className="address-list-container">
       {list?.length ? (
         list?.map((v, i) => (
-          <AddressItem info={v} key={i} onClick={handleClick} />
+          <AddressItem
+            info={v}
+            key={i}
+            onClick={handleClick}
+            onSelect={() => handleSelect(v)}
+          />
         ))
       ) : (
         <View className="address-list-empty">

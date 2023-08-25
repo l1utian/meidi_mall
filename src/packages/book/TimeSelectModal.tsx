@@ -35,7 +35,7 @@ const GoodModal = ({ visible, onConfirm, onClose }) => {
       visible={visible}
       options={options}
       style={{
-        height: "30%",
+        minHeight: "30%",
       }}
       onSelect={handleSelect}
       onTimeChange={onClose}

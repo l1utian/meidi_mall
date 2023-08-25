@@ -5,7 +5,6 @@ import {
   Form,
   Button,
 } from "@nutui/nutui-react-taro";
-import { useState } from "react";
 import { View, Image } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
 import top from "@/assets/public/top.svg";
@@ -23,29 +22,16 @@ const ChooseReason = () => {
       });
       return;
     }
-    Taro.setStorage({
-      key: "refund",
-      data: {
-        reason:
-          value?.reason && value?.reason.length ? value?.reason.join(";") : "",
-        other: value?.other || "",
-      },
+    Taro.setStorageSync("refund", {
+      reason:
+        value?.reason && value?.reason.length ? value?.reason.join(";") : "",
+      other: value?.other || "",
     });
     Taro.navigateBack({
       delta: 1,
     });
   };
-  //   useDidShow(() => {
-  //     Taro.getStorage({
-  //       key: "refund",
-  //       success(result) {
-  //         form?.setFieldsValue({
-  //           ...result.data,
-  //           reason: result.data.split(";"),
-  //         });
-  //       },
-  //     });
-  //   });
+
   return (
     <View className="choose-reason">
       <Form

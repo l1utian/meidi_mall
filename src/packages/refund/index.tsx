@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { View, Image, Text } from "@tarojs/components";
-import Taro, { useRouter, useDidShow, useDidHide } from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { getOrderInfo, postOrderRefund } from "@/api/order";
 import { useRequest } from "ahooks";
 import { InputNumber, TextArea, Button } from "@nutui/nutui-react-taro";
 import { orderStatus } from "@/constants/order";
 import right from "@/assets/public/right.svg";
+import ChooseModal from "./ChooseModal";
 import "./index.scss";
 
 const Refund = () => {
   const { params } = useRouter();
   const { outOrderNo } = params;
-  const [refundType, setRefundType] = useState<string>("");
+  const [refundType, setRefundType] = useState<string[]>([]);
+  const [other, setOther] = useState<string>("");
+  const [visible, setVisible] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const { data } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
@@ -23,24 +26,9 @@ const Refund = () => {
     setRefundNum(data?.data.number);
   }, [data]);
 
-  // 从本地缓存中获取退款理由
-  useDidShow(() => {
-    Taro.getStorage({
-      key: "refund",
-      success(result) {
-        setRefundType(result?.data.reason + result?.data?.other);
-      },
-    });
-  });
-
-  //清楚本地缓存
-  useDidHide(() => {
-    Taro.removeStorage({ key: "refund" });
-  });
-
   // 提交
   const handleSubmit = () => {
-    if (!refundType) {
+    if (!refundType && !other) {
       Taro.showToast({
         title: "请选择退款原因",
         icon: "none",
@@ -61,8 +49,20 @@ const Refund = () => {
       }
     });
   };
+  const handleConfirm = ({ reason, textArea }) => {
+    setVisible(false);
+    setOther(textArea);
+    setRefundType(reason);
+  };
   return (
     <View className="refund">
+      <ChooseModal
+        other={other}
+        refundType={refundType}
+        visible={visible}
+        onClose={() => setVisible(false)}
+        onConfirm={handleConfirm}
+      />
       <View className="refund-good">
         <Image src={data?.data.picUrl} className="refund-good-img" />
         <View className="refund-good-detail">
@@ -89,14 +89,10 @@ const Refund = () => {
           <View className="refund-info-label">退款原因</View>
           <View
             className="refund-selected-right"
-            onClick={() =>
-              Taro.navigateTo({
-                url: `/packages/chooseReason/index`,
-              })
-            }
+            onClick={() => setVisible(true)}
           >
             <View className="refund-selected-right-text">
-              {refundType || "请选择"}
+              {[...refundType, other].join(";") || "请选择"}
             </View>
             <Image
               src={right}

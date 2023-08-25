@@ -8,7 +8,7 @@
     "disablePrivate": false,
     "condition": {
         "miniprogram": {
-            "current": 1692534797392,
+            "current": 1692926813424,
             "list": [
                 {
                     "id": 1692171815804,
@@ -81,10 +81,10 @@
                     "mockUpdateType": "Noupdate"
                 },
                 {
-                    "id": 1692512195327,
+                    "id": 1692884731851,
                     "name": "packages/book/index",
                     "pathName": "packages/book/index",
-                    "query": "",
+                    "query": "outOrderNo=OD20230822162338435482",
                     "scene": "990001",
                     "launchFrom": "scan",
                     "location": "qr_code",
@@ -121,14 +121,15 @@
                     "mockUpdateType": "Noupdate"
                 },
                 {
-                    "id": 1692863562092,
+                    "id": 1692926813424,
                     "name": "packages/refund/index",
                     "pathName": "packages/refund/index",
-                    "query": "outOrderNo=OD20230822160248144146",
+                    "query": "outOrderNo=OD20230822161820327042",
                     "scene": "990001",
                     "launchFrom": "scan",
                     "location": "qr_code",
-                    "mockUpdateType": "Noupdate"
+                    "mockUpdateType": "Noupdate",
+                    "addType": "manual"
                 },
                 {
                     "id": 1692844794693,
