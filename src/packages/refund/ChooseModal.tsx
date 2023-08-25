@@ -54,7 +54,7 @@ const ChooseModal = ({ visible, onClose, onConfirm, other, refundType }) => {
                   {v.children.map((item, index) => (
                     <Checkbox
                       checked={reason.some((v) => v === item.title)}
-                      labelPosition="right"
+                      labelPosition="left"
                       value={item.title}
                       key={index}
                       onChange={(value) => handleChange(value, item?.title)}

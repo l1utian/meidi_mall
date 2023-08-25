@@ -8,7 +8,7 @@
     "disablePrivate": false,
     "condition": {
         "miniprogram": {
-            "current": 1692926813424,
+            "current": 1692941140662,
             "list": [
                 {
                     "id": 1692171815804,
@@ -121,10 +121,10 @@
                     "mockUpdateType": "Noupdate"
                 },
                 {
-                    "id": 1692926813424,
+                    "id": 1692941140662,
                     "name": "packages/refund/index",
                     "pathName": "packages/refund/index",
-                    "query": "outOrderNo=OD20230822161820327042",
+                    "query": "outOrderNo=OD20230822155202438491",
                     "scene": "990001",
                     "launchFrom": "scan",
                     "location": "qr_code",

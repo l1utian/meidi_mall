@@ -28,7 +28,7 @@ const Refund = () => {
 
   // 提交
   const handleSubmit = () => {
-    if (!refundType && !other) {
+    if (!refundType && other === "") {
       Taro.showToast({
         title: "请选择退款原因",
         icon: "none",
@@ -37,7 +37,7 @@ const Refund = () => {
       return;
     }
     runAsync({
-      refundType,
+      refundType: [...refundType, other].join(";"),
       message,
       refundNum,
       outOrderNo,
