@@ -16,6 +16,6 @@ export const navigateToPage = (url: string): void => {
   if (isTabPage(url)) {
     Taro.switchTab({ url });
   } else {
-    Taro.navigateTo({ url });
+    Taro.redirectTo({ url });
   }
 };
