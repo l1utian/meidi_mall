@@ -127,7 +127,22 @@ const OrderList = () => {
             <View className="orderDetail-info-label">订单编号</View>
             <View className="orderDetail-info-content">
               <Text>{data?.data.outOrderNo}</Text>
-              <Button size="small" className="orderDetail-info-content-copy">
+              <Button
+                size="small"
+                className="orderDetail-info-content-copy"
+                onClick={() => {
+                  Taro.setClipboardData({
+                    data: data?.data.outOrderNo,
+                    success() {
+                      Taro?.showToast({
+                        title: "订单编号已复制",
+                        icon: "success",
+                        duration: 1000,
+                      });
+                    },
+                  });
+                }}
+              >
                 复制
               </Button>
             </View>
