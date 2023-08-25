@@ -51,9 +51,9 @@ const OrderItem = ({ info, onAction, onClick }) => {
       <Divider className="orderItem-divider" style={{ color: "" }} />
       <View className="orderItem-bottom">
         <View>
-          {info.orderStatus !== 201 && info.orderStatus !== 101 ? (
+          {info.appointmentDate && info.appointmentTime ? (
             <Text className="orderItem-bottom-time">
-              上门时间：{info.appointmentDate}
+              {`上门时间：${info.appointmentDate} ${info.appointmentTime}`}
             </Text>
           ) : null}
         </View>

@@ -98,30 +98,37 @@ const OrderList = () => {
         onRefresh={refresh}
       />
       <View className="orderDetail-content">
-        {data?.data.orderStatus !== 101 && data?.data.orderStatus !== 201 && (
-          <View className="orderDetail-address">
-            <Image
-              src={location}
-              mode="widthFix"
-              className="orderDetail-address-img"
-            />
-            <View className="orderDetail-address-info">
-              <View className="orderDetail-address-top">
-                <Text className="orderDetail-address-name">
-                  {data?.data.consignee}
-                </Text>
-                <Text>{data?.data.mobile}</Text>
+        {data?.data.orderStatus !== 101 &&
+          data?.data.orderStatus !== 201 &&
+          data?.data.consignee &&
+          data?.data.mobile &&
+          data?.data.address && (
+            <View className="orderDetail-address">
+              <Image
+                src={location}
+                mode="widthFix"
+                className="orderDetail-address-img"
+              />
+              <View className="orderDetail-address-info">
+                <View className="orderDetail-address-top">
+                  <Text className="orderDetail-address-name">
+                    {data?.data.consignee}
+                  </Text>
+                  <Text>{data?.data.mobile}</Text>
+                </View>
+                <Text>{data?.data.address}</Text>
               </View>
-              <Text>{data?.data.address}</Text>
             </View>
-          </View>
-        )}
-        {data?.data.orderStatus !== 101 && data?.data.orderStatus !== 201 && (
-          <View className="orderDetail-time">
-            <Text>预约服务时间</Text>
-            <Text>{`${data?.data.appointmentDate} ${data?.data.appointmentTime}`}</Text>
-          </View>
-        )}
+          )}
+        {data?.data.orderStatus !== 101 &&
+          data?.data.orderStatus !== 201 &&
+          data?.data.appointmentDate &&
+          data?.data.appointmentTime && (
+            <View className="orderDetail-time">
+              <Text>预约服务时间</Text>
+              <Text>{`${data?.data.appointmentDate} ${data?.data.appointmentTime}`}</Text>
+            </View>
+          )}
         <View className="orderDetail-good">
           <Image src={data?.data.picUrl} className="orderDetail-good-img" />
           <View className="orderDetail-good-detail">

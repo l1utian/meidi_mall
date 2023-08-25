@@ -22,7 +22,7 @@ const Refund = () => {
   const { data } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
   });
-  const { runAsync } = useRequest(postOrderRefund, { manual: true });
+  const { runAsync, loading } = useRequest(postOrderRefund, { manual: true });
   const [refundNum, setRefundNum] = useState<number>(1);
 
   useEffect(() => {
@@ -46,7 +46,12 @@ const Refund = () => {
       outOrderNo,
     }).then((res) => {
       if (res.code === 200) {
-        Taro.navigateTo({
+        Taro.showToast({
+          title: "提交成功，请耐心等待",
+          icon: "success",
+          duration: 1000,
+        });
+        Taro.redirectTo({
           url: `/packages/orderDetail/index?outOrderNo=${outOrderNo}`,
         });
       }
@@ -138,7 +143,7 @@ const Refund = () => {
         </View>
       </View>
       <View className="refund-bottom">
-        <Button block type="primary" onClick={handleSubmit}>
+        <Button block type="primary" onClick={handleSubmit} loading={loading}>
           提交
         </Button>
       </View>

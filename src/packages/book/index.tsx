@@ -54,6 +54,22 @@ const Book = () => {
   };
 
   const handleSubmit = () => {
+    if (!appointmentDate && !appointmentTime) {
+      Taro.showToast({
+        title: "请选择上门时间",
+        icon: "error",
+        duration: 1000,
+      });
+      return;
+    }
+    if (address && address?.id) {
+      Taro.showToast({
+        title: "请选择地址",
+        icon: "error",
+        duration: 1000,
+      });
+      return;
+    }
     setTipModalVisible(true);
   };
   const handleConfirm = () => {

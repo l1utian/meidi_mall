@@ -42,10 +42,6 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
     //已完成
     203: [
       {
-        text: "退款/售后",
-        key: "refund",
-      },
-      {
         text: "确认服务完成",
         key: "confirm",
         type: "primary",
