@@ -51,7 +51,7 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
         type: "primary",
       },
     ],
-    //服务中
+    //已完成
     204: [],
     //退款中
     301: [],

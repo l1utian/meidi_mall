@@ -24,13 +24,13 @@ const OrderStatus = ({ status }) => {
       icon: status_service,
     },
     203: {
-      status: "已完成",
-      tip: "订单已完成，致力于为您提供更好的服务",
+      status: "服务中",
+      tip: "",
       icon: status_finish,
     },
     204: {
-      status: "服务中",
-      tip: "",
+      status: "已完成",
+      tip: "订单已完成，致力于为您提供更好的服务",
       icon: status_service,
     },
     301: {
