@@ -39,7 +39,7 @@ const Settlement = () => {
                   duration: 1000,
                 });
               }
-              Taro.navigateTo({
+              Taro.redirectTo({
                 url: `/packages/orderDetail/index?outOrderNo=${res.data.outOrderNo}`,
               });
             },

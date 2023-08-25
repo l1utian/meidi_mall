@@ -8,6 +8,7 @@ import "./modal.scss";
 const GoodModal = ({ visible, onClose, productList, selected }) => {
   const [selectedProduct, setSelectedProduct] = useState<any>(selected);
   const handleConfirm = () => {
+    onClose && onClose(selected);
     Taro.navigateTo({
       url: `/packages/settlement/index?url=${selectedProduct.url}&productCode=${selectedProduct.productCode}&productName=${selectedProduct.productName}&retailPrice=${selectedProduct.retailPrice}`,
     });

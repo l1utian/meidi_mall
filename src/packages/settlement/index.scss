@@ -81,6 +81,9 @@
       justify-content: space-between;
       align-items: center;
       padding: 26px 32px;
+      &-label {
+        margin-right: 15px;
+      }
     }
   }
   .settlement-total {
