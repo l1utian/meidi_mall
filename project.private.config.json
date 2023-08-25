@@ -8,7 +8,7 @@
     "disablePrivate": false,
     "condition": {
         "miniprogram": {
-            "current": 1692252864800,
+            "current": 1692952909216,
             "list": [
                 {
                     "id": 1692171815804,
@@ -81,14 +81,15 @@
                     "mockUpdateType": "Noupdate"
                 },
                 {
-                    "id": 1692884731851,
+                    "id": 1692952909216,
                     "name": "packages/book/index",
                     "pathName": "packages/book/index",
-                    "query": "outOrderNo=OD20230822162338435482",
+                    "query": "outOrderNo=OD20230822162356313153",
                     "scene": "990001",
                     "launchFrom": "scan",
                     "location": "qr_code",
-                    "mockUpdateType": "Noupdate"
+                    "mockUpdateType": "Noupdate",
+                    "addType": "manual"
                 },
                 {
                     "id": 1692776657797,

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View } from "@tarojs/components";
-import Taro, { useRouter } from "@tarojs/taro";
+import Taro, { useRouter, useDidShow } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
 import OrderItem from "@/components/OrderItem";
 import { useRequest } from "ahooks";
@@ -56,7 +56,11 @@ const OrderList = () => {
       refreshDeps: [activeTab],
     }
   );
-
+  useDidShow(() => {
+    getOrderListRun({
+      orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
+    });
+  });
   const { runAsync } = useRequest(postOrderContinuePay, {
     manual: true,
   });

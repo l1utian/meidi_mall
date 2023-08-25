@@ -3,6 +3,8 @@ import Taro, { useRouter, useDidShow, useDidHide } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { Button, Dialog } from "@nutui/nutui-react-taro";
 import right from "@/assets/public/right.svg";
+import { isEmpty } from "lodash-es";
+
 import { useRequest } from "ahooks";
 import { getAddressList } from "@/api/address";
 import { postOrderAppointment } from "@/api/order";
@@ -62,7 +64,7 @@ const Book = () => {
       });
       return;
     }
-    if (address && address?.id) {
+    if (!address && !address?.id) {
       Taro.showToast({
         title: "请选择地址",
         icon: "error",
@@ -87,7 +89,7 @@ const Book = () => {
           icon: "success",
           duration: 2000,
         }).then(() => {
-          Taro.navigateTo({
+          Taro.redirectTo({
             url: `/packages/orderDetail/index?outOrderNo=${outOrderNo}`,
           });
         });
@@ -120,7 +122,9 @@ const Book = () => {
               className="book-address-icon"
               mode="widthFix"
             />
-            <Text className="book-address-detail">{address.location}</Text>
+            <Text className="book-address-detail">
+              {address.location || "请填写上门地址"}
+            </Text>
           </View>
           <Image
             src={right}
@@ -129,7 +133,13 @@ const Book = () => {
           />
         </View>
         <View className="book-address-bottom">
-          <View className="book-address-selected">
+          <View
+            className={
+              isEmpty(address)
+                ? "book-address-noSelected"
+                : "book-address-selected"
+            }
+          >
             <Text>上门服务</Text>
             <View className="book-address-selected-icon">
               <Check className="book-address-selected-check" />
