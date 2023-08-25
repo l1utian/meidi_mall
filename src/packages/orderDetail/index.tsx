@@ -9,6 +9,8 @@ import location from "@/assets/user/location.svg";
 import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
+import { useMemo } from "react";
+import { getRemainingMilliseconds } from "@/utils/tool";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -16,7 +18,7 @@ const OrderList = () => {
 
   const { params } = useRouter();
   const { outOrderNo } = params;
-  const { data } = useRequest(() => getOrderInfo({ outOrderNo }), {
+  const { data, refresh } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
   });
   const { runAsync, loading } = useRequest(postOrderContinuePay, {
@@ -25,6 +27,21 @@ const OrderList = () => {
 
   // 页面加载时显示 loading
   useLoading(loading);
+
+  // 剩余的支付有效期
+  const validPayTime = useMemo(() => {
+    if (
+      data?.data.orderStatus === 101 &&
+      data?.data.validTime &&
+      data?.data?.orderTime
+    ) {
+      return getRemainingMilliseconds(
+        data?.data?.orderTime,
+        data?.data.validTime
+      );
+    }
+    return 0;
+  }, [data]);
 
   const handleClick = (key) => {
     switch (key) {
@@ -75,7 +92,11 @@ const OrderList = () => {
   };
   return (
     <View className="orderDetail">
-      <OrderStatus status={data?.data.orderStatus} />
+      <OrderStatus
+        status={data?.data.orderStatus}
+        validPayTime={validPayTime}
+        onRefresh={refresh}
+      />
       <View className="orderDetail-content">
         {data?.data.orderStatus !== 101 && data?.data.orderStatus !== 201 && (
           <View className="orderDetail-address">

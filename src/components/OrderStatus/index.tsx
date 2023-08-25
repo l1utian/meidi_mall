@@ -4,9 +4,16 @@ import status_pay from "@/assets/components/status_pay.svg";
 import status_finish from "@/assets/components/status_finish.svg";
 import status_service from "@/assets/components/status_service.svg";
 import order_bg from "@/assets/components/order_bg.png";
+import { CountDown } from "@nutui/nutui-react-taro";
+
 import "./index.scss";
 
-const OrderStatus = ({ status }) => {
+interface OrderStatusProps {
+  status: number;
+  validPayTime?: number;
+  onRefresh?: any;
+}
+const OrderStatus = ({ status, validPayTime, onRefresh }: OrderStatusProps) => {
   const statusInfo = {
     101: {
       status: "待支付",
@@ -79,7 +86,21 @@ const OrderStatus = ({ status }) => {
         <Text>{statusInfo[status]?.status}</Text>
       </View>
       <View className="order-status-bottom">
-        <Text>{statusInfo[status]?.tip}</Text>
+        {status === 101 ? (
+          <View className="order-status-paying">
+            <Text>请完成支付，</Text>
+
+            <CountDown
+              remainingTime={validPayTime}
+              autoStart={true}
+              onEnd={onRefresh}
+            />
+
+            <Text style={{ marginLeft: 4 }}>后将取消订单</Text>
+          </View>
+        ) : (
+          <Text>{statusInfo[status]?.tip}</Text>
+        )}
       </View>
     </View>
   );
