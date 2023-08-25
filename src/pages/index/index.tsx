@@ -6,12 +6,13 @@ import { getGoodsList } from "@/api";
 import { useRequest } from "ahooks";
 import { debounce } from "@/utils/tool";
 import GoodItem from "./GoodItem";
+import Empty from "./Empty";
 import "./index.scss";
 
 const Index = () => {
   const [name, setName] = useState<string>("");
 
-  const { data }: any = useRequest(() => getGoodsList({ name }), {
+  const { data, loading }: any = useRequest(() => getGoodsList({ name }), {
     refreshDeps: [name],
   });
 
@@ -34,18 +35,22 @@ const Index = () => {
         onChange={handleSearch}
       />
       <Grid columns={2}>
-        {data?.data && data?.data.length
-          ? data.data.map((v, i) => (
-              <Grid.Item key={i} onClick={() => handleClick(v.id)}>
-                <GoodItem
-                  src={v.picUrl}
-                  name={v.name}
-                  retailPrice={v.retailPrice}
-                  counterPrice={v.counterPrice}
-                />
-              </Grid.Item>
-            ))
-          : null}
+        {data?.data?.length ? (
+          data.data.map((v, i) => (
+            <Grid.Item key={i} onClick={() => handleClick(v.id)}>
+              <GoodItem
+                src={v.picUrl}
+                name={v.name}
+                retailPrice={v.retailPrice}
+                counterPrice={v.counterPrice}
+              />
+            </Grid.Item>
+          ))
+        ) : loading ? null : (
+          <View className="indexListEmpty">
+            <Empty />
+          </View>
+        )}
       </Grid>
     </View>
   );
