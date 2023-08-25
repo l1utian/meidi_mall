@@ -14,8 +14,11 @@ import { formatLocation } from "@/utils/tool";
 import useAddress from "@/hooks/useAddress";
 import { ArrowRight } from "@nutui/icons-react-taro";
 import "./index.scss";
+import useRequireLogin from "@/hooks/useRequireLogin";
 
 function AddAddress() {
+  // 判断是否是登录状态，如果未登录会跳转到登录页面
+  useRequireLogin();
   const { runAsync, loading } = useRequest(postAddressAdd, {
     manual: true,
   });

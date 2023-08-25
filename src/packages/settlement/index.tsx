@@ -6,8 +6,11 @@ import { useRouter } from "@tarojs/taro";
 import { baseUrl } from "@/utils/request";
 import { postOrderCreate } from "@/api/order";
 import "./index.scss";
+import useRequireLogin from "@/hooks/useRequireLogin";
 
 const Settlement = () => {
+  // 判断是否是登录状态，如果未登录会跳转到登录页面
+  useRequireLogin();
   const { params } = useRouter();
   const [number, setNumber] = useState<number | string>(1);
   const [message, setMessage] = useState<string>("");

@@ -12,8 +12,11 @@ import location from "@/assets/user/location.svg";
 import { Check } from "@nutui/icons-react-taro";
 import { formatLocation } from "@/utils/tool";
 import "./index.scss";
+import useRequireLogin from "@/hooks/useRequireLogin";
 
 const Book = () => {
+  // 判断是否是登录状态，如果未登录会跳转到登录页面
+  useRequireLogin();
   const { params } = useRouter();
   const { outOrderNo } = params;
   const { data } = useRequest(getAddressList);

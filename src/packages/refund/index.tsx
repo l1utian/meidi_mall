@@ -8,8 +8,11 @@ import { orderStatus } from "@/constants/order";
 import right from "@/assets/public/right.svg";
 import ChooseModal from "./ChooseModal";
 import "./index.scss";
+import useRequireLogin from "@/hooks/useRequireLogin";
 
 const Refund = () => {
+  // 判断是否是登录状态，如果未登录会跳转到登录页面
+  useRequireLogin();
   const { params } = useRouter();
   const { outOrderNo } = params;
   const [refundType, setRefundType] = useState<string[]>([]);

@@ -10,8 +10,11 @@ import { formatLocation } from "@/utils/tool";
 import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
 import "./index.scss";
+import useRequireLogin from "@/hooks/useRequireLogin";
 
 function AddressList() {
+  // 判断是否是登录状态，如果未登录会跳转到登录页面
+  useRequireLogin();
   const { params } = useRouter();
   const { fromPage } = params || {};
   const [visible, setVisible] = useState(false);
