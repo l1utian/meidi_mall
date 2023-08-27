@@ -16,54 +16,54 @@ const OrderItem = ({ info, onAction, onClick }) => {
       <View onClick={onClick}>
         <View className="orderItem-title">
           <Text className="orderItem-title-time">
-            下单时间：{info.orderTime}
+            下单时间：{info?.orderTime}
           </Text>
           <Text className="orderItem-title-status">
-            {orderStatus[info.orderStatus]}
+            {orderStatus[info?.orderStatus]}
           </Text>
         </View>
         <View className="orderItem-good">
           <Image
-            src={completeImageUrl(info.picUrl, BASE_API_URL)}
+            src={completeImageUrl(info?.picUrl, BASE_API_URL)}
             className="orderItem-good-img"
           />
           <View className="orderItem-good-detail">
-            <Text className="orderItem-good-name">{info.productName}</Text>
+            <Text className="orderItem-good-name">{info?.productName}</Text>
             <View className="orderItem-good-info">
               <View>
                 <Text className="orderItem-good-symbol">￥</Text>
-                <Text className="orderItem-good-price">{info.price}</Text>
+                <Text className="orderItem-good-price">{info?.price}</Text>
               </View>
               <View>
-                <Text className="orderItem-good-num">×{info.number}</Text>
+                <Text className="orderItem-good-num">×{info?.number}</Text>
               </View>
             </View>
           </View>
         </View>
         <View className="orderItem-total">
           <View>
-            <Text className="orderItem-total-num">共{info.number}件</Text>
+            <Text className="orderItem-total-num">共{info?.number}件</Text>
           </View>
           <View>
             <Text className="orderItem-total-label">合计：</Text>
           </View>
           <View>
             <Text className="orderItem-total-symbol">￥</Text>
-            <Text className="orderItem-total-price">{info.orderPrice}</Text>
+            <Text className="orderItem-total-price">{info?.orderPrice}</Text>
           </View>
         </View>
       </View>
       <Divider className="orderItem-divider" style={{ color: "" }} />
       <View className="orderItem-bottom">
         <View>
-          {info.appointmentDate && info.appointmentTime ? (
+          {info?.appointmentDate && info?.appointmentTime ? (
             <Text className="orderItem-bottom-time">
-              {`上门时间：${info.appointmentDate} ${info.appointmentTime}`}
+              {`上门时间：${info?.appointmentDate} ${info?.appointmentTime}`}
             </Text>
           ) : null}
         </View>
         <View>
-          <ButtonGroup onClick={handleAction} status={info.orderStatus} />
+          <ButtonGroup onClick={handleAction} status={info?.orderStatus} />
         </View>
       </View>
     </View>

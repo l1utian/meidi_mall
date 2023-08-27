@@ -6,7 +6,7 @@ import {
   Button,
 } from "@nutui/nutui-react-taro";
 import { View, Image } from "@tarojs/components";
-import Taro, { useDidShow } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 import top from "@/assets/public/top.svg";
 import { data } from "./data";
 import "./index.scss";
