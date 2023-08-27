@@ -14,6 +14,7 @@ import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
+import { loginWithCheckSession } from "@/utils/TTUtil";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -73,29 +74,24 @@ const OrderList = () => {
       // 继续支付
       case "continuePay":
         runAsync({ outOrderNo: order.outOrderNo }).then((res) => {
+          const orderId = res?.data?.options?.orderInfo?.order_id;
+
           if (res?.code === 200) {
-            // tt.pay({
-            //   orderInfo: res.data.options.orderInfo,
-            //   service: 5,
-            //   success(res) {
-            //     console.log(res);
-            //   },
-            //   fail(res) {
-            //     console.log(res);
-            //   },
-            // });
-            tt.continueToPay({
-              outOrderNo: order.outOrderNo,
-              success(res) {
-                console.log(res);
-                getOrderListRun({
-                  orderStatus: tabs.find((v) => v.key === activeTab)
-                    ?.orderStatus,
-                });
-              },
-              fail(err) {
-                console.log(err);
-              },
+            loginWithCheckSession()?.then(() => {
+              tt?.continueToPay({
+                outOrderNo: order.outOrderNo,
+                orderId,
+                success(res) {
+                  console.log(res);
+                  getOrderListRun({
+                    orderStatus: tabs.find((v) => v.key === activeTab)
+                      ?.orderStatus,
+                  });
+                },
+                fail(err) {
+                  console.log(err);
+                },
+              });
             });
           }
         });

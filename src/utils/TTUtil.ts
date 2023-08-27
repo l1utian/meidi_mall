@@ -1,3 +1,4 @@
+// 判断是否登录
 const login = () => {
   return new Promise<{
     hasLogin: true;
@@ -31,6 +32,49 @@ const login = () => {
         });
       },
     });
+  });
+};
+
+// 不分接口内容需要判断是否有section，如果没有,section则需要登录，才能调用对应的方法
+const checkSession = () => {
+  return new Promise<boolean>((resolve, reject) => {
+    tt?.checkSession({
+      success: function (res) {
+        console.log(res);
+
+        resolve(true);
+      },
+      fail: function () {
+        reject();
+      },
+    });
+  });
+};
+
+// loginWithCheckSession
+export const loginWithCheckSession = () => {
+  return new Promise<{
+    hasLogin: true;
+    code?: string;
+    message?: string;
+  }>((resolve, reject) => {
+    checkSession()
+      ?.then(() => {
+        resolve({
+          hasLogin: true,
+          code: undefined,
+          message: "已登录",
+        });
+      })
+      ?.catch(() => {
+        login()
+          ?.then((res) => {
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
   });
 };
 

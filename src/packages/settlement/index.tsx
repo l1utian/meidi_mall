@@ -7,6 +7,7 @@ import { BASE_API_URL } from "@/config/base";
 import { postOrderCreate } from "@/api/order";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
+import { loginWithCheckSession } from "@/utils/TTUtil";
 
 const Settlement = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -22,30 +23,34 @@ const Settlement = () => {
   const handleSubmit = () => {
     postOrderCreate({ message, number, orderPrice, productCode }).then(
       (res: any) => {
+        const orderInfo = res?.data?.options?.orderInfo;
+        const orderNo = res?.data?.outOrderNo;
         if (res.code === 200) {
-          tt.pay({
-            orderInfo: res.data.options.orderInfo,
-            service: 5,
-            success: function (res: any) {
-              // 0：支付成功
-              // 1：支付超时
-              // 2：支付失败
-              // 3：支付关闭
-              // 4：支付取消
-              if (res.code === 0) {
-                Taro.showToast({
-                  title: "支付成功",
-                  icon: "success",
-                  duration: 1000,
+          loginWithCheckSession()?.then(() => {
+            tt.pay({
+              orderInfo,
+              service: 5,
+              success: function (res: any) {
+                // 0：支付成功
+                // 1：支付超时
+                // 2：支付失败
+                // 3：支付关闭
+                // 4：支付取消
+                if (res.code === 0) {
+                  Taro.showToast({
+                    title: "支付成功",
+                    icon: "success",
+                    duration: 1000,
+                  });
+                }
+                Taro.redirectTo({
+                  url: `/packages/orderDetail/index?outOrderNo=${orderNo}`,
                 });
-              }
-              Taro.redirectTo({
-                url: `/packages/orderDetail/index?outOrderNo=${res.data.outOrderNo}`,
-              });
-            },
-            fail: function (err) {
-              console.log("支付失败", err);
-            },
+              },
+              fail: function (err) {
+                console.log("支付失败", err);
+              },
+            });
           });
         }
       }

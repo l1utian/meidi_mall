@@ -11,6 +11,7 @@ import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { useMemo } from "react";
 import { getRemainingMilliseconds } from "@/utils/tool";
+import { loginWithCheckSession } from "@/utils/TTUtil";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -49,14 +50,16 @@ const OrderList = () => {
       case "continuePay":
         runAsync({ outOrderNo }).then((res) => {
           if (res?.code === 200) {
-            tt.continueToPay({
-              outOrderNo: outOrderNo,
-              success(res) {
-                console.log(res);
-              },
-              fail(err) {
-                console.log(err);
-              },
+            loginWithCheckSession()?.then(() => {
+              tt?.continueToPay({
+                outOrderNo: outOrderNo,
+                success(res) {
+                  console.log(res);
+                },
+                fail(err) {
+                  console.log(err);
+                },
+              });
             });
           }
         });

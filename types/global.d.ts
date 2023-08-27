@@ -60,4 +60,8 @@ declare namespace tt {
     success: (res: { code: string }) => void;
     fail?: (err: any) => void;
   }): void;
+  export function checkSession(obj: {
+    success: (res: { code: string }) => void;
+    fail?: (err: any) => void;
+  }): void;
 }
