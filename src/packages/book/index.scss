@@ -67,10 +67,10 @@
         position: relative;
         width: 220px;
         height: 100px;
-        background: rgba(0, 0, 0, 0.1);
+        background: #f9f9f9;
         border-radius: 16px;
-        border: 1px solid #999;
-        color: #999;
+        border: 1px solid #f9f9f9;
+        color: #909090;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -83,7 +83,7 @@
           right: -35px;
           width: 70px;
           height: 70px;
-          background: #999;
+          background: #ededed;
         }
         .book-address-selected-check {
           font-size: 18px;
