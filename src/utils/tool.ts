@@ -49,3 +49,23 @@ export function getRemainingMilliseconds(start?: string, end?: string): number {
 
   return endDate.getTime() - now.getTime();
 }
+
+export function completeImageUrl(imgUrl: string, domain: string): string {
+  // 如果imgUrl以http或https开头，则直接返回
+  if (imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+    return imgUrl;
+  }
+
+  // 移除域名结尾的/ (如果存在)
+  if (domain.endsWith("/")) {
+    domain = domain.slice(0, -1);
+  }
+
+  // 确保imgUrl以/开头
+  if (!imgUrl.startsWith("/")) {
+    imgUrl = "/" + imgUrl;
+  }
+
+  // 拼接域名和图片地址
+  return domain + imgUrl;
+}

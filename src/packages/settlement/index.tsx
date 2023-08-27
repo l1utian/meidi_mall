@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import { Price, Input, InputNumber, Button } from "@nutui/nutui-react-taro";
 import { Text, View, Image } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
-import { baseUrl } from "@/utils/request";
+import { BASE_API_URL } from "@/config/base";
 import { postOrderCreate } from "@/api/order";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
@@ -56,7 +56,10 @@ const Settlement = () => {
       <View className="settlement-info">
         <Text className="settlement-info-title">商品信息</Text>
         <View className="settlement-info-detail">
-          <Image src={baseUrl + url || ""} className="settlement-info-img" />
+          <Image
+            src={BASE_API_URL + url || ""}
+            className="settlement-info-img"
+          />
           <View className="settlement-info-right">
             <Text className="settlement-info-name">{productName}</Text>
             <View className="settlement-info-num">

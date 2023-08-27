@@ -1,8 +1,7 @@
 import Taro from "@tarojs/taro";
 import { apiAppId, apiAppKey } from "@/config/base";
 import CryptoJS from "crypto-js";
-
-export const baseUrl = "http://nj.cirscn.com:15581/h5api";
+import { BASE_API_URL } from "@/config/base";
 
 // 计算get请求的加密数据
 export const getGetSign = () => {
@@ -30,7 +29,7 @@ export const REG_CDN_FILE_ORIGIN = (url: string) => {
   if (reg.test(url)) {
     return url;
   } else {
-    return baseUrl + url;
+    return BASE_API_URL + url;
   }
 };
 const request = (
@@ -51,7 +50,7 @@ const request = (
   return new Promise((resolve, reject) => {
     const token = Taro.getStorageSync("token");
     Taro.request({
-      url: baseUrl + url,
+      url: BASE_API_URL + url,
       method: options.method,
       data: options.data,
       timeout: 180000,

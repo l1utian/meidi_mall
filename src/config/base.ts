@@ -1,3 +1,8 @@
+// api地址
+export const BASE_URL = "http://nj.cirscn.com:15581";
+
+export const BASE_API_URL = `${BASE_URL}/h5api`;
+
 // 客服抖音号
 export const CUSTOMER_SERVICE_DY_ID = "1749153376";
 

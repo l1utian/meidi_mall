@@ -4,10 +4,12 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { getGoodsList } from "@/api";
 import { useRequest } from "ahooks";
-import { debounce } from "@/utils/tool";
+import { debounce, completeImageUrl } from "@/utils/tool";
+
 import GoodItem from "./GoodItem";
 import Empty from "./Empty";
 import "./index.scss";
+import { BASE_API_URL } from "@/config/base";
 
 const Index = () => {
   const [name, setName] = useState<string>("");
@@ -39,7 +41,7 @@ const Index = () => {
           data.data.map((v, i) => (
             <Grid.Item key={i} onClick={() => handleClick(v.id)}>
               <GoodItem
-                src={v.picUrl}
+                src={completeImageUrl(v.picUrl, BASE_API_URL)}
                 name={v.name}
                 retailPrice={v.retailPrice}
                 counterPrice={v.counterPrice}

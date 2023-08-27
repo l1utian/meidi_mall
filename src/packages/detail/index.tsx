@@ -15,7 +15,7 @@ import Taro from "@tarojs/taro";
 import message from "@/assets/public/message.svg";
 import { getGoodsInfo } from "@/api/index";
 import { useRequest } from "ahooks";
-import { baseUrl } from "@/utils/request";
+import { BASE_API_URL } from "@/config/base";
 import GoodModal from "./GoodModal";
 import useLoading from "@/hooks/useLoading";
 import "./index.scss";
@@ -67,7 +67,7 @@ function Detail() {
       <Swiper defaultValue={0} indicator height={224}>
         {goodDetail.gallery?.split(",").map((v, i) => (
           <SwiperItem key={i}>
-            <Image mode="scaleToFill" src={baseUrl + v} height={224} />
+            <Image mode="scaleToFill" src={BASE_API_URL + v} height={224} />
           </SwiperItem>
         ))}
       </Swiper>
