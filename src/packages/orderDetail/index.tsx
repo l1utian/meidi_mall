@@ -49,16 +49,6 @@ const OrderList = () => {
       case "continuePay":
         runAsync({ outOrderNo }).then((res) => {
           if (res?.code === 200) {
-            // tt.pay({
-            //   orderInfo: res.data.options.orderInfo,
-            //   service: 5,
-            //   success(res) {
-            //     console.log(res);
-            //   },
-            //   fail(res) {
-            //     console.log(res);
-            //   },
-            // });
             tt.continueToPay({
               outOrderNo: outOrderNo,
               success(res) {
@@ -93,7 +83,7 @@ const OrderList = () => {
   return (
     <View className="orderDetail">
       <OrderStatus
-        status={data?.data.orderStatus}
+        status={data?.data?.orderStatus}
         validPayTime={validPayTime}
         onRefresh={refresh}
       />
@@ -178,7 +168,7 @@ const OrderList = () => {
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">下单时间</View>
             <View className="orderDetail-info-content">
-              {data?.data.orderTime}
+              {data?.data?.orderTime}
             </View>
           </View>
           <View className="orderDetail-info-item">
@@ -188,7 +178,7 @@ const OrderList = () => {
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">备注留言</View>
             <View className="orderDetail-info-content">
-              {data?.data.message}
+              {data?.data?.message}
             </View>
           </View>
         </View>
@@ -196,14 +186,14 @@ const OrderList = () => {
           <View className="orderDetail-price-top">
             <Text>商品总额</Text>
             <Text className="orderDetail-price-top-num">
-              ¥{data?.data.orderPrice}
+              ¥{data?.data?.orderPrice || 0}
             </Text>
           </View>
           <Divider className="orderDetail-price-middle" />
           <View className="orderDetail-price-bottom">
             <Text className="orderDetail-price-bottom-total">总计：</Text>
             <Text className="orderDetail-price-bottom-num">
-              ¥{data?.data.orderPrice}
+              ¥{data?.data?.orderPrice || 0}
             </Text>
           </View>
         </View>
@@ -216,7 +206,7 @@ const OrderList = () => {
           <ButtonGroup
             onClick={handleClick}
             size="normal"
-            status={data?.data.orderStatus}
+            status={data?.data?.orderStatus}
           />
         </View>
       )}
