@@ -39,9 +39,7 @@ const login = () => {
 const checkSession = () => {
   return new Promise<boolean>((resolve, reject) => {
     tt?.checkSession({
-      success: function (res) {
-        console.log(res);
-
+      success: function () {
         resolve(true);
       },
       fail: function () {

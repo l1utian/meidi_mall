@@ -79,7 +79,7 @@ const OrderList = () => {
           if (res?.code === 200) {
             loginWithCheckSession()?.then(() => {
               tt?.continueToPay({
-                outOrderNo: order.outOrderNo,
+                // outOrderNo: order.outOrderNo,
                 orderId,
                 success(res) {
                   console.log(res);

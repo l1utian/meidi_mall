@@ -10,8 +10,9 @@ import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { useMemo } from "react";
-import { getRemainingMilliseconds } from "@/utils/tool";
+import { completeImageUrl, getRemainingMilliseconds } from "@/utils/tool";
 import { loginWithCheckSession } from "@/utils/TTUtil";
+import { BASE_API_URL } from "@/config/base";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -49,14 +50,18 @@ const OrderList = () => {
       // 继续支付
       case "continuePay":
         runAsync({ outOrderNo }).then((res) => {
+          const orderId = res?.data?.options?.orderInfo?.order_id;
           if (res?.code === 200) {
             loginWithCheckSession()?.then(() => {
               tt?.continueToPay({
-                outOrderNo: outOrderNo,
+                // outOrderNo: outOrderNo,
+                orderId,
                 success(res) {
                   console.log(res);
+                  refresh();
                 },
                 fail(err) {
+                  refresh();
                   console.log(err);
                 },
               });
@@ -123,7 +128,10 @@ const OrderList = () => {
             </View>
           )}
         <View className="orderDetail-good">
-          <Image src={data?.data.picUrl} className="orderDetail-good-img" />
+          <Image
+            src={completeImageUrl(data?.data.picUrl, BASE_API_URL)}
+            className="orderDetail-good-img"
+          />
           <View className="orderDetail-good-detail">
             <Text className="orderDetail-good-name">
               {data?.data.productName}

@@ -3,6 +3,8 @@ import { Divider } from "@nutui/nutui-react-taro";
 import { orderStatus } from "@/constants/order";
 import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
+import { completeImageUrl } from "@/utils/tool";
+import { BASE_API_URL } from "@/config/base";
 
 const OrderItem = ({ info, onAction, onClick }) => {
   const handleAction = (key) => {
@@ -21,7 +23,10 @@ const OrderItem = ({ info, onAction, onClick }) => {
           </Text>
         </View>
         <View className="orderItem-good">
-          <Image src={info.picUrl} className="orderItem-good-img" />
+          <Image
+            src={completeImageUrl(info.picUrl, BASE_API_URL)}
+            className="orderItem-good-img"
+          />
           <View className="orderItem-good-detail">
             <Text className="orderItem-good-name">{info.productName}</Text>
             <View className="orderItem-good-info">

@@ -51,8 +51,9 @@ export function getRemainingMilliseconds(start?: string, end?: string): number {
 }
 
 export function completeImageUrl(imgUrl: string, domain: string): string {
+  if (!imgUrl) return "";
   // 如果imgUrl以http或https开头，则直接返回
-  if (imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+  if (imgUrl?.startsWith("http://") || imgUrl?.startsWith("https://")) {
     return imgUrl;
   }
 
