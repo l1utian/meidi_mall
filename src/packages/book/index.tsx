@@ -103,7 +103,8 @@ const Book = () => {
   });
 
   useDidHide(() => {
-    Taro.removeStorageSync("address");
+    console.log("切出页面");
+    Taro.removeStorage({ key: "address" });
   });
   return (
     <View className="book-container">

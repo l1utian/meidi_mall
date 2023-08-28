@@ -215,8 +215,9 @@ const OrderList = () => {
         data?.data.orderStatus === 203) && (
         <View className="orderDetail-bottom">
           <ButtonGroup
-            onClick={handleClick}
             size="normal"
+            onClick={handleClick}
+            isDetail={true}
             status={data?.data?.orderStatus}
           />
         </View>

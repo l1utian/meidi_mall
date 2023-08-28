@@ -6,8 +6,14 @@ interface Props {
   onClick?: any;
   size?: any;
   status?: any;
+  isDetail?: any;
 }
-const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
+const ButtonGroup = ({
+  onClick,
+  size = "small",
+  status,
+  isDetail = false,
+}: Props) => {
   const handleClick = (key) => {
     onClick && onClick(key);
   };
@@ -39,8 +45,12 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
         key: "refund",
       },
     ],
-    //已完成
+    //服务中
     203: [
+      {
+        text: "退款/售后",
+        key: "refund",
+      },
       {
         text: "确认服务完成",
         key: "confirm",
@@ -48,7 +58,12 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
       },
     ],
     //已完成
-    204: [],
+    204: [
+      {
+        text: "退款/售后",
+        key: "refund",
+      },
+    ],
     //退款中
     301: [],
     //退款完成
@@ -58,6 +73,7 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
     //已取消
     401: [],
   };
+  console.log(data[status].length, data[status].length === 1 && isDetail);
   return (
     <View className="button-group">
       {(data[status] || []).map((v, i) => (
@@ -65,6 +81,7 @@ const ButtonGroup = ({ onClick, size = "small", status }: Props) => {
           key={i}
           size={size}
           type={v.type || ""}
+          block={data[status].length === 1 && isDetail}
           onClick={() => handleClick(v.key)}
         >
           {v.text}
