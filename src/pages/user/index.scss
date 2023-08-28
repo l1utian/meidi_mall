@@ -107,7 +107,13 @@
   background-color: transparent;
   margin: 0;
   border: none;
-
+  .nut-cell:last-child .nut-cell__divider {
+    border-top: var(
+      --nutui-cell-divider-border-bottom,
+      2px solid #f5f6f7
+    ) !important;
+    height: 2px;
+  }
   &::after {
     border: none !important;
   }

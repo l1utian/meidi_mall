@@ -19,12 +19,18 @@ function getNextTwentyDays(): string[] {
 
 export const options = [
   // 第一列
-  getNextTwentyDays()?.map((item) => {
-    return {
-      text: item,
-      value: item,
-    };
-  }),
+  [
+    {
+      text: "2023-08-24",
+      value: "2023-08-24",
+    },
+    ...getNextTwentyDays()?.map((item) => {
+      return {
+        text: item,
+        value: item,
+      };
+    }),
+  ],
   [
     { text: "8:00-10:00", value: "8:00-10:00" },
     { text: "10:00-12:00", value: "10:00-12:00" },
