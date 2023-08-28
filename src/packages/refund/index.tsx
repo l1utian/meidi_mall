@@ -100,7 +100,13 @@ const Refund = () => {
             onClick={() => setVisible(true)}
           >
             <View className="refund-selected-right-text">
-              {[...refundType, other].join(";") || "请选择"}
+              {`${refundType.join(";")} ${
+                other
+                  ? refundType && refundType.length
+                    ? `;${other}`
+                    : other
+                  : ""
+              }` || "请选择"}
             </View>
             <Image
               src={right}
