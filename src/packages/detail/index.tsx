@@ -73,12 +73,17 @@ function Detail() {
       </Swiper>
       <View className="detail-intro">
         <View className="detail-intro-top">
-          <Text className="detail-intro-price">
-            ￥{selectedProduct.retailPrice}
-          </Text>
-          <Text className="detail-intro-price-u">
-            ¥{selectedProduct.counterPrice}
-          </Text>
+          <View>
+            <Text className="detail-intro-symbol">￥</Text>
+            <Text className="detail-intro-price">
+              {selectedProduct.retailPrice}
+            </Text>
+          </View>
+          <View>
+            <Text className="detail-intro-price-u">
+              ¥{selectedProduct.counterPrice}
+            </Text>
+          </View>
         </View>
         <View className="detail-intro-bottom">
           {selectedProduct.productName || "-"}

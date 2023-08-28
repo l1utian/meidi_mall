@@ -31,12 +31,17 @@ const GoodModal = ({ visible, onClose, productList, selected }) => {
     >
       <View className="good-modal">
         <View className="good-modal-top">
-          <Text className="good-modal-price">
-            ￥{selectedProduct.retailPrice}
-          </Text>
-          <Text className="good-modal-price-u">
-            ￥{selectedProduct.counterPrice}
-          </Text>
+          <View>
+            <Text className="good-modal-symbol">￥</Text>
+            <Text className="good-modal-price">
+              {selectedProduct.retailPrice}
+            </Text>
+          </View>
+          <View>
+            <Text className="good-modal-price-u">
+              ￥{selectedProduct.counterPrice}
+            </Text>
+          </View>
         </View>
         <View className="good-modal-middle">
           <View className="good-modal-list">

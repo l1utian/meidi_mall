@@ -111,7 +111,11 @@ const Settlement = () => {
           <Text className="settlement-bottom-price">￥</Text>
           <Text className="settlement-bottom-num">{orderPrice}</Text>
         </View>
-        <Button type="primary" onClick={handleSubmit}>
+        <Button
+          type="primary"
+          onClick={handleSubmit}
+          className="settlement-bottom-submit"
+        >
           提交订单
         </Button>
       </View>

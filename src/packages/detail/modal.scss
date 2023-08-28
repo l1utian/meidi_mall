@@ -4,6 +4,12 @@
   padding-bottom: 160px;
   &-top {
     margin-bottom: 48px;
+    display: flex;
+    align-items: flex-end;
+  }
+  &-symbol {
+    font-size: 28px;
+    font-weight: bold;
   }
   &-price {
     font-size: 36px;

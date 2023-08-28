@@ -83,7 +83,7 @@ const OrderStatus = ({ status, validPayTime, onRefresh }: OrderStatusProps) => {
           src={statusInfo[status]?.icon}
           mode="widthFix"
         />
-        <Text>{statusInfo[status]?.status}</Text>
+        <Text style={{ fontWeight: "bold" }}>{statusInfo[status]?.status}</Text>
       </View>
       <View className="order-status-bottom">
         {status === 101 ? (
