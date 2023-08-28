@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import Taro, { useRouter, useDidShow, useDidHide } from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { Button, Dialog } from "@nutui/nutui-react-taro";
 import right from "@/assets/public/right.svg";
@@ -15,18 +15,21 @@ import { Check } from "@nutui/icons-react-taro";
 import { formatLocation } from "@/utils/tool";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
+import { addressStore } from "@/store/address";
 
 const Book = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
-  // useRequireLogin();
+  useRequireLogin();
+
   const { params } = useRouter();
+  const { address, setAddress } = addressStore();
+
   const { outOrderNo } = params;
   const { data } = useRequest(getAddressList);
   const { runAsync } = useRequest(postOrderAppointment, {
     manual: true,
   });
 
-  const [address, setAddress] = useState<any>({});
   const [visible, setVisible] = useState<boolean>(false);
 
   // 新增tip弹窗提示
@@ -96,16 +99,7 @@ const Book = () => {
       }
     });
   };
-  useDidShow(() => {
-    if (Taro.getStorageSync("address")) {
-      setAddress(Taro.getStorageSync("address"));
-    }
-  });
 
-  useDidHide(() => {
-    console.log("切出页面");
-    Taro.removeStorage({ key: "address" });
-  });
   return (
     <View className="book-container">
       <View className="book-address">

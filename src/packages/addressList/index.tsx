@@ -11,8 +11,11 @@ import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
+import { addressStore } from "@/store/address";
 
 function AddressList() {
+  const { address, setAddress } = addressStore();
+
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
   const { params } = useRouter();
@@ -83,7 +86,7 @@ function AddressList() {
 
   const handleSelect = (v) => {
     if (fromPage === "book") {
-      Taro.setStorageSync("address", v);
+      setAddress(v);
       Taro.navigateBack();
     }
   };
@@ -93,6 +96,7 @@ function AddressList() {
         list?.map((v, i) => (
           <AddressItem
             info={v}
+            isSelect={address?.id === v.id}
             key={i}
             onClick={handleClick}
             onSelect={() => handleSelect(v)}

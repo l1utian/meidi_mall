@@ -15,10 +15,17 @@ import Empty from "./Empty";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
+import { addressStore } from "@/store/address";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
+
+  // 清空多余的地址信息
+  const { removeAddress } = addressStore();
+  useDidShow(() => {
+    removeAddress();
+  });
   // 101 待支付
   // 201 待预约
   // 202 待服务

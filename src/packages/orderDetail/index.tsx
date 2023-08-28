@@ -1,7 +1,7 @@
 import { Divider, Button } from "@nutui/nutui-react-taro";
 import { useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
-import Taro, { useRouter } from "@tarojs/taro";
+import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import {
   getOrderInfo,
   postOrderContinuePay,
@@ -19,10 +19,17 @@ import { useMemo } from "react";
 import { completeImageUrl, getRemainingMilliseconds } from "@/utils/tool";
 import { loginWithCheckSession } from "@/utils/TTUtil";
 import { BASE_API_URL } from "@/config/base";
+import { addressStore } from "@/store/address";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
+
+  // 清空多余的地址信息
+  const { removeAddress } = addressStore();
+  useDidShow(() => {
+    removeAddress();
+  });
 
   const { params } = useRouter();
   const { outOrderNo } = params;

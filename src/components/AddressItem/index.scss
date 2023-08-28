@@ -50,5 +50,7 @@
   }
 }
 .address-item-active {
-  outline: 1px solid #0092d8;
+  .address-item-cell {
+    border: 2px solid #0092d8;
+  }
 }
