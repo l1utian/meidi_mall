@@ -18,7 +18,7 @@ import useRequireLogin from "@/hooks/useRequireLogin";
 
 const Book = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
-  useRequireLogin();
+  // useRequireLogin();
   const { params } = useRouter();
   const { outOrderNo } = params;
   const { data } = useRequest(getAddressList);
@@ -32,8 +32,8 @@ const Book = () => {
   // 新增tip弹窗提示
   const [tipModalVisible, setTipModalVisible] = useState<boolean>(false);
 
-  const [appointmentDate, setAppointmentDate] = useState<string>("");
-  const [appointmentTime, setAppointmentTime] = useState<string>("");
+  const [appointmentDate, setAppointmentDate] = useState<string>("2023-09-01");
+  const [appointmentTime, setAppointmentTime] = useState<string>("08:00-10:00");
   const list = useMemo(() => {
     return (data?.data ?? [])?.map((v) => {
       return {
@@ -50,9 +50,9 @@ const Book = () => {
     setAddress(list.find((v) => v.isDefault) ?? {});
   }, [list]);
 
-  const handleSelect = (value) => {
-    setAppointmentDate(value[0]?.value);
-    setAppointmentTime(value[0]?.children[0].value);
+  const handleSelect = (value: [string, string]) => {
+    setAppointmentDate(value[0]);
+    setAppointmentTime(value[1]);
   };
 
   const handleSubmit = () => {
@@ -170,6 +170,7 @@ const Book = () => {
       </View>
       <TimeSelectModal
         visible={visible}
+        value={[appointmentDate, appointmentTime]}
         onConfirm={handleSelect}
         onClose={() => setVisible(false)}
       />

@@ -2,6 +2,7 @@
   background-color: #f8f8f8;
   padding: 20px 24px;
   height: 100vh;
+
   .book-address {
     display: flex;
     flex-direction: column;
@@ -131,5 +132,13 @@
     background-color: #fff;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+  }
+  .nut-popup {
+    border-radius: 20px 20px 0 0;
+    .nut-picker-view-panel {
+      picker-view-column {
+        background-color: rgba(0, 146, 216, 0.08);
+      }
+    }
   }
 }
