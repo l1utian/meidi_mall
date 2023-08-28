@@ -13,10 +13,11 @@ type Props = {
 };
 interface IProps {
   info: Props;
+  isSelect?: boolean;
   onClick?: any;
   onSelect?: any;
 }
-const AddressItem = ({ info, onClick, onSelect }: IProps) => {
+const AddressItem = ({ info, isSelect, onClick, onSelect }: IProps) => {
   const { name, tel, location, isDefault, id } = info || {};
   const handleClick = (key) => {
     onClick && onClick({ key, id });
@@ -25,7 +26,10 @@ const AddressItem = ({ info, onClick, onSelect }: IProps) => {
     onSelect && onSelect();
   };
   return (
-    <View className="address-item" onClick={handleSelect}>
+    <View
+      className={isSelect ? "address-item address-item-active" : "address-item"}
+      onClick={handleSelect}
+    >
       <Cell className="address-item-cell">
         <View className="address-item-top">
           <Text className="address-item-name">{name}</Text>
