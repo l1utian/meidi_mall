@@ -108,14 +108,14 @@ export default defineAppConfig({
       {
         pagePath: "pages/index/index",
         text: "首页",
-        iconPath: "./assets/tabBar/home.svg",
-        selectedIconPath: "./assets/tabBar/home_selected.svg",
+        iconPath: "./assets/tabBar/home.png",
+        selectedIconPath: "./assets/tabBar/home_selected.png",
       },
       {
         pagePath: "pages/user/index",
         text: "我的",
-        iconPath: "./assets/tabBar/my.svg",
-        selectedIconPath: "./assets/tabBar/my_selected.svg",
+        iconPath: "./assets/tabBar/my.png",
+        selectedIconPath: "./assets/tabBar/my_selected.png",
       },
     ],
   },

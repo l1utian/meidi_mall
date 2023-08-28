@@ -1,11 +1,17 @@
 import { Divider, Button } from "@nutui/nutui-react-taro";
+import { useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
-import { getOrderInfo, postOrderContinuePay } from "@/api/order";
+import {
+  getOrderInfo,
+  postOrderContinuePay,
+  postOrderConfirmOrder,
+} from "@/api/order";
 import { useRequest } from "ahooks";
 import OrderStatus from "@/components/OrderStatus";
 import useLoading from "@/hooks/useLoading";
 import location from "@/assets/user/location.svg";
+import ConfirmModal from "@/components/ConfirmModal";
 import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
@@ -20,13 +26,16 @@ const OrderList = () => {
 
   const { params } = useRouter();
   const { outOrderNo } = params;
+  const [visible, setVisible] = useState<boolean>(false);
   const { data, refresh } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
   });
   const { runAsync, loading } = useRequest(postOrderContinuePay, {
     manual: true,
   });
-
+  const { runAsync: confirmRun } = useRequest(postOrderConfirmOrder, {
+    manual: true,
+  });
   // 页面加载时显示 loading
   useLoading(loading);
 
@@ -71,25 +80,43 @@ const OrderList = () => {
         break;
       // 售后/退款
       case "refund":
-        Taro.navigateTo({
+        Taro.redirectTo({
           url: `/packages/refund/index?outOrderNo=${outOrderNo}`,
         });
         break;
       // 预约
       case "book":
-        Taro.navigateTo({
+        Taro.redirectTo({
           url: `/packages/book/index?outOrderNo=${outOrderNo}`,
         });
         break;
       // 确认完成
       case "confirm":
+        setVisible(true);
         break;
       default:
         break;
     }
   };
+  const handleConfirm = () => {
+    confirmRun({
+      outOrderNo: outOrderNo,
+    }).then((res) => {
+      if (res.code === 200) {
+        setVisible(false);
+        refresh();
+      }
+    });
+  };
   return (
     <View className="orderDetail">
+      <ConfirmModal
+        visible={visible}
+        content="确认服务已完成吗？"
+        title="确认"
+        onConfirm={handleConfirm}
+        onCancel={() => setVisible(false)}
+      />
       <OrderStatus
         status={data?.data?.orderStatus}
         validPayTime={validPayTime}
@@ -212,7 +239,8 @@ const OrderList = () => {
       {(data?.data.orderStatus === 101 ||
         data?.data.orderStatus === 201 ||
         data?.data.orderStatus === 202 ||
-        data?.data.orderStatus === 203) && (
+        data?.data.orderStatus === 203 ||
+        data?.data.orderStatus === 204) && (
         <View className="orderDetail-bottom">
           <ButtonGroup
             size="normal"

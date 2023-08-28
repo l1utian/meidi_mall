@@ -31,7 +31,7 @@ const Refund = () => {
 
   // 提交
   const handleSubmit = () => {
-    if (!refundType && other === "") {
+    if (!refundType.length && other === "") {
       Taro.showToast({
         title: "请选择退款原因",
         icon: "none",
@@ -40,7 +40,9 @@ const Refund = () => {
       return;
     }
     runAsync({
-      refundType: [...refundType, other].join(";"),
+      refundType: `${refundType.join(";")}${
+        other ? (refundType && refundType.length ? `;${other}` : other) : ""
+      }`,
       message,
       refundNum,
       outOrderNo,
@@ -100,13 +102,15 @@ const Refund = () => {
             onClick={() => setVisible(true)}
           >
             <View className="refund-selected-right-text">
-              {`${refundType.join(";")} ${
-                other
-                  ? refundType && refundType.length
-                    ? `;${other}`
-                    : other
-                  : ""
-              }` || "请选择"}
+              {refundType.length || other !== ""
+                ? `${refundType.join(";")} ${
+                    other
+                      ? refundType && refundType.length
+                        ? `;${other}`
+                        : other
+                      : ""
+                  }`
+                : "请选择"}
             </View>
             <Image
               src={right}

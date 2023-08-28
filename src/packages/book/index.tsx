@@ -64,7 +64,7 @@ const Book = () => {
       });
       return;
     }
-    if (!address && !address?.id) {
+    if (isEmpty(address)) {
       Taro.showToast({
         title: "请选择地址",
         icon: "error",
