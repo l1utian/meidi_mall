@@ -57,7 +57,6 @@ const Login = () => {
   const handleGetPhoneNumber = (e) => {
     loginAndGetPhoneNumber(e)
       ?.then((res) => {
-        console.log(res);
         Taro.showLoading({
           title: "登录中...",
         });

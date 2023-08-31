@@ -18,6 +18,7 @@ function AddressList() {
 
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
+
   const { params } = useRouter();
   const { fromPage } = params || {};
 
@@ -43,7 +44,7 @@ function AddressList() {
       return {
         ...v,
         location: formatLocation(
-          [v?.province, v?.city, v?.county, v?.addressDetail],
+          [v?.province, v?.city, v?.county, v?.street, v?.addressDetail],
           ""
         ),
       };

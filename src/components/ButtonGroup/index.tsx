@@ -73,7 +73,6 @@ const ButtonGroup = ({
     //已取消
     401: [],
   };
-  console.log(data[status].length, data[status].length === 1 && isDetail);
   return (
     <View className="button-group">
       {(data[status] || []).map((v, i) => (

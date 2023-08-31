@@ -136,7 +136,7 @@ const OrderList = () => {
     confirmRun({
       outOrderNo: currentOrder?.outOrderNo,
     }).then((res) => {
-      if (res.code === 200) {
+      if (res?.code === 200) {
         getOrderListRun();
         setVisible(false);
       }

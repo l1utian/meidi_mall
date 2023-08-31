@@ -7,7 +7,10 @@ import { isEmpty } from "lodash-es";
 
 import { useRequest } from "ahooks";
 import { getAddressList } from "@/api/address";
-import { postOrderAppointment } from "@/api/order";
+import {
+  postOrderAppointment,
+  postOrderAppointmentTimeList,
+} from "@/api/order";
 import TimeSelectModal from "./TimeSelectModal";
 import ConfirmModal from "@/components/ConfirmModal";
 import location from "@/assets/user/location.svg";
@@ -23,8 +26,52 @@ const Book = () => {
 
   const { params } = useRouter();
   const { address, setAddress } = addressStore();
+  const [appointmentDate, setAppointmentDate] = useState<string>("");
+  const [appointmentTime, setAppointmentTime] = useState<string>("");
+
+  const [appointmentDateChange, setAppointmentDateChange] =
+    useState<string>("");
+  const [appointmentTimeChange, setAppointmentTimeChange] =
+    useState<string>("");
 
   const { outOrderNo } = params;
+  // 可预约时间
+  const { data: allAppointmentTimeData } = useRequest(
+    postOrderAppointmentTimeList,
+    {
+      onSuccess: (res) => {
+        if (res?.code === 200) {
+          setAppointmentDateChange(res.data[0]?.subDate);
+          setAppointmentTimeChange(res?.data[0]?.details?.[0]);
+        }
+      },
+    }
+  );
+
+  // 预约日期列表
+  const appointmentDateList = useMemo(() => {
+    return (
+      allAppointmentTimeData?.data?.map((v) => {
+        return {
+          text: v?.subDate,
+          value: v?.subDate,
+        };
+      }) ?? []
+    );
+  }, [allAppointmentTimeData]);
+
+  // 预约时间段表
+  const appointmentTimeList = useMemo(() => {
+    return (
+      allAppointmentTimeData?.data
+        ?.find((v) => v?.subDate === appointmentDateChange)
+        ?.details?.map((v) => ({
+          text: v,
+          value: v,
+        })) ?? []
+    );
+  }, [allAppointmentTimeData, appointmentDateChange]);
+
   const { data } = useRequest(getAddressList);
   const { runAsync } = useRequest(postOrderAppointment, {
     manual: true,
@@ -35,14 +82,12 @@ const Book = () => {
   // 新增tip弹窗提示
   const [tipModalVisible, setTipModalVisible] = useState<boolean>(false);
 
-  const [appointmentDate, setAppointmentDate] = useState<string>("2023-09-01");
-  const [appointmentTime, setAppointmentTime] = useState<string>("08:00-10:00");
   const list = useMemo(() => {
     return (data?.data ?? [])?.map((v) => {
       return {
         ...v,
         location: formatLocation(
-          [v?.province, v?.city, v?.county, v?.addressDetail],
+          [v?.province, v?.city, v?.county, v?.street, v?.addressDetail],
           " "
         ),
       };
@@ -53,9 +98,18 @@ const Book = () => {
     setAddress(list.find((v) => v.isDefault) ?? {});
   }, [list]);
 
+  const handleChange = (obj, value) => {
+    if (value[0]) {
+      setAppointmentDateChange(value[0]);
+      const details = allAppointmentTimeData?.data?.find(
+        (v) => v?.subDate === value[0]
+      )?.details;
+      setAppointmentTimeChange(details?.[0] ?? "");
+    }
+  };
   const handleSelect = (value: [string, string]) => {
-    setAppointmentDate(value[0]);
-    setAppointmentTime(value[1]);
+    setAppointmentDate(value[0] || appointmentDateChange);
+    setAppointmentTime(value[1] || appointmentTimeChange);
   };
 
   const handleSubmit = () => {
@@ -86,7 +140,7 @@ const Book = () => {
       addressId: address.id,
       message: "",
     }).then((res) => {
-      if (res.code === 200) {
+      if (res?.code === 200) {
         Taro.showToast({
           title: "预约成功",
           icon: "success",
@@ -163,9 +217,11 @@ const Book = () => {
         </Button>
       </View>
       <TimeSelectModal
+        options={[appointmentDateList, appointmentTimeList]}
         visible={visible}
         value={[appointmentDate, appointmentTime]}
         onConfirm={handleSelect}
+        onChange={handleChange}
         onClose={() => setVisible(false)}
       />
       <Dialog id="tip" />

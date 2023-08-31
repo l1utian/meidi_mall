@@ -1,25 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import {
   Input,
   Checkbox,
-  Address,
   TextArea,
   Button,
+  Cascader,
 } from "@nutui/nutui-react-taro";
 import Taro, { useRouter } from "@tarojs/taro";
-import {
-  getAddressInfo,
-  getAvailableAddressList,
-  postAddressEdit,
-} from "@/api/address";
+import { getAddressInfo, postAddressEdit } from "@/api/address";
 import { useRequest } from "ahooks";
 import { formatLocation } from "@/utils/tool";
 import useAddress from "@/hooks/useAddress";
 import { ArrowRight } from "@nutui/icons-react-taro";
 import "../addAddress/index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
-import { optionsDemo1 } from "../addAddress/data";
 
 function EditAddress() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -32,6 +27,7 @@ function EditAddress() {
     handleAddressChange,
     validate,
     setFormState,
+    handleLoad,
   } = useAddress();
 
   useRequest(() => getAddressInfo(id), {
@@ -42,8 +38,13 @@ function EditAddress() {
           name: res?.data?.name,
           tel: res?.data?.tel,
           province: res?.data?.province,
+          provinceCode: res?.data?.provinceCode,
           city: res?.data?.city,
+          cityCode: res?.data?.cityCode,
           county: res?.data?.county,
+          countyCode: res?.data?.countyCode,
+          street: res?.data?.street,
+          streetCode: res?.data?.streetCode,
           addressDetail: res?.data?.addressDetail,
           isDefault: res?.data?.isDefault,
         });
@@ -58,7 +59,12 @@ function EditAddress() {
   const address = useMemo(() => {
     return formState?.province
       ? formatLocation(
-          [formState.province, formState.city, formState.county],
+          [
+            formState.province,
+            formState.city,
+            formState.county,
+            formState.street,
+          ],
           " "
         )
       : "请选择";
@@ -72,7 +78,6 @@ function EditAddress() {
             ...formState,
             id,
           }).then((res) => {
-            console.log(res);
             if (res?.code === 200) {
               Taro.navigateBack();
             }
@@ -88,12 +93,6 @@ function EditAddress() {
         }
       });
   };
-
-  useEffect(() => {
-    getAvailableAddressList().then((res) => {
-      console.log(res);
-    });
-  }, []);
 
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -129,7 +128,7 @@ function EditAddress() {
       <TextArea
         onChange={(value) => handleChange("addressDetail", value)}
         value={formState?.addressDetail}
-        maxLength={200}
+        maxLength={64}
       />
       <View
         className="addAddress-textarea"
@@ -148,12 +147,14 @@ function EditAddress() {
       <Button block type="primary" onClick={handleSave} loading={loading}>
         保存
       </Button>
-      <Address
+      <Cascader
         visible={visible}
-        options={optionsDemo1}
         title="详细地址"
-        onChange={handleAddressChange}
+        closeable
         onClose={() => setVisible(false)}
+        onChange={handleAddressChange}
+        lazy
+        onLoad={handleLoad}
       />
     </View>
   );

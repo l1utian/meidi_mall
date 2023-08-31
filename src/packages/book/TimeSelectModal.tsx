@@ -1,9 +1,15 @@
 import { Picker } from "@nutui/nutui-react-taro";
-import { options } from "./TimeSelectModalData";
 import "./modal.scss";
 import { PickerOption } from "@nutui/nutui-react-taro/dist/types/packages/picker";
 
-const GoodModal = ({ visible, value, onClose, onConfirm }) => {
+const GoodModal = ({
+  visible,
+  value,
+  onClose,
+  onConfirm,
+  onChange,
+  options,
+}) => {
   const confirmPicker = (
     options: PickerOption[],
     values: (string | number)[]
@@ -20,6 +26,7 @@ const GoodModal = ({ visible, value, onClose, onConfirm }) => {
       onClose={onClose}
       value={value}
       onConfirm={(list, values) => confirmPicker(list, values)}
+      onChange={onChange}
     />
   );
 };

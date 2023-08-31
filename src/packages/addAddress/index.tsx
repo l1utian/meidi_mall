@@ -1,36 +1,41 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import {
   Input,
   Checkbox,
-  Address,
   TextArea,
   Button,
+  Cascader,
 } from "@nutui/nutui-react-taro";
 import Taro from "@tarojs/taro";
-import { getAvailableAddressList, postAddressAdd } from "@/api/address";
+import { postAddressAdd } from "@/api/address";
 import { useRequest } from "ahooks";
 import { formatLocation } from "@/utils/tool";
 import useAddress from "@/hooks/useAddress";
 import { ArrowRight } from "@nutui/icons-react-taro";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
-import { optionsDemo1 } from "./data";
 
 function AddAddress() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
+
   const { runAsync, loading } = useRequest(postAddressAdd, {
     manual: true,
   });
 
-  const { formState, handleChange, handleAddressChange, validate } =
+  const { formState, handleChange, handleAddressChange, validate, handleLoad } =
     useAddress();
 
   const address = useMemo(() => {
     return formState?.province
       ? formatLocation(
-          [formState.province, formState.city, formState.county],
+          [
+            formState.province,
+            formState.city,
+            formState.county,
+            formState.street,
+          ],
           " "
         )
       : "请选择";
@@ -60,12 +65,6 @@ function AddAddress() {
         }
       });
   };
-
-  useEffect(() => {
-    getAvailableAddressList().then((res) => {
-      console.log(res);
-    });
-  }, []);
 
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -99,7 +98,7 @@ function AddAddress() {
       <TextArea
         onChange={(value) => handleChange("addressDetail", value)}
         placeholder="详细地址"
-        maxLength={200}
+        maxLength={64}
       />
       <View
         className="addAddress-textarea"
@@ -118,12 +117,14 @@ function AddAddress() {
       <Button block type="primary" onClick={handleSave} loading={loading}>
         保存
       </Button>
-      <Address
+      <Cascader
         visible={visible}
-        options={optionsDemo1}
         title="详细地址"
-        onChange={handleAddressChange}
+        closeable
         onClose={() => setVisible(false)}
+        onChange={handleAddressChange}
+        lazy
+        onLoad={handleLoad}
       />
     </View>
   );

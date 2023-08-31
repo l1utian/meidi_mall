@@ -25,7 +25,7 @@ const Settlement = () => {
       (res: any) => {
         const orderInfo = res?.data?.options?.orderInfo;
         const orderNo = res?.data?.outOrderNo;
-        if (res.code === 200) {
+        if (res?.code === 200) {
           loginWithCheckSession()?.then(() => {
             tt.pay({
               orderInfo,

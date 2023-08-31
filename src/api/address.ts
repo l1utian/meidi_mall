@@ -1,21 +1,21 @@
-import { get, post } from "@/utils/request";
+import { post } from "@/utils/request";
 
 /**
  *  地址管理
  */
 // 可用地址列表
-export const getAvailableAddressList = (): Promise<any> => {
-  return get("/address/areaList");
+export const getAvailableAddressList = (regionId): Promise<any> => {
+  return post("/address/areaList", { regionId });
 };
 
 //地址列表
 export const getAddressList = (): Promise<any> => {
-  return get("/address/list");
+  return post("/address/list", {});
 };
 
 //查看地址
 export const getAddressInfo = (id): Promise<any> => {
-  return get(`/address/getInfo?id=${id}`);
+  return post("/address/getInfo", { id });
 };
 
 //新增地址
@@ -30,5 +30,5 @@ export const postAddressEdit = (params): Promise<any> => {
 
 //删除地址
 export const postAddressRemove = (params): Promise<any> => {
-  return get("/address/remove", params);
+  return post("/address/remove", params);
 };

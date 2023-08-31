@@ -47,7 +47,7 @@ const Refund = () => {
       refundNum,
       outOrderNo,
     }).then((res) => {
-      if (res.code === 200) {
+      if (res?.code === 200) {
         Taro.showToast({
           title: "提交成功，请耐心等待",
           icon: "success",
