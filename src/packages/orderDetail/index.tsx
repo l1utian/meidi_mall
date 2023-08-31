@@ -65,25 +65,36 @@ const OrderList = () => {
     switch (key) {
       // 继续支付
       case "continuePay":
-        runAsync({ outOrderNo }).then((res) => {
-          const orderId = res?.data?.options?.orderInfo?.order_id;
-          if (res?.code === 200) {
-            loginWithCheckSession()?.then(() => {
-              tt?.continueToPay({
-                // outOrderNo: outOrderNo,
-                orderId,
-                success(res) {
-                  console.log(res);
-                  refresh();
-                },
-                fail(err) {
-                  refresh();
-                  console.log(err);
-                },
-              });
-            });
-          }
+        loginWithCheckSession()?.then(() => {
+          tt?.continueToPay({
+            outOrderNo: outOrderNo,
+            success(res) {
+              console.log(res);
+              refresh();
+            },
+            fail(err) {
+              refresh();
+              console.log(err);
+            },
+          });
         });
+        // runAsync({ outOrderNo }).then((res) => {
+        //   if (res?.code === 200) {
+        //     loginWithCheckSession()?.then(() => {
+        //       tt?.continueToPay({
+        //         outOrderNo: outOrderNo,
+        //         success(res) {
+        //           console.log(res);
+        //           refresh();
+        //         },
+        //         fail(err) {
+        //           refresh();
+        //           console.log(err);
+        //         },
+        //       });
+        //     });
+        //   }
+        // });
         break;
       // 售后/退款
       case "refund":

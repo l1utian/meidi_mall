@@ -80,28 +80,43 @@ const OrderList = () => {
     switch (key) {
       // 继续支付
       case "continuePay":
-        runAsync({ outOrderNo: order.outOrderNo }).then((res) => {
-          const orderId = res?.data?.options?.orderInfo?.order_id;
-
-          if (res?.code === 200) {
-            loginWithCheckSession()?.then(() => {
-              tt?.continueToPay({
-                // outOrderNo: order.outOrderNo,
-                orderId,
-                success(res) {
-                  console.log(res);
-                  getOrderListRun({
-                    orderStatus: tabs.find((v) => v.key === activeTab)
-                      ?.orderStatus,
-                  });
-                },
-                fail(err) {
-                  console.log(err);
-                },
+        // runAsync({ outOrderNo: order.outOrderNo });
+        loginWithCheckSession()?.then(() => {
+          tt?.continueToPay({
+            outOrderNo: order.outOrderNo,
+            success(res) {
+              console.log(res);
+              getOrderListRun({
+                orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
               });
-            });
-          }
+            },
+            fail(err) {
+              console.log(err);
+            },
+          });
         });
+        // runAsync({ outOrderNo: order.outOrderNo }).then((res) => {
+        //   const orderId = res?.data?.options?.orderInfo?.order_id;
+
+        //   if (res?.code === 200) {
+        //     loginWithCheckSession()?.then(() => {
+        //       tt?.continueToPay({
+        //         outOrderNo: order.outOrderNo,
+        //         orderId,
+        //         success(res) {
+        //           console.log(res);
+        //           getOrderListRun({
+        //             orderStatus: tabs.find((v) => v.key === activeTab)
+        //               ?.orderStatus,
+        //           });
+        //         },
+        //         fail(err) {
+        //           console.log(err);
+        //         },
+        //       });
+        //     });
+        //   }
+        // });
         break;
       // 售后/退款
       case "refund":
