@@ -81,7 +81,7 @@ const getPhoneNumber = (e) => {
     if (e.detail.errMsg.slice(-2) === "ok") {
       resolve(JSON.stringify(e.detail));
     } else {
-      reject(e.detail.errMsg);
+      reject({ errMsg: "手机号获取失败" });
     }
   });
 };
@@ -103,17 +103,13 @@ export const loginAndGetPhoneNumber = (e) => {
                 });
               } catch (error) {
                 reject({
-                  errMsg: "解析手机号失败",
+                  errMsg: "手机号解析失败",
                 });
               }
             })
             .catch((err) => {
-              // 用户未授权
-              if (err === "getPhoneNumber:fail auth deny") {
-                return;
-              }
               reject({
-                errMsg: "登录发生未知错误，请重试",
+                errMsg: err?.errMsg || "登录发生未知错误，请重试",
               });
             });
         }
