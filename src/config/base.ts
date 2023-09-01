@@ -1,10 +1,14 @@
 // api地址
-export const BASE_URL = "http://nj.cirscn.com:15581";
+export const BASE_API_URL = process.env.TARO_APP_API_BASE_API_URL;
 
-export const BASE_API_URL = `${BASE_URL}/h5api`;
+console.log("BASE_API_URL", BASE_API_URL);
 
 // 客服抖音号
-export const CUSTOMER_SERVICE_DY_ID = "1749153376";
+export const CUSTOMER_SERVICE_DY_ID =
+  process.env.TARO_APP_API_CUSTOMER_SERVICE_DY_ID;
 
-export const apiAppId = "3c06a5dc2a6249ce9899f656334e20e9";
-export const apiAppKey = "9b7ac73e644348bcba8a834df41c70b2";
+// appid
+export const apiAppId = process.env.TARO_APP_API_APP_ID;
+
+// appkey
+export const apiAppKey = process.env.TARO_APP_API_APP_KEY;
