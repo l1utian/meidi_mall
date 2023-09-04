@@ -14,13 +14,7 @@
 2. 在项目根目录下执行：
 
 ```bash
-yarn install
-```
-
-或
-
-```bash
-npm install
+yarn install 或 npm install
 ```
 
 > **小提示**: 如果您发现安装速度有点慢，可以先尝试更换为国内的 npm 镜像库地址，执行以下命令：
@@ -36,13 +30,7 @@ npm install
 如果您希望在开发环境下运行项目（通常用于开发和测试），请执行：
 
 ```bash
-npm run dev:tt
-```
-
-或
-
-```bash
-yarn dev:tt
+npm run dev:tt 或 yarn dev:tt
 ```
 
 ### 生产环境
@@ -50,13 +38,7 @@ yarn dev:tt
 当您认为应用已经准备好并想要进行部署时，请执行：
 
 ```bash
-npm run build:tt
-```
-
-或
-
-```bash
-yarn build:tt
+npm run build:tt 或 yarn build:tt
 ```
 
 ## ⚙️ 配置项说明与设置
@@ -66,25 +48,13 @@ yarn build:tt
 - **`.env.development`**: 对应开发环境。要在开发环境中运行应用，请使用以下命令：
 
 ```
-npm dev:tt
-```
-
-或
-
-```
-yarn dev:tt
+npm dev:tt 或 yarn dev:tt
 ```
 
 - **`.env.production`**: 对应生产环境。要在生产环境中部署应用，请使用以下命令：
 
 ```
-npm build:tt
-```
-
-或
-
-```
-yarn build:tt
+npm build:tt 或 yarn build:tt
 ```
 
 ### 如何设置
