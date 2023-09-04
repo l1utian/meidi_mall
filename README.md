@@ -12,13 +12,16 @@
 
 1. 打开终端或命令行工具。
 2. 在项目根目录下执行：
-   ```bash
-   yarn install
-   ```
-   或
-   ```bash
-   npm install
-   ```
+
+```bash
+yarn install
+```
+
+或
+
+```bash
+npm install
+```
 
 > **小提示**: 如果您发现安装速度有点慢，可以先尝试更换为国内的 npm 镜像库地址，执行以下命令：
 >
@@ -56,44 +59,56 @@ npm run build:tt
 yarn build:tt
 ```
 
-## 🌍 环境变量
+## ⚙️ 配置项说明与设置
 
-为了使应用更为灵活和安全，我们使用了环境变量来存储一些配置信息。这些信息是存在`.env.development` 和 `.env.production`两个文件中。
+应用通过配置文件来适应不同的运行环境。以下是两个主要的配置文件及其对应的运行命令：
 
-**环境变量包括：**
+- **`.env.development`**: 对应开发环境。要在开发环境中运行应用，请使用以下命令：
 
-- **接口地址**: 用于连接后台数据的地址。
-- **客服抖音号**: 用户在应用中可以通过这个号码联系到客服。
-- **抖音 AppID 和 AppKey**: 这两个密钥用于应用与抖音的接口交互。
+```
+npm dev:tt
+```
 
-> ⚠️ **注意**: 在编辑或使用环境变量时，请确保不要添加任何多余的内容，如多余的双引号或分号。
+或
 
-### 环境变量对应关系
+```
+yarn dev:tt
+```
 
-- `.env.development`: 对应开发环境，使用`npm dev:tt` 或 `yarn dev:tt`命令。
-- `.env.production`: 对应生产环境，使用`npm build:tt` 或 `yarn build:tt`命令。
+- **`.env.production`**: 对应生产环境。要在生产环境中部署应用，请使用以下命令：
+  ```
+  npm build:tt
+  ```
+  或
+  ```
+  yarn build:tt
+  ```
 
-## ⚙️ 配置项说明
+### 如何设置
 
-为了更好地适应不同的运行环境和确保应用的灵活性，本项目提供了两个配置文件供您进行必要的设置：
+在每个环境文件中，您会看到类似于以下的变量设置：
 
-1. **`.env.development`**: 该文件对应开发环境的配置。在开发、调试和测试应用时，系统会读取此文件中的配置项。
-2. **`.env.production`**: 该文件对应生产环境的配置。当应用准备部署并对外提供服务时，系统会读取此文件中的配置项。
+```
+TARO_APP_API_BASE_API_URL = http://example.com/api
+```
 
-### 开发环境与生产环境的区别：
-
-- **开发环境**主要用于应用的开发和测试，它可能包含一些用于调试的工具和设置。在此环境下，应用的性能可能不是最优的，但它为开发者提供了方便的调试和测试工具。
-
-- **生产环境**是应用准备正式对外提供服务的环境。所有的调试工具和不必要的功能都会被关闭或移除，确保应用达到最佳的性能和安全性。
+请确保在设置时，不添加任何多余的符号，如双引号或分号。
 
 ### 配置项详解：
 
-- **`TARO_APP_API_BASE_API_URL`**: 接口地址。该地址用于连接后台数据，它是应用请求数据或发送数据的地方。
+- **`TARO_APP_API_BASE_API_URL`**: 接口地址，用于连接后台数据。
 
-- **`TARO_APP_API_CUSTOMER_SERVICE_DY_ID`**: 客服抖音号。用户在应用中可以通过此号码联系到客服，为用户提供必要的帮助和支持。
+  - 示例: `TARO_APP_API_BASE_API_URL = http://nj.cirscn.com:15581/h5api`
 
-- **`TARO_APP_API_APP_ID`**: 抖音 AppID。这是应用在抖音平台的唯一标识，用于应用与抖音的接口交互。
+- **`TARO_APP_API_CUSTOMER_SERVICE_DY_ID`**: 客服抖音号。更多信息请查看[抖音 IM 客服接入指南](https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/open-capacity/operation/customer-service/1)。
 
-- **`TARO_APP_API_APP_KEY`**: 抖音 AppKey。与 AppID 配合使用，它是应用与抖音接口交互时的一个密钥，确保数据的安全传输。
+  - 示例: `TARO_APP_API_CUSTOMER_SERVICE_DY_ID = 1749153376`
+
+- **`TARO_APP_API_APP_ID`**: 抖音 AppID，这是应用在抖音平台的唯一标识。
+
+  - 示例: `TARO_APP_API_APP_ID = 3c06a5dc2a6249ce9899f656334e20e9`
+
+- **`TARO_APP_API_APP_KEY`**: 抖音 AppKey，与 AppID 配合使用，确保数据的安全传输。
+  - 示例: `TARO_APP_API_APP_KEY = 9b7ac73e644348bcba8a834df41c70b2`
 
 > ⚠️ **重要提醒**: 在修改配置文件时，请确保您了解每个配置项的含义，避免不必要的错误。同时，务必保证`AppKey`的安全，避免泄露。
