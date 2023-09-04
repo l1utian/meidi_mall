@@ -76,13 +76,16 @@ yarn dev:tt
 ```
 
 - **`.env.production`**: 对应生产环境。要在生产环境中部署应用，请使用以下命令：
-  ```
-  npm build:tt
-  ```
-  或
-  ```
-  yarn build:tt
-  ```
+
+```
+npm build:tt
+```
+
+或
+
+```
+yarn build:tt
+```
 
 ### 如何设置
 
