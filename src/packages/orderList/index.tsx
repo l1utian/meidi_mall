@@ -6,7 +6,7 @@ import OrderItem from "@/components/OrderItem";
 import { useRequest } from "ahooks";
 import {
   getOrderList,
-  postOrderContinuePay,
+  // postOrderContinuePay,
   postOrderConfirmOrder,
 } from "@/api/order";
 import useLoading from "@/hooks/useLoading";
@@ -44,6 +44,7 @@ const OrderList = () => {
     { title: "服务中", key: "2", orderStatus: "203" },
     { title: "退款", key: "3" },
   ];
+  const [confirmLoading, setConfirmLoading] = useState(false);
   const [currentOrder, setCurrentOrder] = useState<any>({});
   const [activeTab, setActiveTab] = useState<any>(type || "0");
   const [visible, setVisible] = useState<boolean>(false);
@@ -69,28 +70,34 @@ const OrderList = () => {
       orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
     });
   });
-  const { runAsync } = useRequest(postOrderContinuePay, {
-    manual: true,
-  });
-  const { runAsync: confirmRun } = useRequest(postOrderConfirmOrder, {
-    manual: true,
-  });
+  // const { runAsync } = useRequest(postOrderContinuePay, {
+  //   manual: true,
+  // });
+  const { runAsync: confirmRun, loading: confirmResLoading } = useRequest(
+    postOrderConfirmOrder,
+    {
+      manual: true,
+    }
+  );
   const handleClick = (key, order) => {
     setCurrentOrder(order);
     switch (key) {
       // 继续支付
       case "continuePay":
         // runAsync({ outOrderNo: order.outOrderNo });
+        setConfirmLoading(true);
         loginWithCheckSession()?.then(() => {
           tt?.continueToPay({
             outOrderNo: order.outOrderNo,
             success(res) {
+              setConfirmLoading(false);
               console.log(res);
               getOrderListRun({
                 orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
               });
             },
             fail(err) {
+              setConfirmLoading(false);
               console.log(err);
             },
           });
@@ -161,6 +168,7 @@ const OrderList = () => {
     <View className="orderList">
       <ConfirmModal
         visible={visible}
+        confirmLoading={confirmResLoading}
         content="确认服务已完成吗？"
         title="确认"
         onConfirm={handleConfirm}
@@ -177,6 +185,7 @@ const OrderList = () => {
             {data?.data && data?.data.length ? (
               data.data.map((v, i) => (
                 <OrderItem
+                  loading={confirmLoading}
                   info={v}
                   key={i}
                   onAction={(key) => handleClick(key, v)}

@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import Taro from "@tarojs/taro";
 import { Price, Input, InputNumber, Button } from "@nutui/nutui-react-taro";
 import { Text, View, Image } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
@@ -13,6 +12,7 @@ import { completeImageUrl, onPayCallback } from "@/utils/tool";
 const Settlement = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
+  const [loading, setLoading] = useState(false);
   const { params } = useRouter();
 
   const [number, setNumber] = useState<number | string>(1);
@@ -23,8 +23,9 @@ const Settlement = () => {
   }, [retailPrice, number]);
 
   const handleSubmit = () => {
-    postOrderCreate({ message, number, orderPrice, productCode }).then(
-      (res: any) => {
+    setLoading(true);
+    postOrderCreate({ message, number, orderPrice, productCode })
+      .then((res: any) => {
         const orderInfo = res?.data?.options?.orderInfo;
         const orderNo = res?.data?.outOrderNo;
         if (res?.code === 200) {
@@ -33,19 +34,26 @@ const Settlement = () => {
               orderInfo,
               service: 5,
               success: function (res: any) {
+                setLoading(false);
+
                 onPayCallback({
                   code: res.code,
                   redirectTo: `/packages/orderDetail/index?outOrderNo=${orderNo}`,
                 });
               },
               fail: function (err) {
+                setLoading(false);
                 console.log("支付失败", err);
               },
             });
           });
+        } else {
+          setLoading(false);
         }
-      }
-    );
+      })
+      ?.catch(() => {
+        setLoading(false);
+      });
   };
   return (
     <div className="settlement-container">
@@ -105,6 +113,7 @@ const Settlement = () => {
         <Button
           type="primary"
           onClick={handleSubmit}
+          loading={loading}
           className="settlement-bottom-submit"
         >
           提交订单

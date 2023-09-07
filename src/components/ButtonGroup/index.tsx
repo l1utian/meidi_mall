@@ -6,12 +6,14 @@ interface Props {
   onClick?: any;
   size?: any;
   status?: any;
+  loading?: boolean;
   isDetail?: any;
 }
 const ButtonGroup = ({
   onClick,
   size = "small",
   status,
+  loading,
   isDetail = false,
 }: Props) => {
   const handleClick = (key) => {
@@ -73,6 +75,7 @@ const ButtonGroup = ({
       {(data[status] || []).map((v, i) => (
         <Button
           key={i}
+          loading={(v.key === "continuePay" || v.key === "confirm") && loading}
           size={size}
           type={v.type || ""}
           block={data[status].length === 1 && isDetail}

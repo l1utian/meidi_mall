@@ -4,22 +4,22 @@ import { View, Image, Text } from "@tarojs/components";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import {
   getOrderInfo,
-  postOrderContinuePay,
+  // postOrderContinuePay,
   postOrderConfirmOrder,
 } from "@/api/order";
 import { useRequest } from "ahooks";
 import OrderStatus from "@/components/OrderStatus";
-import useLoading from "@/hooks/useLoading";
+// import useLoading from "@/hooks/useLoading";
 import location from "@/assets/user/location.svg";
 import ConfirmModal from "@/components/ConfirmModal";
 import ButtonGroup from "@/components/ButtonGroup";
-import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { useMemo } from "react";
 import { completeImageUrl, getRemainingMilliseconds } from "@/utils/tool";
 import { loginWithCheckSession } from "@/utils/TTUtil";
 import { BASE_API_URL } from "@/config/base";
 import { addressStore } from "@/store/address";
+import "./index.scss";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -33,18 +33,22 @@ const OrderList = () => {
 
   const { params } = useRouter();
   const { outOrderNo } = params;
+  const [confirmLoading, setConfirmLoading] = useState(false);
   const [visible, setVisible] = useState<boolean>(false);
   const { data, refresh } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
   });
-  const { runAsync, loading } = useRequest(postOrderContinuePay, {
-    manual: true,
-  });
-  const { runAsync: confirmRun } = useRequest(postOrderConfirmOrder, {
-    manual: true,
-  });
+  // const { runAsync, loading } = useRequest(postOrderContinuePay, {
+  //   manual: true,
+  // });
+  const { runAsync: confirmRun, loading: confirmResLoading } = useRequest(
+    postOrderConfirmOrder,
+    {
+      manual: true,
+    }
+  );
   // 页面加载时显示 loading
-  useLoading(loading);
+  // useLoading(loading);
 
   // 剩余的支付有效期
   const validPayTime = useMemo(() => {
@@ -65,14 +69,17 @@ const OrderList = () => {
     switch (key) {
       // 继续支付
       case "continuePay":
+        setConfirmLoading(true);
         loginWithCheckSession()?.then(() => {
           tt?.continueToPay({
             outOrderNo: outOrderNo,
             success(res) {
+              setConfirmLoading(false);
               console.log(res);
               refresh();
             },
             fail(err) {
+              setConfirmLoading(false);
               refresh();
               console.log(err);
             },
@@ -132,6 +139,7 @@ const OrderList = () => {
         visible={visible}
         content="确认服务已完成吗？"
         title="确认"
+        confirmLoading={confirmResLoading}
         onConfirm={handleConfirm}
         onCancel={() => setVisible(false)}
       />
@@ -262,6 +270,7 @@ const OrderList = () => {
         <View className="orderDetail-bottom">
           <ButtonGroup
             size="normal"
+            loading={confirmLoading}
             onClick={handleClick}
             isDetail={true}
             status={data?.data?.orderStatus}
