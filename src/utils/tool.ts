@@ -1,3 +1,4 @@
+import Taro from "@tarojs/taro";
 export function formatLocation(
   stringList: string[],
   separator: string = " "
@@ -70,3 +71,45 @@ export function completeImageUrl(imgUrl: string, domain: string): string {
   // 拼接域名和图片地址
   return domain + imgUrl;
 }
+
+// 支付回调
+export const onPayCallback = ({ code, redirectTo }) => {
+  let title: string = "支付失败";
+  // 0：支付成功
+  // 1：支付超时
+  // 2：支付失败
+  // 3：支付关闭
+  // 4：支付取消
+  switch (code) {
+    case 0:
+      title = "支付成功";
+      break;
+    case 1:
+      title = "支付超时";
+      break;
+    case 2:
+      title = "支付失败";
+      break;
+    case 3:
+      title = "支付关闭";
+      break;
+    case 4:
+      title = "放弃支付";
+      break;
+    default:
+      break;
+  }
+
+  Taro.showToast({
+    title,
+    icon: code === 0 ? "success" : "none",
+    duration: 1000,
+  });
+  if (redirectTo) {
+    setTimeout(() => {
+      Taro.redirectTo({
+        url: redirectTo,
+      });
+    }, 1000);
+  }
+};

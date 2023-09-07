@@ -8,7 +8,7 @@ import { postOrderCreate } from "@/api/order";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
-import { completeImageUrl } from "@/utils/tool";
+import { completeImageUrl, onPayCallback } from "@/utils/tool";
 
 const Settlement = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -33,20 +33,9 @@ const Settlement = () => {
               orderInfo,
               service: 5,
               success: function (res: any) {
-                // 0：支付成功
-                // 1：支付超时
-                // 2：支付失败
-                // 3：支付关闭
-                // 4：支付取消
-                if (res.code === 0) {
-                  Taro.showToast({
-                    title: "支付成功",
-                    icon: "success",
-                    duration: 1000,
-                  });
-                }
-                Taro.redirectTo({
-                  url: `/packages/orderDetail/index?outOrderNo=${orderNo}`,
+                onPayCallback({
+                  code: res.code,
+                  redirectTo: `/packages/orderDetail/index?outOrderNo=${orderNo}`,
                 });
               },
               fail: function (err) {
