@@ -85,6 +85,7 @@ function AddAddress() {
           placeholder="请输入"
           align="right"
           type="digit"
+          maxLength={11}
           onChange={(value) => handleChange("tel", value)}
         />
       </View>

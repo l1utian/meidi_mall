@@ -114,6 +114,7 @@ function EditAddress() {
           placeholder="请输入"
           align="right"
           type="digit"
+          maxLength={11}
           value={formState?.tel}
           onChange={(value) => handleChange("tel", value)}
         />
