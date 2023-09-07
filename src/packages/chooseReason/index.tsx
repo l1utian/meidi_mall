@@ -12,7 +12,6 @@ import { data } from "./data";
 import "./index.scss";
 
 const ChooseReason = () => {
-  const form: any = Form.useForm();
   const handleChange = (value) => {
     if (!value?.reason && !value?.other) {
       Taro.showToast({

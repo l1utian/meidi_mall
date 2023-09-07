@@ -1,4 +1,4 @@
-import { get, post } from "@/utils/request";
+import { post } from "@/utils/request";
 
 /**
  *  订单管理
@@ -16,12 +16,12 @@ export const postOrderContinuePay = (params): Promise<any> => {
 
 //订单列表
 export const getOrderList = (params): Promise<any> => {
-  return post("/order/list", params);
+  return post("/order/list", params, true);
 };
 
 //订单详情
 export const getOrderInfo = (params): Promise<any> => {
-  return post("/order/getInfo", params);
+  return post("/order/getInfo", params, true);
 };
 
 //预约服务

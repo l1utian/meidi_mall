@@ -10,7 +10,7 @@ export const getAvailableAddressList = (regionId): Promise<any> => {
 
 //地址列表
 export const getAddressList = (): Promise<any> => {
-  return post("/address/list", {});
+  return post("/address/list", {}, true);
 };
 
 //查看地址

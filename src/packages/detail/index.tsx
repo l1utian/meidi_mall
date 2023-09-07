@@ -17,9 +17,8 @@ import { getGoodsInfo } from "@/api/index";
 import { useRequest } from "ahooks";
 import { BASE_API_URL } from "@/config/base";
 import GoodModal from "./GoodModal";
-import useLoading from "@/hooks/useLoading";
-import "./index.scss";
 import { completeImageUrl } from "@/utils/tool";
+import "./index.scss";
 
 // 给所有 img 标签添加 mode
 (Taro as any).options.html.transformElement = (el) => {
@@ -40,15 +39,12 @@ function Detail() {
   const [selectedProduct, setSelectedProduct] = useState<any>({});
   const [visible, setVisible] = useState<boolean>(false);
 
-  const { loading, data } = useRequest(() => getGoodsInfo({ id }), {
+  const { data } = useRequest(() => getGoodsInfo({ id }), {
     refreshDeps: [id],
     onSuccess: (res) => {
       setSelectedProduct(res.data.goodsProductList[0]);
     },
   });
-
-  // 页面加载时显示 loading
-  useLoading(loading);
 
   const goodDetail = useMemo(() => data?.data || {}, [data]);
 

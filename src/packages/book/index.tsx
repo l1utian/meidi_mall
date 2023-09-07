@@ -144,7 +144,7 @@ const Book = () => {
         Taro.showToast({
           title: "预约成功",
           icon: "success",
-          duration: 2000,
+          duration: 1000,
         });
         setTimeout(() => {
           Taro.redirectTo({

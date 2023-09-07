@@ -68,48 +68,36 @@ const Login = () => {
   const handleGetPhoneNumber = (e) => {
     loginAndGetPhoneNumber(e, code)
       ?.then((res) => {
-        Taro.showLoading({
-          title: "登录中...",
-        });
-        login(res)
-          ?.then((data) => {
-            Taro.hideLoading();
-            if (data?.code === 200) {
-              const token = data?.token;
-              const returnUrl = decodeURIComponent(
-                router.params.returnUrl || ""
-              );
-              if (token) {
-                Taro.setStorageSync("token", token);
-                fetchUserInfo()?.then(() => {
-                  Taro.showToast({
-                    title: "登录成功",
-                    icon: "success",
-                    duration: 1000,
-                  });
-                  if (returnUrl) {
-                    navigateToPage(returnUrl);
-                  } else {
-                    // 如果没有返回的 URL，则跳转到默认页面
-                    Taro.switchTab({
-                      url: "/pages/index/index",
-                    });
-                  }
+        login(res)?.then((data) => {
+          if (data?.code === 200) {
+            const token = data?.token;
+            const returnUrl = decodeURIComponent(router.params.returnUrl || "");
+            if (token) {
+              Taro.setStorageSync("token", token);
+              fetchUserInfo()?.then(() => {
+                Taro.showToast({
+                  title: "登录成功",
+                  icon: "success",
+                  duration: 1000,
                 });
-              }
+                if (returnUrl) {
+                  navigateToPage(returnUrl);
+                } else {
+                  // 如果没有返回的 URL，则跳转到默认页面
+                  Taro.switchTab({
+                    url: "/pages/index/index",
+                  });
+                }
+              });
             }
-          })
-          ?.catch((err) => {
-            Taro.hideLoading();
-          });
+          }
+        });
       })
       .catch((err) => {
         const errMsg = err.errMsg;
         if (errMsg.includes("cancel")) {
           return;
         }
-        Taro.hideLoading();
-
         errMsg &&
           typeof errMsg === "string" &&
           Taro.showToast({

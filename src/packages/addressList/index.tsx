@@ -5,7 +5,6 @@ import AddressItem from "@/components/AddressItem";
 import { Button } from "@nutui/nutui-react-taro";
 import { postAddressRemove, getAddressList } from "@/api/address";
 import { useRequest } from "ahooks";
-import useLoading from "@/hooks/useLoading";
 import { formatLocation } from "@/utils/tool";
 import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
@@ -24,7 +23,7 @@ function AddressList() {
 
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState(null);
-  const { data, runAsync, loading } = useRequest(getAddressList, {
+  const { data, runAsync } = useRequest(getAddressList, {
     manual: true,
   });
 
@@ -81,9 +80,6 @@ function AddressList() {
       });
     }
   };
-
-  // 页面加载时显示 loading
-  useLoading(loading);
 
   const handleSelect = (v) => {
     if (fromPage === "book") {

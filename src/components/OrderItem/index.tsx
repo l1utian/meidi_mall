@@ -6,7 +6,7 @@ import "./index.scss";
 import { completeImageUrl } from "@/utils/tool";
 import { BASE_API_URL } from "@/config/base";
 
-const OrderItem = ({ info, onAction, loading, onClick }) => {
+const OrderItem = ({ info, onAction, onClick }) => {
   const handleAction = (key) => {
     onAction && onAction(key);
   };
@@ -63,11 +63,7 @@ const OrderItem = ({ info, onAction, loading, onClick }) => {
           ) : null}
         </View>
         <View>
-          <ButtonGroup
-            onClick={handleAction}
-            status={info?.orderStatus}
-            loading={loading}
-          />
+          <ButtonGroup onClick={handleAction} status={info?.orderStatus} />
         </View>
       </View>
     </View>

@@ -4,18 +4,13 @@ import Taro, { useRouter, useDidShow } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
 import OrderItem from "@/components/OrderItem";
 import { useRequest } from "ahooks";
-import {
-  getOrderList,
-  // postOrderContinuePay,
-  postOrderConfirmOrder,
-} from "@/api/order";
-import useLoading from "@/hooks/useLoading";
+import { getOrderList, postOrderConfirmOrder } from "@/api/order";
 import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
-import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
 import { addressStore } from "@/store/address";
+import "./index.scss";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -44,7 +39,6 @@ const OrderList = () => {
     { title: "服务中", key: "2", orderStatus: "203" },
     { title: "退款", key: "3" },
   ];
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const [currentOrder, setCurrentOrder] = useState<any>({});
   const [activeTab, setActiveTab] = useState<any>(type || "0");
   const [visible, setVisible] = useState<boolean>(false);
@@ -70,9 +64,7 @@ const OrderList = () => {
       orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
     });
   });
-  // const { runAsync } = useRequest(postOrderContinuePay, {
-  //   manual: true,
-  // });
+
   const { runAsync: confirmRun, loading: confirmResLoading } = useRequest(
     postOrderConfirmOrder,
     {
@@ -84,46 +76,26 @@ const OrderList = () => {
     switch (key) {
       // 继续支付
       case "continuePay":
-        // runAsync({ outOrderNo: order.outOrderNo });
-        setConfirmLoading(true);
+        Taro.showLoading({
+          title: "加载中",
+          mask: true,
+        });
         loginWithCheckSession()?.then(() => {
           tt?.continueToPay({
             outOrderNo: order.outOrderNo,
             success(res) {
-              setConfirmLoading(false);
+              Taro.hideLoading();
               console.log(res);
               getOrderListRun({
                 orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
               });
             },
             fail(err) {
-              setConfirmLoading(false);
+              Taro.hideLoading();
               console.log(err);
             },
           });
         });
-        // runAsync({ outOrderNo: order.outOrderNo }).then((res) => {
-        //   const orderId = res?.data?.options?.orderInfo?.order_id;
-
-        //   if (res?.code === 200) {
-        //     loginWithCheckSession()?.then(() => {
-        //       tt?.continueToPay({
-        //         outOrderNo: order.outOrderNo,
-        //         orderId,
-        //         success(res) {
-        //           console.log(res);
-        //           getOrderListRun({
-        //             orderStatus: tabs.find((v) => v.key === activeTab)
-        //               ?.orderStatus,
-        //           });
-        //         },
-        //         fail(err) {
-        //           console.log(err);
-        //         },
-        //       });
-        //     });
-        //   }
-        // });
         break;
       // 售后/退款
       case "refund":
@@ -150,9 +122,6 @@ const OrderList = () => {
       url: `/packages/orderDetail/index?outOrderNo=${v.outOrderNo}`,
     });
   };
-
-  // 页面加载时显示 loading
-  useLoading(loading);
 
   const handleConfirm = () => {
     confirmRun({
@@ -185,7 +154,6 @@ const OrderList = () => {
             {data?.data && data?.data.length ? (
               data.data.map((v, i) => (
                 <OrderItem
-                  loading={confirmLoading}
                   info={v}
                   key={i}
                   onAction={(key) => handleClick(key, v)}

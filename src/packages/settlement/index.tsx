@@ -8,11 +8,11 @@ import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
 import { completeImageUrl, onPayCallback } from "@/utils/tool";
+import Taro from "@tarojs/taro";
 
 const Settlement = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
-  const [loading, setLoading] = useState(false);
   const { params } = useRouter();
 
   const [number, setNumber] = useState<number | string>(1);
@@ -23,7 +23,10 @@ const Settlement = () => {
   }, [retailPrice, number]);
 
   const handleSubmit = () => {
-    setLoading(true);
+    Taro.showLoading({
+      title: "加载中",
+      mask: true,
+    });
     postOrderCreate({ message, number, orderPrice, productCode })
       .then((res: any) => {
         const orderInfo = res?.data?.options?.orderInfo;
@@ -34,25 +37,24 @@ const Settlement = () => {
               orderInfo,
               service: 5,
               success: function (res: any) {
-                setLoading(false);
-
+                Taro.hideLoading();
                 onPayCallback({
                   code: res.code,
                   redirectTo: `/packages/orderDetail/index?outOrderNo=${orderNo}`,
                 });
               },
               fail: function (err) {
-                setLoading(false);
                 console.log("支付失败", err);
+                Taro.hideLoading();
               },
             });
           });
         } else {
-          setLoading(false);
+          Taro.hideLoading();
         }
       })
       ?.catch(() => {
-        setLoading(false);
+        Taro.hideLoading();
       });
   };
   return (
@@ -113,7 +115,6 @@ const Settlement = () => {
         <Button
           type="primary"
           onClick={handleSubmit}
-          loading={loading}
           className="settlement-bottom-submit"
         >
           提交订单

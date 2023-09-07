@@ -132,7 +132,7 @@ export const previewFile = ({
         filePath: filePath,
         fileType,
         fileName,
-        success: function (res) {
+        success: function () {
           console.log("打开文档成功");
         },
       });

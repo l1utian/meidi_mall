@@ -11,5 +11,5 @@ export const getGoodsList = (params) => {
 
 //商品详情
 export const getGoodsInfo = (params): Promise<any> => {
-  return get("/goods/getInfo", params);
+  return get("/goods/getInfo", params, true);
 };

@@ -37,9 +37,10 @@ const request = (
   options: {
     method: Taro.request.Option["method"];
     data: Taro.request.Option["data"];
-  },
-  isFormData?: boolean
+    loading?: boolean;
+  }
 ) => {
+  const isLoading = options.loading || false;
   let sign;
   if (options.method === "GET") {
     sign = getGetSign();
@@ -49,15 +50,18 @@ const request = (
 
   return new Promise((resolve, reject) => {
     const token = Taro.getStorageSync("token");
+    isLoading &&
+      Taro.showLoading({
+        title: "加载中",
+        mask: true,
+      });
     Taro.request({
       url: BASE_API_URL + url,
       method: options.method,
       data: options.data,
       timeout: 180000,
       header: {
-        "content-type": isFormData
-          ? "application/x-www-form-urlencoded"
-          : "application/json;charset=UTF-8",
+        "content-type": "application/json;charset=UTF-8",
         Authorization: token,
         token: token,
         appid: apiAppId,
@@ -65,24 +69,22 @@ const request = (
         sign: sign.sign,
       },
       success(res: any) {
-        if (res.data.code === 200) {
-          resolve(res.data);
+        isLoading && Taro.hideLoading();
+        // 成功
+        if (res?.data?.code === 200) {
+          resolve(res?.data);
           return;
-        } else if (res?.data?.code === 401) {
+        }
+        // 未登录
+        if (res?.data?.code === 401) {
           Taro.removeStorageSync("token");
-          resolve(null);
+        } else if (res?.data?.code) {
+          Taro.showToast({
+            title: res.data.msg || "服务器错误，请稍后再试",
+            icon: "none",
+            duration: 2000,
+          });
         } else {
-          // 如果code存在，则是正常返回
-          if (res?.data?.code) {
-            Taro.showToast({
-              title: res.data.msg || "服务器错误，请稍后再试",
-              icon: "none",
-              duration: 2000,
-            });
-            resolve(null);
-            return;
-          }
-
           switch (res?.statusCode) {
             case 400:
               Taro.showToast({
@@ -142,38 +144,23 @@ const request = (
               });
               break;
           }
-          resolve(null);
         }
+        resolve(res.data);
       },
       fail(error) {
-        reject(error.errMsg);
         console.log(error);
+        isLoading && Taro.hideLoading();
+        reject(error.errMsg);
       },
     });
   });
 };
 
-const get = <T extends {}>(url: string, options?: T) => {
-  return request(url, { method: "GET", data: options });
+const get = <T extends {}>(url: string, options?: T, loading?: boolean) => {
+  return request(url, { method: "GET", data: options, loading });
 };
-const post = <T extends {}>(
-  url: string,
-  options?: T,
-  isFormData: boolean = false
-) => {
-  return request(url, { method: "POST", data: options }, isFormData);
+const post = <T extends {}>(url: string, options?: T, loading?: boolean) => {
+  return request(url, { method: "POST", data: options, loading });
 };
 
-const formDataPost = <T extends {}>(url: string, options: T) => {
-  return request(url, { method: "POST", data: options }, true);
-};
-
-const put = (url: string, options = {}) => {
-  return request(url, { method: "PUT", data: options });
-};
-// 不能声明DELETE（关键字）
-const remove = (url: string, options = {}) => {
-  return request(url, { method: "DELETE", data: options });
-};
-
-export { request, get, post, formDataPost, put, remove };
+export { request, get, post };

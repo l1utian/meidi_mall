@@ -2,14 +2,9 @@ import { Divider, Button } from "@nutui/nutui-react-taro";
 import { useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
-import {
-  getOrderInfo,
-  // postOrderContinuePay,
-  postOrderConfirmOrder,
-} from "@/api/order";
+import { getOrderInfo, postOrderConfirmOrder } from "@/api/order";
 import { useRequest } from "ahooks";
 import OrderStatus from "@/components/OrderStatus";
-// import useLoading from "@/hooks/useLoading";
 import location from "@/assets/user/location.svg";
 import ConfirmModal from "@/components/ConfirmModal";
 import ButtonGroup from "@/components/ButtonGroup";
@@ -33,22 +28,17 @@ const OrderList = () => {
 
   const { params } = useRouter();
   const { outOrderNo } = params;
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const [visible, setVisible] = useState<boolean>(false);
   const { data, refresh } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
   });
-  // const { runAsync, loading } = useRequest(postOrderContinuePay, {
-  //   manual: true,
-  // });
+
   const { runAsync: confirmRun, loading: confirmResLoading } = useRequest(
     postOrderConfirmOrder,
     {
       manual: true,
     }
   );
-  // 页面加载时显示 loading
-  // useLoading(loading);
 
   // 剩余的支付有效期
   const validPayTime = useMemo(() => {
@@ -69,39 +59,25 @@ const OrderList = () => {
     switch (key) {
       // 继续支付
       case "continuePay":
-        setConfirmLoading(true);
+        Taro.showLoading({
+          title: "加载中",
+          mask: true,
+        });
         loginWithCheckSession()?.then(() => {
           tt?.continueToPay({
             outOrderNo: outOrderNo,
             success(res) {
-              setConfirmLoading(false);
+              Taro.hideLoading();
               console.log(res);
               refresh();
             },
             fail(err) {
-              setConfirmLoading(false);
+              Taro.hideLoading();
               refresh();
               console.log(err);
             },
           });
         });
-        // runAsync({ outOrderNo }).then((res) => {
-        //   if (res?.code === 200) {
-        //     loginWithCheckSession()?.then(() => {
-        //       tt?.continueToPay({
-        //         outOrderNo: outOrderNo,
-        //         success(res) {
-        //           console.log(res);
-        //           refresh();
-        //         },
-        //         fail(err) {
-        //           refresh();
-        //           console.log(err);
-        //         },
-        //       });
-        //     });
-        //   }
-        // });
         break;
       // 售后/退款
       case "refund":
@@ -270,7 +246,6 @@ const OrderList = () => {
         <View className="orderDetail-bottom">
           <ButtonGroup
             size="normal"
-            loading={confirmLoading}
             onClick={handleClick}
             isDetail={true}
             status={data?.data?.orderStatus}

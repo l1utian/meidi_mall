@@ -13,7 +13,7 @@ export type UserActions = {
 /**
  * 创建并暴露地址存储对象
  */
-export const addressStore = create<UserState & UserActions>((set, get) => ({
+export const addressStore = create<UserState & UserActions>((set) => ({
   // 地址信息
   address: {},
 
