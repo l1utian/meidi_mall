@@ -63,6 +63,7 @@ function Detail() {
         selected={selectedProduct}
         productList={goodDetail.goodsProductList || []}
         visible={visible}
+        picUrl={goodDetail?.picUrl || ""}
         onClose={handleClose}
       />
       <Swiper defaultValue={0} indicator height={224}>

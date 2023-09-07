@@ -5,12 +5,12 @@ import { Close } from "@nutui/icons-react-taro";
 import Taro from "@tarojs/taro";
 import "./modal.scss";
 
-const GoodModal = ({ visible, onClose, productList, selected }) => {
+const GoodModal = ({ picUrl, visible, onClose, productList, selected }) => {
   const [selectedProduct, setSelectedProduct] = useState<any>(selected);
   const handleConfirm = () => {
     onClose && onClose(selectedProduct);
     Taro.navigateTo({
-      url: `/packages/settlement/index?url=${selectedProduct.url}&productCode=${selectedProduct.productCode}&productName=${selectedProduct.productName}&retailPrice=${selectedProduct.retailPrice}`,
+      url: `/packages/settlement/index?url=${picUrl}&productCode=${selectedProduct.productCode}&productName=${selectedProduct.productName}&retailPrice=${selectedProduct.retailPrice}`,
     });
   };
   useEffect(() => {
