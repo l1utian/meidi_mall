@@ -8,11 +8,13 @@ import { postOrderCreate } from "@/api/order";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
+import { completeImageUrl } from "@/utils/tool";
 
 const Settlement = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
   const { params } = useRouter();
+
   const [number, setNumber] = useState<number | string>(1);
   const [message, setMessage] = useState<string>("");
   const { url, productCode, productName, retailPrice }: any = params;
@@ -62,7 +64,7 @@ const Settlement = () => {
         <Text className="settlement-info-title">商品信息</Text>
         <View className="settlement-info-detail">
           <Image
-            src={BASE_API_URL + url || ""}
+            src={completeImageUrl(url, BASE_API_URL as string) || ""}
             className="settlement-info-img"
           />
           <View className="settlement-info-right">

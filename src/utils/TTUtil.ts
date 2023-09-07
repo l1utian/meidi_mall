@@ -78,10 +78,11 @@ export const loginWithCheckSession = () => {
 
 const getPhoneNumber = (e) => {
   return new Promise((resolve, reject) => {
+    console.log(e);
     if (e.detail.errMsg.slice(-2) === "ok") {
       resolve(JSON.stringify(e.detail));
     } else {
-      reject({ errMsg: "手机号获取失败" });
+      reject({ errMsg: "服务器开小差啦，请重试" });
     }
   });
 };

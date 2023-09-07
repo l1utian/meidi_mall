@@ -19,6 +19,7 @@ import { BASE_API_URL } from "@/config/base";
 import GoodModal from "./GoodModal";
 import useLoading from "@/hooks/useLoading";
 import "./index.scss";
+import { completeImageUrl } from "@/utils/tool";
 
 // 给所有 img 标签添加 mode
 (Taro as any).options.html.transformElement = (el) => {
@@ -67,7 +68,11 @@ function Detail() {
       <Swiper defaultValue={0} indicator height={224}>
         {goodDetail.gallery?.split(",").map((v, i) => (
           <SwiperItem key={i}>
-            <Image mode="scaleToFill" src={BASE_API_URL + v} height={224} />
+            <Image
+              mode="scaleToFill"
+              src={completeImageUrl(v, BASE_API_URL as string)}
+              height={224}
+            />
           </SwiperItem>
         ))}
       </Swiper>
