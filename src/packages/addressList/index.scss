@@ -8,10 +8,10 @@ page {
     left: 0;
     right: 0;
     bottom: 0;
-    bottom: constant(safe-area-inset-bottom);
-    bottom: env(safe-area-inset-bottom);
     width: 100%;
     padding: 12px 32px 24px;
+    padding: 12px 32px calc(24px + constant(safe-area-inset-bottom));
+    padding: 12px 32px calc(24px + env(safe-area-inset-bottom));
     z-index: 999;
     background-color: #fff;
     -webkit-box-sizing: border-box;

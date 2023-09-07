@@ -47,33 +47,32 @@ const ConfirmModal = (props: ConfirmModalProps) => {
             >
               {cancelText}
             </View>
-
-            {confirmLoading ? (
+            <View
+              className="confirm-modal__button confirm-modal__button--confirm"
+              onClick={onConfirm}
+            >
+              <ConfigProvider theme={{ nutuiLoadingIconSize: "18px" }}>
+                <Loading
+                  type="circular"
+                  style={{
+                    marginRight: "3px",
+                    marginTop: "4px",
+                    color: "#909090",
+                    visibility: confirmLoading ? "visible" : "hidden",
+                  }}
+                />
+              </ConfigProvider>
               <View
-                className="confirm-modal__button confirm-modal__button--confirm"
-                onClick={onConfirm}
-              >
-                <ConfigProvider theme={{ nutuiLoadingIconSize: "18px" }}>
-                  <Loading
-                    type="circular"
-                    style={{
-                      marginRight: "3px",
-                      marginTop: "4px",
-                    }}
-                  />
-                </ConfigProvider>
-                <View className="confirm-modal__button--confirm-disabled">
-                  {confirmText}
-                </View>
-              </View>
-            ) : (
-              <View
-                className="confirm-modal__button confirm-modal__button--confirm"
+                className={`${
+                  confirmLoading
+                    ? "confirm-modal__button--confirm-disabled"
+                    : "confirm-modal__button confirm-modal__button--confirm"
+                }`}
                 onClick={onConfirm}
               >
                 <View>{confirmText}</View>
               </View>
-            )}
+            </View>
           </View>
         </View>
       </View>

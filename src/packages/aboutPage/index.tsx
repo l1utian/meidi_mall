@@ -9,6 +9,8 @@ const QualificationPage = () => {
     <Image
       src={data?.data?.url}
       mode="widthFix"
+      lazyLoad
+      fadeIn
       style={{
         width: "100%",
       }}

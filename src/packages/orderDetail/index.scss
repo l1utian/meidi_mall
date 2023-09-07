@@ -158,10 +158,10 @@
     left: 0;
     right: 0;
     bottom: 0;
-    bottom: constant(safe-area-inset-bottom);
-    bottom: env(safe-area-inset-bottom);
     width: 100%;
     padding: 16px 32px 34px;
+    padding: 16px 32px calc(34px + constant(safe-area-inset-bottom));
+    padding: 16px 32px calc(34px + env(safe-area-inset-bottom));
     z-index: 999;
     box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.1);
     background-color: #fff;
