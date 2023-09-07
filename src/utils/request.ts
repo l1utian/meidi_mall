@@ -72,15 +72,77 @@ const request = (
           Taro.removeStorageSync("token");
           resolve(null);
         } else {
-          // 其他各种各样的状态码统统返回
-          if (res?.data?.msg) {
+          // 如果code存在，则是正常返回
+          if (res?.data?.code) {
             Taro.showToast({
-              title: res.data.msg || "请求失败",
+              title: res.data.msg || "服务器错误，请稍后再试",
               icon: "none",
               duration: 2000,
             });
             resolve(null);
+            return;
           }
+
+          switch (res?.statusCode) {
+            case 400:
+              Taro.showToast({
+                title: "操作失败，请稍后重试",
+                icon: "none",
+                duration: 2000,
+              });
+              break;
+
+            case 401:
+              Taro.showToast({
+                title: "您尚未登录或登录已过期",
+                icon: "none",
+                duration: 2000,
+              });
+              break;
+
+            case 403:
+              Taro.showToast({
+                title: "抱歉，您没有权限进行此操作",
+                icon: "none",
+                duration: 2000,
+              });
+              break;
+
+            case 404:
+              Taro.showToast({
+                title: "抱歉，我们找不到您请求的内容",
+                icon: "none",
+                duration: 2000,
+              });
+              break;
+
+            case 500:
+              Taro.showToast({
+                title: "服务器出了点小差，请稍后再试",
+                icon: "none",
+                duration: 2000,
+              });
+              break;
+
+            case 502:
+            case 503:
+            case 504:
+              Taro.showToast({
+                title: "服务器繁忙，请稍后重试",
+                icon: "none",
+                duration: 2000,
+              });
+              break;
+
+            default:
+              Taro.showToast({
+                title: "出现未知错误，请稍后再试",
+                icon: "none",
+                duration: 2000,
+              });
+              break;
+          }
+          resolve(null);
         }
       },
       fail(error) {

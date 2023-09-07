@@ -1,5 +1,5 @@
 // 判断是否登录
-const login = () => {
+export const checkLogin = () => {
   return new Promise<{
     hasLogin: true;
     code?: string;
@@ -49,7 +49,6 @@ const checkSession = () => {
   });
 };
 
-// loginWithCheckSession
 export const loginWithCheckSession = () => {
   return new Promise<{
     hasLogin: true;
@@ -65,7 +64,7 @@ export const loginWithCheckSession = () => {
         });
       })
       ?.catch(() => {
-        login()
+        checkLogin()
           ?.then((res) => {
             resolve(res);
           })
@@ -78,46 +77,36 @@ export const loginWithCheckSession = () => {
 
 const getPhoneNumber = (e) => {
   return new Promise((resolve, reject) => {
-    console.log(e);
     if (e.detail.errMsg.slice(-2) === "ok") {
       resolve(JSON.stringify(e.detail));
+    } else if (e.detail.errMsg === "bad parameter") {
+      reject({ errMsg: "页面发生错误，请刷新后重试" });
     } else {
       reject({ errMsg: "服务器开小差啦，请重试" });
     }
   });
 };
 
-export const loginAndGetPhoneNumber = (e) => {
+export const loginAndGetPhoneNumber = (e, code) => {
   return new Promise((resolve, reject) => {
-    login()
-      .then((res) => {
-        const { hasLogin, code } = res;
-        if (hasLogin) {
-          getPhoneNumber(e)
-            ?.then((res: string) => {
-              try {
-                const phoneInfo = JSON.parse(res);
-                resolve({
-                  code,
-                  encryptedData: phoneInfo.encryptedData,
-                  iv: phoneInfo.iv,
-                });
-              } catch (error) {
-                reject({
-                  errMsg: "手机号解析失败",
-                });
-              }
-            })
-            .catch((err) => {
-              reject({
-                errMsg: err?.errMsg || "登录发生未知错误，请重试",
-              });
-            });
+    getPhoneNumber(e)
+      ?.then((res: string) => {
+        try {
+          const phoneInfo = JSON.parse(res);
+          resolve({
+            code,
+            encryptedData: phoneInfo.encryptedData,
+            iv: phoneInfo.iv,
+          });
+        } catch (error) {
+          reject({
+            errMsg: "手机号解析失败",
+          });
         }
       })
-      .catch(() => {
+      .catch((err) => {
         reject({
-          errMsg: "登录失败",
+          errMsg: err?.errMsg || "登录发生未知错误，请重试",
         });
       });
   });
