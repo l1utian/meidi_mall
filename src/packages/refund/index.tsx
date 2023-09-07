@@ -22,7 +22,7 @@ const Refund = () => {
   const { data } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
   });
-  const { runAsync, loading } = useRequest(postOrderRefund, { manual: true });
+  const { runAsync } = useRequest(postOrderRefund, { manual: true });
   const [refundNum, setRefundNum] = useState<number>(1);
 
   useEffect(() => {
@@ -153,7 +153,7 @@ const Refund = () => {
         </View>
       </View>
       <View className="refund-bottom">
-        <Button block type="primary" onClick={handleSubmit} loading={loading}>
+        <Button block type="primary" onClick={handleSubmit}>
           提交
         </Button>
       </View>

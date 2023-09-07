@@ -30,5 +30,5 @@ export const postAddressEdit = (params): Promise<any> => {
 
 //删除地址
 export const postAddressRemove = (params): Promise<any> => {
-  return post("/address/remove", params);
+  return post("/address/remove", params, true);
 };

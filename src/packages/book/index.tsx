@@ -73,7 +73,7 @@ const Book = () => {
   }, [allAppointmentTimeData, appointmentDateChange]);
 
   const { data } = useRequest(getAddressList);
-  const { runAsync, loading } = useRequest(postOrderAppointment, {
+  const { runAsync } = useRequest(postOrderAppointment, {
     manual: true,
   });
 
@@ -231,7 +231,6 @@ const Book = () => {
         title="提示"
         content="具体上门服务时间以工程师电话预约为准"
         onConfirm={handleConfirm}
-        confirmLoading={loading}
         onCancel={() => setTipModalVisible(false)}
       />
     </View>

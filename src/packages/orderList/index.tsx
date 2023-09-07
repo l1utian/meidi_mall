@@ -137,7 +137,6 @@ const OrderList = () => {
     <View className="orderList">
       <ConfirmModal
         visible={visible}
-        confirmLoading={confirmResLoading}
         content="确认服务已完成吗？"
         title="确认"
         onConfirm={handleConfirm}

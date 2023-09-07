@@ -31,12 +31,9 @@ function AddressList() {
     runAsync();
   });
 
-  const { runAsync: removeRun, loading: removeLoading } = useRequest(
-    postAddressRemove,
-    {
-      manual: true,
-    }
-  );
+  const { runAsync: removeRun } = useRequest(postAddressRemove, {
+    manual: true,
+  });
 
   const list = useMemo(() => {
     return (data?.data ?? [])?.map((v) => {
@@ -121,7 +118,6 @@ function AddressList() {
       <ConfirmModal
         visible={visible}
         onCancel={handleCancel}
-        confirmLoading={removeLoading}
         onConfirm={handleConfirm}
         title="删除确认"
         content="确定删除该地址吗？"

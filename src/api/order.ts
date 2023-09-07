@@ -26,17 +26,17 @@ export const getOrderInfo = (params): Promise<any> => {
 
 //预约服务
 export const postOrderAppointment = (params): Promise<any> => {
-  return post("/order/appointment", params);
+  return post("/order/appointment", params, true);
 };
 
 //确认服务完成
 export const postOrderConfirmOrder = (params): Promise<any> => {
-  return post("/order/confirmOrder", params);
+  return post("/order/confirmOrder", params, true);
 };
 
 //申请退款
 export const postOrderRefund = (params): Promise<any> => {
-  return post("/order/refund", params);
+  return post("/order/refund", params, true);
 };
 
 // 可预约时间

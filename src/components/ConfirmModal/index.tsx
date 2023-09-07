@@ -68,7 +68,6 @@ const ConfirmModal = (props: ConfirmModalProps) => {
                     ? "confirm-modal__button--confirm-disabled"
                     : "confirm-modal__button confirm-modal__button--confirm"
                 }`}
-                onClick={onConfirm}
               >
                 <View>{confirmText}</View>
               </View>
