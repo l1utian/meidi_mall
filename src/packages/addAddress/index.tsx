@@ -48,10 +48,6 @@ function AddAddress() {
           runAsync(formState).then((res) => {
             if (res?.code === 200) {
               Taro.navigateBack();
-            } else {
-              Taro.showToast({
-                title: res.msg || "地址添加失败",
-              });
             }
           });
         }
