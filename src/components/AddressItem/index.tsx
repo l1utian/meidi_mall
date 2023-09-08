@@ -1,4 +1,4 @@
-import { Cell, Divider, Checkbox } from "@nutui/nutui-react-taro";
+import { Cell, Divider, Tag } from "@nutui/nutui-react-taro";
 import { View, Image, Text } from "@tarojs/components";
 import del from "@/assets/components/del.svg";
 import edit from "@/assets/components/edit.svg";
@@ -40,7 +40,15 @@ const AddressItem = ({ info, isSelect, onClick, onSelect }: IProps) => {
           style={{ color: "#d1d1d1", marginTop: "12px", marginBottom: "8px" }}
         />
         <View className="address-item-bottom">
-          <Checkbox checked={isDefault === 1} label="默认地址" />
+          <Tag
+            type="primary"
+            style={{
+              visibility: isDefault === 1 ? "visible" : "hidden",
+              marginRight: 10,
+            }}
+          >
+            默认
+          </Tag>
           <View className="address-item-action">
             <View
               className="address-item-icon"
