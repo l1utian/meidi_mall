@@ -47,7 +47,7 @@ const OrderStatus = ({ status, validPayTime, onRefresh }: OrderStatusProps) => {
     },
     //退款完成
     302: {
-      status: "退款完成",
+      status: "已退款",
       tip: "",
       icon: status_finish,
     },

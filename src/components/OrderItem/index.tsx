@@ -6,6 +6,39 @@ import "./index.scss";
 import { completeImageUrl } from "@/utils/tool";
 import { BASE_API_URL } from "@/config/base";
 
+const Bottom = ({ info, onAction }) => {
+  console.log(info);
+
+  if (
+    info?.orderStatus === 301 || // 退款中
+    info?.orderStatus === 303 || // 退款失败
+    info?.orderStatus === 401 // 已取消
+  ) {
+    return null;
+  }
+  return (
+    <>
+      <Divider className="orderItem-divider" style={{ color: "" }} />
+      <View className="orderItem-bottom">
+        <View>
+          {info?.orderStatus === 302 ? (
+            <Text className="orderItem-bottom-refund">
+              退款成功 ¥{info?.orderPrice || 0}
+            </Text>
+          ) : info?.appointmentDate && info?.appointmentTime ? (
+            <Text className="orderItem-bottom-time">
+              {`上门时间：${info?.appointmentDate} ${info?.appointmentTime}`}
+            </Text>
+          ) : null}
+        </View>
+        <View>
+          <ButtonGroup onClick={onAction} status={info?.orderStatus} />
+        </View>
+      </View>
+    </>
+  );
+};
+
 const OrderItem = ({ info, onAction, onClick }) => {
   const handleAction = (key) => {
     onAction && onAction(key);
@@ -52,19 +85,7 @@ const OrderItem = ({ info, onAction, onClick }) => {
             <Text className="orderItem-total-price">{info?.orderPrice}</Text>
           </View>
         </View>
-      </View>
-      <Divider className="orderItem-divider" style={{ color: "" }} />
-      <View className="orderItem-bottom">
-        <View>
-          {info?.appointmentDate && info?.appointmentTime ? (
-            <Text className="orderItem-bottom-time">
-              {`上门时间：${info?.appointmentDate} ${info?.appointmentTime}`}
-            </Text>
-          ) : null}
-        </View>
-        <View>
-          <ButtonGroup onClick={handleAction} status={info?.orderStatus} />
-        </View>
+        <Bottom info={info} onAction={handleAction} />
       </View>
     </View>
   );
