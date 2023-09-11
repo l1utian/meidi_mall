@@ -8,7 +8,7 @@
     "disablePrivate": false,
     "condition": {
         "miniprogram": {
-            "current": 1692374119961,
+            "current": 1694396588377,
             "list": [
                 {
                     "id": 1692171815804,
@@ -31,7 +31,7 @@
                     "mockUpdateType": "Noupdate"
                 },
                 {
-                    "id": 1692252864800,
+                    "id": 1694394966458,
                     "name": "pages/user/index",
                     "pathName": "pages/user/index",
                     "query": "",
@@ -111,14 +111,15 @@
                     "mockUpdateType": "Noupdate"
                 },
                 {
-                    "id": 1692769420610,
+                    "id": 1694396588377,
                     "name": "packages/orderList/index",
                     "pathName": "packages/orderList/index",
                     "query": "type=0",
                     "scene": "990001",
                     "launchFrom": "scan",
                     "location": "qr_code",
-                    "mockUpdateType": "Noupdate"
+                    "mockUpdateType": "Noupdate",
+                    "addType": "manual"
                 },
                 {
                     "id": 1692941140662,

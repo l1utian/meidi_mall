@@ -34,37 +34,33 @@ const OrderList = () => {
   const { type } = params;
 
   const tabs = [
-    { title: "全部订单", key: "0", orderStatus: "" },
-    { title: "待支付", key: "1", orderStatus: "101" },
-    { title: "服务中", key: "2", orderStatus: "203" },
-    { title: "退款", key: "3" },
+    { title: "全部订单", key: 0, orderStatus: "" },
+    { title: "待支付", key: 1, orderStatus: "101" },
+    { title: "服务中", key: 2, orderStatus: "203" },
+    { title: "退款", key: 3 },
   ];
   const [currentOrder, setCurrentOrder] = useState<any>({});
-  const [activeTab, setActiveTab] = useState<any>(type || "0");
+  const [activeTab, setActiveTab] = useState<any>(type || 0);
   const [visible, setVisible] = useState<boolean>(false);
   const {
     data,
     loading,
     runAsync: getOrderListRun,
-  }: any = useRequest(
-    () =>
-      getOrderList({
-        orderStatus:
-          activeTab === "3"
-            ? ""
-            : tabs.find((v) => v.key === activeTab)?.orderStatus,
-        refund: activeTab === "3" ? 1 : "",
-      }),
-    {
-      refreshDeps: [activeTab],
-    }
-  );
+  }: any = useRequest((parmams) => getOrderList(parmams), { manual: true });
+
   useDidShow(() => {
     getOrderListRun({
-      orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
+      orderStatus:
+        activeTab === 3
+          ? ""
+          : tabs.find((v) => v.key === activeTab)?.orderStatus,
+      refund: activeTab === 3 ? 1 : "",
     });
   });
 
+  // {
+  //   orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
+  // }
   const { runAsync: confirmRun, loading: confirmResLoading } = useRequest(
     postOrderConfirmOrder,
     {
@@ -87,7 +83,11 @@ const OrderList = () => {
               Taro.hideLoading();
               console.log(res);
               getOrderListRun({
-                orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
+                orderStatus:
+                  activeTab === 3
+                    ? ""
+                    : tabs.find((v) => v.key === activeTab)?.orderStatus,
+                refund: activeTab === 3 ? 1 : "",
               });
             },
             fail(err) {
@@ -128,11 +128,27 @@ const OrderList = () => {
       outOrderNo: currentOrder?.outOrderNo,
     }).then((res) => {
       if (res?.code === 200) {
-        getOrderListRun();
+        getOrderListRun({
+          orderStatus:
+            activeTab === 3
+              ? ""
+              : tabs.find((v) => v.key === activeTab)?.orderStatus,
+          refund: activeTab === 3 ? 1 : "",
+        });
         setVisible(false);
       }
     });
   };
+
+  const handleClickTab = (value) => {
+    setActiveTab(value);
+    getOrderListRun({
+      orderStatus:
+        value === 3 ? "" : tabs.find((v) => v.key === value)?.orderStatus,
+      refund: value === 3 ? 1 : "",
+    });
+  };
+
   return (
     <View className="orderList">
       <ConfirmModal
@@ -142,12 +158,7 @@ const OrderList = () => {
         onConfirm={handleConfirm}
         onCancel={() => setVisible(false)}
       />
-      <Tabs
-        value={activeTab}
-        onChange={(value) => {
-          setActiveTab(String(value));
-        }}
-      >
+      <Tabs value={activeTab} onChange={handleClickTab}>
         {tabs.map((v) => (
           <Tabs.TabPane title={v.title} key={v.key}>
             {data?.data && data?.data.length ? (

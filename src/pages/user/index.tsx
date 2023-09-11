@@ -83,16 +83,16 @@ function User() {
       <View className="user-grid">
         <View className="user-grid-title">商城订单</View>
         <Grid>
-          <GridItem text="全部" onClick={() => handleClickGrid("0")}>
+          <GridItem text="全部" onClick={() => handleClickGrid(0)}>
             <Image src={all} mode="widthFix" style={{ width: "32px" }} />
           </GridItem>
-          <GridItem text="待支付" onClick={() => handleClickGrid("1")}>
+          <GridItem text="待支付" onClick={() => handleClickGrid(1)}>
             <Image src={pay} mode="widthFix" style={{ width: "32px" }} />
           </GridItem>
-          <GridItem text="服务中" onClick={() => handleClickGrid("2")}>
+          <GridItem text="服务中" onClick={() => handleClickGrid(2)}>
             <Image src={service} mode="widthFix" style={{ width: "32px" }} />
           </GridItem>
-          <GridItem text="退款" onClick={() => handleClickGrid("3")}>
+          <GridItem text="退款" onClick={() => handleClickGrid(3)}>
             <Image src={back} mode="widthFix" style={{ width: "32px" }} />
           </GridItem>
         </Grid>

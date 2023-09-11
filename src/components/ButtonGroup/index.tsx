@@ -78,7 +78,10 @@ const ButtonGroup = ({
           size={size}
           type={v.type || ""}
           block={data[status].length === 1 && isDetail}
-          onClick={() => handleClick(v.key)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClick(v.key);
+          }}
         >
           {v.text}
         </Button>

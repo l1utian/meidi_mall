@@ -7,8 +7,6 @@ import { completeImageUrl } from "@/utils/tool";
 import { BASE_API_URL } from "@/config/base";
 
 const Bottom = ({ info, onAction }) => {
-  console.log(info);
-
   if (
     info?.orderStatus === 301 || // 退款中
     info?.orderStatus === 303 || // 退款失败
