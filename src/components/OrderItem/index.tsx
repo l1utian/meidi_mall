@@ -21,7 +21,7 @@ const Bottom = ({ info, onAction }) => {
         <View>
           {info?.orderStatus === 302 ? (
             <Text className="orderItem-bottom-refund">
-              退款成功 ¥{info?.orderPrice || 0}
+              退款成功 ¥{(info?.price || 0) * (info?.refundAmount || 0) || 0}
             </Text>
           ) : info?.appointmentDate && info?.appointmentTime ? (
             <Text className="orderItem-bottom-time">
