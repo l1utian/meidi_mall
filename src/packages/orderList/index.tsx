@@ -61,12 +61,9 @@ const OrderList = () => {
   // {
   //   orderStatus: tabs.find((v) => v.key === activeTab)?.orderStatus,
   // }
-  const { runAsync: confirmRun, loading: confirmResLoading } = useRequest(
-    postOrderConfirmOrder,
-    {
-      manual: true,
-    }
-  );
+  const { runAsync: confirmRun } = useRequest(postOrderConfirmOrder, {
+    manual: true,
+  });
   const handleClick = (key, order) => {
     setCurrentOrder(order);
     switch (key) {

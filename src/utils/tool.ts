@@ -131,3 +131,15 @@ export const onPayCallback = ({ code, redirectTo }) => {
   //   }, 1000);
   // }
 };
+
+export const formatDate = (inputDate: string): string => {
+  const dateParts = inputDate.split("-");
+  if (dateParts.length !== 3) {
+    throw new Error("输入日期格式不正确");
+  }
+
+  const month = dateParts[1];
+  const day = dateParts[2];
+
+  return `${month}月${day}日`;
+};

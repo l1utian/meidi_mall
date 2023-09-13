@@ -71,7 +71,12 @@ const ButtonGroup = ({
   };
 
   return data?.[status]?.length ? (
-    <View className="button-group">
+    <View
+      className="button-group"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       {data?.[status]?.map((v, i) => (
         <Button
           key={i}

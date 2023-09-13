@@ -3,7 +3,7 @@ import { Divider } from "@nutui/nutui-react-taro";
 import { orderStatus } from "@/constants/order";
 import ButtonGroup from "@/components/ButtonGroup";
 import "./index.scss";
-import { completeImageUrl } from "@/utils/tool";
+import { completeImageUrl, formatDate } from "@/utils/tool";
 import { BASE_API_URL } from "@/config/base";
 
 const Bottom = ({ info, onAction }) => {
@@ -17,15 +17,20 @@ const Bottom = ({ info, onAction }) => {
   return (
     <>
       <Divider className="orderItem-divider" style={{ color: "" }} />
-      <View className="orderItem-bottom">
+      <View
+        className="orderItem-bottom"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <View>
           {info?.orderStatus === 302 ? (
             <Text className="orderItem-bottom-refund">
-              退款成功 ¥{(info?.price || 0) * (info?.refundAmount || 0) || 0}
+              退款成功 ¥{info?.refundAmount || 0}
             </Text>
           ) : info?.appointmentDate && info?.appointmentTime ? (
             <Text className="orderItem-bottom-time">
-              {`上门时间：${info?.appointmentDate} ${info?.appointmentTime}`}
+              {`上门时间：${formatDate(info?.appointmentDate)}`}
             </Text>
           ) : null}
         </View>
