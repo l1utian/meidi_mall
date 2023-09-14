@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { getOrderInfo, postOrderRefund } from "@/api/order";
 import { useRequest } from "ahooks";
-import { InputNumber, TextArea, Button } from "@nutui/nutui-react-taro";
+import { TextArea, Button } from "@nutui/nutui-react-taro";
 import { orderStatus } from "@/constants/order";
 import right from "@/assets/public/right.svg";
 import ChooseModal from "./ChooseModal";
@@ -23,11 +23,6 @@ const Refund = () => {
     refreshDeps: [outOrderNo],
   });
   const { runAsync } = useRequest(postOrderRefund, { manual: true });
-  const [refundNum, setRefundNum] = useState<number>(1);
-
-  useEffect(() => {
-    setRefundNum(data?.data.number);
-  }, [data]);
 
   // 提交
   const handleSubmit = () => {
@@ -44,7 +39,6 @@ const Refund = () => {
         other ? (refundType && refundType.length ? `;${other}` : other) : ""
       }`,
       message,
-      refundNum,
       outOrderNo,
     }).then((res) => {
       if (res?.code === 200) {
@@ -123,21 +117,15 @@ const Refund = () => {
       <View className="refund-num">
         <View className="refund-num-left">
           <Text className="refund-num-label">商品件数</Text>
-          <Text className="refund-num-subLabel">{`(最多可退${data?.data.number}件)`}</Text>
         </View>
-        <InputNumber
-          value={refundNum}
-          min={1}
-          max={data?.data.number}
-          onChange={(v) => setRefundNum(Number(v))}
-        />
+        <Text className="refund-num-subLabel">{`${data?.data.number} 件`}</Text>
       </View>
       <View className="refund-reason">
         <View className="refund-reason-item">
           <View className="refund-reason-label">申请总额</View>
           <View className="refund-reason-price">
             <Text className="refund-reason-price-symbol">￥</Text>
-            <Text>{data?.data.price * refundNum}</Text>
+            <Text>{data?.data.price * data?.data.number}</Text>
           </View>
         </View>
         <View className="refund-reason-status">
