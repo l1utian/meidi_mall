@@ -126,7 +126,9 @@ const Refund = () => {
           <View className="refund-reason-label">申请总额</View>
           <View className="refund-reason-price">
             <Text className="refund-reason-price-symbol">￥</Text>
-            <Text>{multiply(data?.data.price, data?.data.number)}</Text>
+            <Text>
+              {multiply(data?.data.price || 0, data?.data.number || 0)}
+            </Text>
           </View>
         </View>
         <View className="refund-reason-status">

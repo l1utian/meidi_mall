@@ -19,7 +19,7 @@ const Settlement = () => {
   const [message, setMessage] = useState<string>("");
   const { url, productCode, productName, retailPrice }: any = params;
   const orderPrice = useMemo(() => {
-    return multiply(retailPrice, Number(number));
+    return multiply(retailPrice || 0, Number(number));
   }, [retailPrice, number]);
 
   const handleSubmit = () => {
