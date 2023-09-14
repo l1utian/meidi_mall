@@ -7,7 +7,7 @@ import { postOrderCreate } from "@/api/order";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
-import { completeImageUrl, onPayCallback } from "@/utils/tool";
+import { completeImageUrl, multiply, onPayCallback } from "@/utils/tool";
 import Taro from "@tarojs/taro";
 
 const Settlement = () => {
@@ -19,7 +19,7 @@ const Settlement = () => {
   const [message, setMessage] = useState<string>("");
   const { url, productCode, productName, retailPrice }: any = params;
   const orderPrice = useMemo(() => {
-    return retailPrice * Number(number);
+    return multiply(retailPrice, Number(number));
   }, [retailPrice, number]);
 
   const handleSubmit = () => {

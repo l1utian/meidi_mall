@@ -143,3 +143,21 @@ export const formatDate = (inputDate: string): string => {
 
   return `${month}月${day}日`;
 };
+export function multiply(a: number, b: number): number {
+  let commonMultiple = 0;
+  let s1 = a.toString();
+  let s2 = b.toString();
+
+  try {
+    commonMultiple += s1.split(".")[1].length;
+  } catch (e) {}
+
+  try {
+    commonMultiple += s2.split(".")[1].length;
+  } catch (e) {}
+
+  return (
+    (Number(s1.replace(".", "")) * Number(s2.replace(".", ""))) /
+    Math.pow(10, commonMultiple)
+  );
+}

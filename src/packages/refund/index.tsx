@@ -9,6 +9,7 @@ import right from "@/assets/public/right.svg";
 import ChooseModal from "./ChooseModal";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
+import { multiply } from "@/utils/tool";
 
 const Refund = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -125,7 +126,7 @@ const Refund = () => {
           <View className="refund-reason-label">申请总额</View>
           <View className="refund-reason-price">
             <Text className="refund-reason-price-symbol">￥</Text>
-            <Text>{data?.data.price * data?.data.number}</Text>
+            <Text>{multiply(data?.data.price, data?.data.number)}</Text>
           </View>
         </View>
         <View className="refund-reason-status">
