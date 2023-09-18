@@ -2,7 +2,7 @@ import { CUSTOMER_SERVICE_DY_ID } from "@/config/base";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { useState, useMemo } from "react";
 import { useRouter } from "@tarojs/taro";
-import { View, Text, Button as TaroButton } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import {
   Swiper,
   SwiperItem,
@@ -32,7 +32,7 @@ import "./index.scss";
 
 function Detail() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
-  useRequireLogin();
+  // useRequireLogin();
 
   const { params } = useRouter();
   const { id } = params;
@@ -118,18 +118,16 @@ function Detail() {
         ) : null}
       </View>
       <View className="detail-bottom">
-        <TaroButton
-          className="detail-bottom-service"
-          open-type="im"
-          dataImId={CUSTOMER_SERVICE_DY_ID}
-        >
-          <Image
-            src={message}
-            mode="widthFix"
-            className="detail-bottom-message"
-          />
-          <Text className="detail-bottom-text">联系客服</Text>
-        </TaroButton>
+        <detail-contact-support imId={CUSTOMER_SERVICE_DY_ID} goodsId={id}>
+          <View className="detail-bottom-service">
+            <Image
+              src={message}
+              mode="widthFix"
+              className="detail-bottom-message"
+            />
+            <Text className="detail-bottom-text">联系客服</Text>
+          </View>
+        </detail-contact-support>
 
         <Button
           className="detail-bottom-btn"

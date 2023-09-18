@@ -1,0 +1,11 @@
+.im-button {
+  appearance: none;
+  background: transparent;
+  padding: 0;
+  position: relative;
+  line-height: auto;
+ 
+}
+.im-button::after {
+  border: none;
+}

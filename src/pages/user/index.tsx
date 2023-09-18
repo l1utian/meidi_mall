@@ -115,12 +115,9 @@ function User() {
           }
           onClick={() => handleClick("address")}
         />
-        <Button
-          className="user-hide-button"
-          open-type="im"
-          dataImId={CUSTOMER_SERVICE_DY_ID}
-        >
+        <about-contact-support imId={CUSTOMER_SERVICE_DY_ID}>
           <Cell
+            className="user-hide-button"
             title={
               <View className="user-group-title">
                 <Image src={kefu} className="user-group-icon" mode="widthFix" />
@@ -131,7 +128,7 @@ function User() {
               <Image src={right} className="user-right-icon" mode="widthFix" />
             }
           />
-        </Button>
+        </about-contact-support>
 
         <Cell
           onClick={() => {

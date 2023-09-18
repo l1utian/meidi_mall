@@ -1,0 +1,12 @@
+
+<button
+  class='im-button'
+  open-type="im"
+  data-im-id="{{imId}}"
+  bindim="imCallback"
+  binderror="onimError"
+>
+ <slot>
+    <view>跳转IM</view>
+ </slot>
+</button>

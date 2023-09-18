@@ -1,0 +1,15 @@
+
+<button
+  class='im-button'
+  open-type="im"
+  data-im-id="{{imId}}"
+  bindim="imCallback"
+  binderror="onimError"
+  data-im-type="goods"
+  data-biz-line="1"
+  data-goods-id="{{goodsId}}"
+>
+ <slot>
+    <view>跳转IM</view>
+ </slot>
+</button>

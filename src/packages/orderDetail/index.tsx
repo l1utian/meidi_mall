@@ -16,7 +16,7 @@ import { BASE_API_URL } from "@/config/base";
 import { addressStore } from "@/store/address";
 import "./index.scss";
 
-const OrderList = () => {
+const OrderDetail = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
 
@@ -248,4 +248,4 @@ const OrderList = () => {
     </View>
   );
 };
-export default OrderList;
+export default OrderDetail;

@@ -100,21 +100,12 @@
   border-radius: 50%;
   object-fit: cover;
 }
-.user-hide-button {
-  position: relative;
-  padding: 0;
-  line-height: auto;
-  background-color: transparent;
-  margin: 0;
-  border: none;
-  .nut-cell:last-child .nut-cell__divider {
+.user-container .nut-cell.user-hide-button {
+  .nut-cell__divider {
     border-top: var(
       --nutui-cell-divider-border-bottom,
       2px solid #f5f6f7
     ) !important;
     height: 2px;
-  }
-  &::after {
-    border: none !important;
   }
 }
