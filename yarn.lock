@@ -1139,10 +1139,17 @@
     core-js-pure "^3.30.2"
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.14.5", "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.6", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.14.5", "@babel/runtime@^7.7.6", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4":
   version "7.22.10"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.22.10.tgz"
   integrity sha512-21t/fkKLMZI4pqP2wlmsQAWnYW1PDyKyyUV4vCi+B25ydmdaYTKXPwCj0BzSUnZf4seIiYvSA3jcZ3gdsMFkLQ==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
+"@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
+  version "7.22.15"
+  resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.22.15.tgz#38f46494ccf6cf020bd4eed7124b425e83e523b8"
+  integrity sha512-T0O+aa+4w0u06iNmapipJXMV4HoUir03hpx3/YqXXhu9xim3w+dVphjFWl1OH8NbZHw5Lbm9k45drDkgq2VNNA==
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -1373,9 +1380,9 @@
     classnames "^2.3.2"
 
 "@nutui/nutui-react-taro@^2.0.14":
-  version "2.0.14"
-  resolved "https://registry.npmmirror.com/@nutui/nutui-react-taro/-/nutui-react-taro-2.0.14.tgz#eb3d32c755fc5f287dd9872fe854fe6bff8acd0b"
-  integrity sha512-HDAdw02pflsHliMAICqNADIzHbfw4CYNw/cj97tTLIWhH/Bn+DKAdep8Y6O6q41dZ3TG0nTp9LPAZRybsYYX3A==
+  version "2.0.17"
+  resolved "https://registry.npmmirror.com/@nutui/nutui-react-taro/-/nutui-react-taro-2.0.17.tgz#52748ccd941b3e9463aeea4f37599cb88d5ed41b"
+  integrity sha512-72LL3uKk7hhGQXOCHVEtxxS/CEgRIlk9jaZq8aa63z+N1wRJwWodcBVaZ5gObdwbAp/MKC9/5ZB6Wicf2eWhkw==
   dependencies:
     "@babel/runtime" "^7.21.0"
     "@nutui/icons-react-taro" "0.0.1"
@@ -1390,7 +1397,7 @@
 
 "@nutui/touch-emulator@^1.0.0":
   version "1.0.0"
-  resolved "https://registry.npmjs.org/@nutui/touch-emulator/-/touch-emulator-1.0.0.tgz"
+  resolved "https://registry.npmmirror.com/@nutui/touch-emulator/-/touch-emulator-1.0.0.tgz#bcd60e64a2014d6bc40c9e312fae1cc8e310e8f7"
   integrity sha512-k2hvI/9LlRA7Ph1Chni27pTuvPmKPt+/I10sWWd2sWzqiCOYRerD79eIwCMRGUF/q6WVDEKVnv00t9CEUL4sPA==
 
 "@parcel/css@^1.4.0":
@@ -1422,7 +1429,7 @@
 
 "@react-spring/animated@~9.6.1":
   version "9.6.1"
-  resolved "https://registry.npmjs.org/@react-spring/animated/-/animated-9.6.1.tgz"
+  resolved "https://registry.npmmirror.com/@react-spring/animated/-/animated-9.6.1.tgz#ccc626d847cbe346f5f8815d0928183c647eb425"
   integrity sha512-ls/rJBrAqiAYozjLo5EPPLLOb1LM0lNVQcXODTC1SMtS6DbuBCPaKco5svFUQFMP2dso3O+qcC4k9FsKc0KxMQ==
   dependencies:
     "@react-spring/shared" "~9.6.1"
@@ -1430,7 +1437,7 @@
 
 "@react-spring/core@~9.6.1":
   version "9.6.1"
-  resolved "https://registry.npmjs.org/@react-spring/core/-/core-9.6.1.tgz"
+  resolved "https://registry.npmmirror.com/@react-spring/core/-/core-9.6.1.tgz#ebe07c20682b360b06af116ea24e2b609e778c10"
   integrity sha512-3HAAinAyCPessyQNNXe5W0OHzRfa8Yo5P748paPcmMowZ/4sMfaZ2ZB6e5x5khQI8NusOHj8nquoutd6FRY5WQ==
   dependencies:
     "@react-spring/animated" "~9.6.1"
@@ -1440,12 +1447,12 @@
 
 "@react-spring/rafz@~9.6.1":
   version "9.6.1"
-  resolved "https://registry.npmjs.org/@react-spring/rafz/-/rafz-9.6.1.tgz"
+  resolved "https://registry.npmmirror.com/@react-spring/rafz/-/rafz-9.6.1.tgz#d71aafb92b78b24e4ff84639f52745afc285c38d"
   integrity sha512-v6qbgNRpztJFFfSE3e2W1Uz+g8KnIBs6SmzCzcVVF61GdGfGOuBrbjIcp+nUz301awVmREKi4eMQb2Ab2gGgyQ==
 
 "@react-spring/shared@~9.6.1":
   version "9.6.1"
-  resolved "https://registry.npmjs.org/@react-spring/shared/-/shared-9.6.1.tgz"
+  resolved "https://registry.npmmirror.com/@react-spring/shared/-/shared-9.6.1.tgz#4e2e4296910656c02bd9fd54c559702bc836ac4e"
   integrity sha512-PBFBXabxFEuF8enNLkVqMC9h5uLRBo6GQhRMQT/nRTnemVENimgRd+0ZT4yFnAQ0AxWNiJfX3qux+bW2LbG6Bw==
   dependencies:
     "@react-spring/rafz" "~9.6.1"
@@ -1453,12 +1460,12 @@
 
 "@react-spring/types@~9.6.1":
   version "9.6.1"
-  resolved "https://registry.npmjs.org/@react-spring/types/-/types-9.6.1.tgz"
+  resolved "https://registry.npmmirror.com/@react-spring/types/-/types-9.6.1.tgz#913d3a68c5cbc1124fdb18eff919432f7b6abdde"
   integrity sha512-POu8Mk0hIU3lRXB3bGIGe4VHIwwDsQyoD1F394OK7STTiX9w4dG3cTLljjYswkQN+hDSHRrj4O36kuVa7KPU8Q==
 
 "@react-spring/web@~9.6.1":
   version "9.6.1"
-  resolved "https://registry.npmjs.org/@react-spring/web/-/web-9.6.1.tgz"
+  resolved "https://registry.npmmirror.com/@react-spring/web/-/web-9.6.1.tgz#3e4c03b724d2b545dc2fa2649eb6109318ab9178"
   integrity sha512-X2zR6q2Z+FjsWfGAmAXlQaoUHbPmfuCaXpuM6TcwXPpLE1ZD4A1eys/wpXboFQmDkjnrlTmKvpVna1MjWpZ5Hw==
   dependencies:
     "@react-spring/animated" "~9.6.1"
@@ -2659,12 +2666,12 @@
 
 "@use-gesture/core@10.2.20":
   version "10.2.20"
-  resolved "https://registry.npmjs.org/@use-gesture/core/-/core-10.2.20.tgz"
+  resolved "https://registry.npmmirror.com/@use-gesture/core/-/core-10.2.20.tgz#b29e0aadd5e90336e599d849e50eef0e06aa28bf"
   integrity sha512-4lFhHc8so4yIHkBEs641DnEsBxPyhJ5GEjB4PURFDH4p/FcZriH6w99knZgI63zN/MBFfylMyb8+PDuj6RIXKQ==
 
 "@use-gesture/react@10.2.20":
   version "10.2.20"
-  resolved "https://registry.npmjs.org/@use-gesture/react/-/react-10.2.20.tgz"
+  resolved "https://registry.npmmirror.com/@use-gesture/react/-/react-10.2.20.tgz#2d556a62c22200507b9d478ce7159057004acb8d"
   integrity sha512-KnJq9ZSqprWA6uNhWTUHZqTCh+rfa0j8ehTzqeBhktUPrmTj7yVOBvEQ/vSFU/7d72cGgWSsJ0f5T6GQCHXnvg==
   dependencies:
     "@use-gesture/core" "10.2.20"
@@ -3222,7 +3229,7 @@ astral-regex@^2.0.0:
 
 async-validator@^4.2.5:
   version "4.2.5"
-  resolved "https://registry.npmjs.org/async-validator/-/async-validator-4.2.5.tgz"
+  resolved "https://registry.npmmirror.com/async-validator/-/async-validator-4.2.5.tgz#c96ea3332a521699d0afaaceed510a54656c6339"
   integrity sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==
 
 async@^3.2.3:
@@ -3813,7 +3820,7 @@ ci-info@^2.0.0:
 
 classnames@^2.2.5, classnames@^2.3.2:
   version "2.3.2"
-  resolved "https://registry.npmjs.org/classnames/-/classnames-2.3.2.tgz"
+  resolved "https://registry.npmmirror.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
   integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
 
 clean-css@^4.2.1:
@@ -4680,7 +4687,7 @@ dom-converter@^0.2.0:
 
 dom-helpers@^5.0.1:
   version "5.2.1"
-  resolved "https://registry.npmjs.org/dom-helpers/-/dom-helpers-5.2.1.tgz"
+  resolved "https://registry.npmmirror.com/dom-helpers/-/dom-helpers-5.2.1.tgz#d9400536b2bf8225ad98fe052e029451ac40e902"
   integrity sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
   dependencies:
     "@babel/runtime" "^7.8.7"
@@ -7313,12 +7320,12 @@ lodash.debounce@^4.0.8:
 
 lodash.isequal@^4.5.0:
   version "4.5.0"
-  resolved "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
+  resolved "https://registry.npmmirror.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
 
 lodash.kebabcase@^4.1.1:
   version "4.1.1"
-  resolved "https://registry.npmjs.org/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz"
+  resolved "https://registry.npmmirror.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
   integrity sha512-N8XRTIMMqqDgSy4VLKPnJ/+hpGZN+PHQiJnSenYqPaVV/NCqEogTnAdZLQiGKhxX+JCs8waWq2t1XHWKOmlY8g==
 
 lodash.memoize@^4.1.2:
@@ -8021,7 +8028,7 @@ oauth-sign@~0.9.0:
 
 object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
-  resolved "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
+  resolved "https://registry.npmmirror.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==
 
 object-inspect@^1.12.3, object-inspect@^1.9.0:
@@ -9007,7 +9014,7 @@ react-dom@^18.0.0:
 
 react-is@^16.13.1:
   version "16.13.1"
-  resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
+  resolved "https://registry.npmmirror.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
 react-reconciler@0.27.0:
@@ -9030,7 +9037,7 @@ react-refresh@^0.4.0:
 
 react-transition-group@^4.4.5:
   version "4.4.5"
-  resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz"
+  resolved "https://registry.npmmirror.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
   integrity sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==
   dependencies:
     "@babel/runtime" "^7.5.5"
@@ -9127,7 +9134,7 @@ regenerator-runtime@0.11:
 
 regenerator-runtime@^0.14.0:
   version "0.14.0"
-  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.14.0.tgz"
+  resolved "https://registry.npmmirror.com/regenerator-runtime/-/regenerator-runtime-0.14.0.tgz#5e19d68eb12d486f797e15a3c6a918f7cec5eb45"
   integrity sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==
 
 regenerator-transform@^0.15.2:

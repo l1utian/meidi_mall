@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { View } from "@tarojs/components";
 import Taro, { useRouter, useDidShow } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
@@ -146,6 +146,15 @@ const OrderList = () => {
     });
   };
 
+  const dataSource = useMemo(() => {
+    return Array?.isArray(data?.data)
+      ? data?.data?.map((v) => ({
+          ...v,
+          orderStatus: v.refundResult === 2 ? 303 : v.orderStatus,
+        }))
+      : [];
+  }, [data?.data]);
+
   return (
     <View className="orderList">
       <ConfirmModal
@@ -158,8 +167,8 @@ const OrderList = () => {
       <Tabs value={activeTab} onChange={handleClickTab}>
         {tabs.map((v) => (
           <Tabs.TabPane title={v.title} key={v.key}>
-            {data?.data && data?.data.length ? (
-              data.data.map((v, i) => (
+            {dataSource?.length ? (
+              dataSource.map((v, i) => (
                 <OrderItem
                   info={v}
                   key={i}

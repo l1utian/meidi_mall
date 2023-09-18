@@ -33,6 +33,18 @@ const OrderList = () => {
     refreshDeps: [outOrderNo],
   });
 
+  const info = useMemo(() => {
+    if (data?.data) {
+      return {
+        ...data?.data,
+        orderStatus:
+          data?.data?.refundResult === 2 ? 303 : data?.data?.orderStatus,
+      };
+    }
+
+    return {};
+  }, [data]);
+
   const { runAsync: confirmRun, loading: confirmResLoading } = useRequest(
     postOrderConfirmOrder,
     {
@@ -42,18 +54,11 @@ const OrderList = () => {
 
   // 剩余的支付有效期
   const validPayTime = useMemo(() => {
-    if (
-      data?.data.orderStatus === 101 &&
-      data?.data.validTime &&
-      data?.data?.orderTime
-    ) {
-      return getRemainingMilliseconds(
-        data?.data?.orderTime,
-        data?.data.validTime
-      );
+    if (info.orderStatus === 101 && info.validTime && info?.orderTime) {
+      return getRemainingMilliseconds(info?.orderTime, info.validTime);
     }
     return 0;
-  }, [data]);
+  }, [info]);
 
   const handleClick = (key) => {
     switch (key) {
@@ -120,16 +125,16 @@ const OrderList = () => {
         onCancel={() => setVisible(false)}
       />
       <OrderStatus
-        status={data?.data?.orderStatus}
+        status={info?.orderStatus}
         validPayTime={validPayTime}
         onRefresh={refresh}
       />
       <View className="orderDetail-content">
-        {data?.data.orderStatus !== 101 &&
-          data?.data.orderStatus !== 201 &&
-          data?.data.consignee &&
-          data?.data.mobile &&
-          data?.data.address && (
+        {info?.orderStatus !== 101 &&
+          info?.orderStatus !== 201 &&
+          info?.consignee &&
+          info?.mobile &&
+          info?.address && (
             <View className="orderDetail-address">
               <Image
                 src={location}
@@ -139,43 +144,37 @@ const OrderList = () => {
               <View className="orderDetail-address-info">
                 <View className="orderDetail-address-top">
                   <Text className="orderDetail-address-name">
-                    {data?.data.consignee}
+                    {info?.consignee}
                   </Text>
-                  <Text>{data?.data.mobile}</Text>
+                  <Text>{info?.mobile}</Text>
                 </View>
-                <Text>{data?.data.address}</Text>
+                <Text>{info?.address}</Text>
               </View>
             </View>
           )}
-        {data?.data.orderStatus !== 101 &&
-          data?.data.orderStatus !== 201 &&
-          data?.data.appointmentDate &&
-          data?.data.appointmentTime && (
+        {info?.orderStatus !== 101 &&
+          info?.orderStatus !== 201 &&
+          info?.appointmentDate &&
+          info?.appointmentTime && (
             <View className="orderDetail-time">
               <Text>预约服务时间</Text>
-              <Text>{`${data?.data.appointmentDate} ${data?.data.appointmentTime}`}</Text>
+              <Text>{`${info?.appointmentDate} ${info?.appointmentTime}`}</Text>
             </View>
           )}
         <View className="orderDetail-good">
           <Image
-            src={completeImageUrl(data?.data.picUrl, BASE_API_URL)}
+            src={completeImageUrl(info?.picUrl, BASE_API_URL)}
             className="orderDetail-good-img"
           />
           <View className="orderDetail-good-detail">
-            <Text className="orderDetail-good-name">
-              {data?.data.productName}
-            </Text>
+            <Text className="orderDetail-good-name">{info?.productName}</Text>
             <View className="orderDetail-good-info">
               <View>
                 <Text className="orderDetail-good-symbol">￥</Text>
-                <Text className="orderDetail-good-price">
-                  {data?.data.price}
-                </Text>
+                <Text className="orderDetail-good-price">{info?.price}</Text>
               </View>
               <View>
-                <Text className="orderDetail-good-num">
-                  ×{data?.data.number}
-                </Text>
+                <Text className="orderDetail-good-num">×{info?.number}</Text>
               </View>
             </View>
           </View>
@@ -184,13 +183,13 @@ const OrderList = () => {
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">订单编号</View>
             <View className="orderDetail-info-content">
-              <Text>{data?.data.outOrderNo}</Text>
+              <Text>{info?.outOrderNo}</Text>
               <Button
                 size="small"
                 className="orderDetail-info-content-copy"
                 onClick={() => {
                   Taro.setClipboardData({
-                    data: data?.data.outOrderNo,
+                    data: info?.outOrderNo,
                     success() {
                       Taro?.showToast({
                         title: "订单编号已复制",
@@ -207,9 +206,7 @@ const OrderList = () => {
           </View>
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">下单时间</View>
-            <View className="orderDetail-info-content">
-              {data?.data?.orderTime}
-            </View>
+            <View className="orderDetail-info-content">{info?.orderTime}</View>
           </View>
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">支付方式</View>
@@ -217,38 +214,36 @@ const OrderList = () => {
           </View>
           <View className="orderDetail-info-item">
             <View className="orderDetail-info-label">备注留言</View>
-            <View className="orderDetail-info-content">
-              {data?.data?.message}
-            </View>
+            <View className="orderDetail-info-content">{info?.message}</View>
           </View>
         </View>
         <View className="orderDetail-price">
           <View className="orderDetail-price-top">
             <Text>商品总额</Text>
             <Text className="orderDetail-price-top-num">
-              ¥{data?.data?.orderPrice || 0}
+              ¥{info?.orderPrice || 0}
             </Text>
           </View>
           <Divider className="orderDetail-price-middle" />
           <View className="orderDetail-price-bottom">
             <Text className="orderDetail-price-bottom-total">总计：</Text>
             <Text className="orderDetail-price-bottom-num">
-              ¥{data?.data?.orderPrice || 0}
+              ¥{info?.orderPrice || 0}
             </Text>
           </View>
         </View>
       </View>
-      {(data?.data.orderStatus === 101 ||
-        data?.data.orderStatus === 201 ||
-        data?.data.orderStatus === 202 ||
-        data?.data.orderStatus === 203 ||
-        data?.data.orderStatus === 204) && (
+      {(info?.orderStatus === 101 ||
+        info?.orderStatus === 201 ||
+        info?.orderStatus === 202 ||
+        info?.orderStatus === 203 ||
+        info?.orderStatus === 204) && (
         <View className="orderDetail-bottom">
           <ButtonGroup
             size="normal"
             onClick={handleClick}
             isDetail={true}
-            status={data?.data?.orderStatus}
+            status={info?.orderStatus}
           />
         </View>
       )}

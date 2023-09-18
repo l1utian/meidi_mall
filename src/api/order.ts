@@ -44,3 +44,15 @@ export const postOrderRefund = (params): Promise<any> => {
 export const postOrderAppointmentTimeList = (): Promise<any> => {
   return post("/order/appointmentTimeList", {});
 };
+
+// 退款失败提示
+// Post /order/refundFailCount
+export const postOrderRefundFailCount = (): Promise<any> => {
+  return post("/order/refundFailCount", {});
+};
+
+// 退款失败已读
+// POST /order/refundFailRead
+export const postOrderRefundFailRead = (): Promise<any> => {
+  return post("/order/refundFailRead", {});
+};

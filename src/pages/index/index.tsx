@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { SearchBar, Grid } from "@nutui/nutui-react-taro";
+import { useState, useEffect } from "react";
+import { SearchBar, Grid, Dialog } from "@nutui/nutui-react-taro";
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { getGoodsList } from "@/api";
+import {
+  getGoodsList,
+  postOrderRefundFailCount,
+  postOrderRefundFailRead,
+} from "@/api";
 import { useRequest } from "ahooks";
 import { debounce, completeImageUrl } from "@/utils/tool";
 
@@ -10,9 +14,11 @@ import GoodItem from "./GoodItem";
 import Empty from "./Empty";
 import "./index.scss";
 import { BASE_API_URL } from "@/config/base";
+import { userStore } from "@/store/user";
 
 const Index = () => {
   const [name, setName] = useState<string>("");
+  const isLoggedIn = userStore.getState().isLoggedIn();
 
   const { data, loading }: any = useRequest(() => getGoodsList({ name }), {
     refreshDeps: [name],
@@ -28,6 +34,24 @@ const Index = () => {
     });
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      postOrderRefundFailCount()?.then((res) => {
+        if (res?.code === 200 && res?.data > 0) {
+          Dialog.open("postOrderRefundFailCount", {
+            content: "退款失败，请联系客服处理",
+            hideCancelButton: true,
+            footerDirection: "vertical",
+            onConfirm() {
+              postOrderRefundFailRead();
+              Dialog.close("postOrderRefundFailCount");
+            },
+          });
+        }
+      });
+    }
+  }, [isLoggedIn]);
+
   return (
     <View className="home">
       <SearchBar
@@ -36,6 +60,8 @@ const Index = () => {
         placeholder="请输入关键字"
         onChange={handleSearch}
       />
+      <Dialog id="postOrderRefundFailCount" />
+
       <Grid columns={2}>
         {data?.data?.length ? (
           data.data.map((v, i) => (
