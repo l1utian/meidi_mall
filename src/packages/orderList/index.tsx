@@ -147,12 +147,7 @@ const OrderList = () => {
   };
 
   const dataSource = useMemo(() => {
-    return Array?.isArray(data?.data)
-      ? data?.data?.map((v) => ({
-          ...v,
-          orderStatus: v.refundResult === 2 ? 303 : v.orderStatus,
-        }))
-      : [];
+    return Array?.isArray(data?.data) ? data?.data : [];
   }, [data?.data]);
 
   return (

@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SearchBar, Grid, Dialog } from "@nutui/nutui-react-taro";
+import { useDidShow } from "@tarojs/taro";
+
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import {
@@ -14,11 +16,9 @@ import GoodItem from "./GoodItem";
 import Empty from "./Empty";
 import "./index.scss";
 import { BASE_API_URL } from "@/config/base";
-import { userStore } from "@/store/user";
 
 const Index = () => {
   const [name, setName] = useState<string>("");
-  const isLoggedIn = userStore.getState().isLoggedIn();
 
   const { data, loading }: any = useRequest(() => getGoodsList({ name }), {
     refreshDeps: [name],
@@ -34,23 +34,26 @@ const Index = () => {
     });
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      postOrderRefundFailCount()?.then((res) => {
-        if (res?.code === 200 && res?.data > 0) {
-          Dialog.open("postOrderRefundFailCount", {
-            content: "退款失败，请联系客服处理",
-            hideCancelButton: true,
-            footerDirection: "vertical",
-            onConfirm() {
-              postOrderRefundFailRead();
-              Dialog.close("postOrderRefundFailCount");
-            },
-          });
-        }
-      });
-    }
-  }, [isLoggedIn]);
+  const fetchOrderRefundFailCount = () => {
+    postOrderRefundFailCount()?.then((res) => {
+      if (res?.code === 200 && res?.data > 0) {
+        Dialog.open("postOrderRefundFailCount", {
+          content: "退款失败，请联系客服处理",
+          hideCancelButton: true,
+          footerDirection: "vertical",
+          onConfirm() {
+            postOrderRefundFailRead();
+            Dialog.close("postOrderRefundFailCount");
+          },
+        });
+      }
+    });
+  };
+
+  // 从其他页面访问首页时
+  useDidShow(() => {
+    fetchOrderRefundFailCount();
+  });
 
   return (
     <View className="home">

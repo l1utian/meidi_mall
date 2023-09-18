@@ -37,8 +37,6 @@ const OrderList = () => {
     if (data?.data) {
       return {
         ...data?.data,
-        orderStatus:
-          data?.data?.refundResult === 2 ? 303 : data?.data?.orderStatus,
       };
     }
 

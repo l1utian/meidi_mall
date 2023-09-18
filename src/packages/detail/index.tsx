@@ -109,11 +109,13 @@ function Detail() {
         <Divider className="detail-divider">
           <Text style={{ color: "#333", fontWeight: 400 }}>服务详情</Text>
         </Divider>
-        <View
-          dangerouslySetInnerHTML={{
-            __html: `<div id="detail">${goodDetail.detail}</div>`,
-          }}
-        ></View>
+        {goodDetail.detail ? (
+          <View
+            dangerouslySetInnerHTML={{
+              __html: `<div id="detail">${goodDetail.detail}</div>`,
+            }}
+          ></View>
+        ) : null}
       </View>
       <View className="detail-bottom">
         <TaroButton

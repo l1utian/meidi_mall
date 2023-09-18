@@ -7,9 +7,12 @@ import { completeImageUrl, formatDate } from "@/utils/tool";
 import { BASE_API_URL } from "@/config/base";
 
 const Bottom = ({ info, onAction }) => {
+  // 退款失败
+  const isRefundFail =
+    info?.orderStatus === 303 || Number(info?.refundResult) === 2;
+
   if (
     info?.orderStatus === 301 || // 退款中
-    info?.orderStatus === 303 || // 退款失败
     info?.orderStatus === 401 // 已取消
   ) {
     return null;
@@ -24,7 +27,9 @@ const Bottom = ({ info, onAction }) => {
         }}
       >
         <View>
-          {info?.orderStatus === 302 ? (
+          {isRefundFail ? (
+            <Text className="orderItem-bottom-refund">退款失败</Text>
+          ) : info?.orderStatus === 302 ? (
             <Text className="orderItem-bottom-refund">
               退款成功 ¥{info?.refundAmount || 0}
             </Text>
