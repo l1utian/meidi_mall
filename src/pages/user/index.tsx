@@ -115,6 +115,7 @@ function User() {
           }
           onClick={() => handleClick("address")}
         />
+        {/* @ts-ignore */}
         <about-contact-support imId={CUSTOMER_SERVICE_DY_ID}>
           <Cell
             className="user-hide-button"
@@ -128,6 +129,7 @@ function User() {
               <Image src={right} className="user-right-icon" mode="widthFix" />
             }
           />
+          {/* @ts-ignore */}
         </about-contact-support>
 
         <Cell

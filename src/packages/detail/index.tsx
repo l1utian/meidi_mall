@@ -32,7 +32,7 @@ import "./index.scss";
 
 function Detail() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
-  // useRequireLogin();
+  useRequireLogin();
 
   const { params } = useRouter();
   const { id } = params;
@@ -118,6 +118,7 @@ function Detail() {
         ) : null}
       </View>
       <View className="detail-bottom">
+        {/* @ts-ignore */}
         <detail-contact-support imId={CUSTOMER_SERVICE_DY_ID} goodsId={id}>
           <View className="detail-bottom-service">
             <Image
@@ -127,6 +128,7 @@ function Detail() {
             />
             <Text className="detail-bottom-text">联系客服</Text>
           </View>
+          {/* @ts-ignore */}
         </detail-contact-support>
 
         <Button
