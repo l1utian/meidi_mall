@@ -11,6 +11,7 @@ import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
 import { addressStore } from "@/store/address";
 import "./index.scss";
+import { onContinueToPayCallback } from "@/utils/tool";
 
 const OrderList = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -73,23 +74,35 @@ const OrderList = () => {
           title: "加载中",
           mask: true,
         });
+
         loginWithCheckSession()?.then(() => {
-          tt?.continueToPay({
-            outOrderNo: order.outOrderNo,
-            success(res) {
-              Taro.hideLoading();
-              console.log(res);
-              getOrderListRun({
-                orderStatus:
-                  activeTab === 3
-                    ? ""
-                    : tabs.find((v) => v.key === activeTab)?.orderStatus,
-                refund: activeTab === 3 ? 1 : "",
+          tt.pay({
+            orderInfo: {
+              order_id: order?.payId,
+              order_token: order?.payToken,
+            },
+            service: 5,
+            success: function (res: any) {
+              onContinueToPayCallback({
+                code: res.code,
+                success() {
+                  Taro.hideLoading();
+                  getOrderListRun({
+                    orderStatus:
+                      activeTab === 3
+                        ? ""
+                        : tabs.find((v) => v.key === activeTab)?.orderStatus,
+                    refund: activeTab === 3 ? 1 : "",
+                  });
+                },
+                fail() {
+                  Taro.hideLoading();
+                },
               });
             },
-            fail(err) {
+            fail: function (err) {
+              console.log("fail", err);
               Taro.hideLoading();
-              console.log(err);
             },
           });
         });

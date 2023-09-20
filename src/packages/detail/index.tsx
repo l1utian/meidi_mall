@@ -1,7 +1,6 @@
-import { CUSTOMER_SERVICE_DY_ID } from "@/config/base";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { useState, useMemo } from "react";
-import { useRouter } from "@tarojs/taro";
+import { useDidShow, useRouter } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import {
   Swiper,
@@ -19,6 +18,7 @@ import { BASE_API_URL } from "@/config/base";
 import GoodModal from "./GoodModal";
 import { completeImageUrl } from "@/utils/tool";
 import "./index.scss";
+import { getIm } from "@/api/assets";
 
 // 给所有 img 标签添加 mode
 (Taro as any).options.html.transformElement = (el) => {
@@ -33,6 +33,17 @@ import "./index.scss";
 function Detail() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
+
+  const result = useRequest(getIm, {
+    manual: true,
+  });
+  useDidShow(() => {
+    result.runAsync();
+  });
+
+  const imId = useMemo(() => {
+    return result?.data?.data?.imId;
+  }, [result?.data]);
 
   const { params } = useRouter();
   const { id } = params;
@@ -119,7 +130,7 @@ function Detail() {
       </View>
       <View className="detail-bottom">
         {/* @ts-ignore */}
-        <detail-contact-support imId={CUSTOMER_SERVICE_DY_ID} goodsId={id}>
+        <detail-contact-support imId={imId} goodsId={id}>
           <View className="detail-bottom-service">
             <Image
               src={message}

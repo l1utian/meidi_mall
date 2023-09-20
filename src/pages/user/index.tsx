@@ -1,5 +1,6 @@
-import { View, Image, Text, Button } from "@tarojs/components";
+import { View, Image, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { useDidShow } from "@tarojs/taro";
 import { CellGroup, Cell, Grid, GridItem } from "@nutui/nutui-react-taro";
 import { userStore } from "@/store/user";
 import location from "@/assets/user/location.svg";
@@ -15,10 +16,25 @@ import bg from "@/assets/user/bg.png";
 import logo from "@/assets/public/logo.png";
 import "./index.scss";
 import { maskPhoneNumber } from "@/utils/tool";
-import { CUSTOMER_SERVICE_DY_ID } from "@/config/base";
+import { getIm } from "@/api/assets";
+import { useRequest } from "ahooks";
+import { useMemo } from "react";
 
 function User() {
   const { userProfile, isLoggedIn, removeUserProfile } = userStore();
+
+  const result = useRequest(getIm, {
+    manual: true,
+  });
+
+  useDidShow(() => {
+    result.runAsync();
+  });
+
+  const imId = useMemo(() => {
+    return result?.data?.data?.imId;
+  }, [result?.data]);
+
   const login = () => {
     if (!isLoggedIn()) {
       Taro.navigateTo({
@@ -116,7 +132,7 @@ function User() {
           onClick={() => handleClick("address")}
         />
         {/* @ts-ignore */}
-        <about-contact-support imId={CUSTOMER_SERVICE_DY_ID}>
+        <about-contact-support imId={imId}>
           <Cell
             className="user-hide-button"
             title={

@@ -39,7 +39,6 @@ const Settlement = () => {
               success: function (res: any) {
                 Taro.hideLoading();
                 onPayCallback({
-                  code: res.code,
                   redirectTo: `/packages/orderDetail/index?outOrderNo=${orderNo}`,
                 });
               },

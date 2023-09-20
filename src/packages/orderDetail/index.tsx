@@ -10,7 +10,11 @@ import ConfirmModal from "@/components/ConfirmModal";
 import ButtonGroup from "@/components/ButtonGroup";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { useMemo } from "react";
-import { completeImageUrl, getRemainingMilliseconds } from "@/utils/tool";
+import {
+  completeImageUrl,
+  getRemainingMilliseconds,
+  onContinueToPayCallback,
+} from "@/utils/tool";
 import { loginWithCheckSession } from "@/utils/TTUtil";
 import { BASE_API_URL } from "@/config/base";
 import { addressStore } from "@/store/address";
@@ -66,18 +70,29 @@ const OrderDetail = () => {
           title: "加载中",
           mask: true,
         });
+
         loginWithCheckSession()?.then(() => {
-          tt?.continueToPay({
-            outOrderNo: outOrderNo,
-            success(res) {
-              Taro.hideLoading();
-              console.log(res);
-              refresh();
+          tt.pay({
+            orderInfo: {
+              order_id: info?.payId,
+              order_token: info?.payToken,
             },
-            fail(err) {
+            service: 5,
+            success: function (res: any) {
+              onContinueToPayCallback({
+                code: res.code,
+                success() {
+                  Taro.hideLoading();
+                  refresh();
+                },
+                fail() {
+                  Taro.hideLoading();
+                },
+              });
+            },
+            fail: function (err) {
+              console.log("支付失败", err);
               Taro.hideLoading();
-              refresh();
-              console.log(err);
             },
           });
         });

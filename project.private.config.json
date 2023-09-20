@@ -1,6 +1,6 @@
 {
     "setting": {
-        "urlCheck": true,
+        "urlCheck": false,
         "IDEPreviewHotRestartCache": true,
         "mockLogin": false,
         "bigPackageSizeSupport": false
