@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { View } from "@tarojs/components";
 import Taro, { useRouter, useDidShow } from "@tarojs/taro";
 import { Tabs } from "@nutui/nutui-react-taro";
@@ -7,6 +7,7 @@ import { useRequest } from "ahooks";
 import { getOrderList, postOrderConfirmOrder } from "@/api/order";
 import ConfirmModal from "@/components/ConfirmModal";
 import Empty from "./Empty";
+import { isNumber } from "lodash-es";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
 import { addressStore } from "@/store/address";
@@ -41,13 +42,19 @@ const OrderList = () => {
     { title: "退款", key: 3 },
   ];
   const [currentOrder, setCurrentOrder] = useState<any>({});
-  const [activeTab, setActiveTab] = useState<any>(type || 0);
+  const [activeTab, setActiveTab] = useState<any>(0);
   const [visible, setVisible] = useState<boolean>(false);
   const {
     data,
     loading,
     runAsync: getOrderListRun,
   }: any = useRequest((parmams) => getOrderList(parmams), { manual: true });
+
+  useEffect(() => {
+    if (isNumber(type)) {
+      setActiveTab(type);
+    }
+  }, [type]);
 
   useDidShow(() => {
     getOrderListRun({
