@@ -19,6 +19,7 @@ import GoodModal from "./GoodModal";
 import { completeImageUrl } from "@/utils/tool";
 import "./index.scss";
 import { getIm } from "@/api/assets";
+import useImageDimension from "@/hooks/useImageDimension";
 
 // 给所有 img 标签添加 mode
 (Taro as any).options.html.transformElement = (el) => {
@@ -33,6 +34,7 @@ import { getIm } from "@/api/assets";
 function Detail() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
+  const { calculatedHeight } = useImageDimension(750, 750);
 
   const result = useRequest(getIm, {
     manual: true,
@@ -73,17 +75,20 @@ function Detail() {
         picUrl={goodDetail?.picUrl || ""}
         onClose={handleClose}
       />
-      <Swiper defaultValue={0} indicator height={224}>
-        {goodDetail.gallery?.split(",").map((v, i) => (
-          <SwiperItem key={i}>
-            <Image
-              mode="scaleToFill"
-              src={completeImageUrl(v, BASE_API_URL as string)}
-              height={224}
-            />
-          </SwiperItem>
-        ))}
-      </Swiper>
+      {calculatedHeight > 0 ? (
+        <Swiper defaultValue={0} indicator height={calculatedHeight}>
+          {goodDetail.gallery?.split(",").map((v, i) => (
+            <SwiperItem key={i}>
+              <Image
+                mode="scaleToFill"
+                src={completeImageUrl(v, BASE_API_URL as string)}
+                height={calculatedHeight}
+              />
+            </SwiperItem>
+          ))}
+        </Swiper>
+      ) : null}
+
       <View className="detail-intro">
         <View className="detail-intro-top">
           <View>
@@ -122,6 +127,7 @@ function Detail() {
         </Divider>
         {goodDetail.detail ? (
           <View
+            className="detail-content"
             dangerouslySetInnerHTML={{
               __html: `<div id="detail">${goodDetail.detail}</div>`,
             }}

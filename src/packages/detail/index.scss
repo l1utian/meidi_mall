@@ -22,10 +22,12 @@
     &-symbol {
       font-size: 28px;
       font-weight: bold;
+      color: #e1251b;
     }
     &-price {
       font-size: 36px;
       font-weight: bolder;
+      color: #e1251b;
     }
     &-price-u {
       margin-left: 18px;
@@ -66,7 +68,14 @@
   .detail-service {
     background-color: #fff;
     padding-top: 32px;
-    padding-bottom: 160px;
+    padding-bottom: calc(32px + 32px + 45px);
+    padding-bottom: calc(
+      32px + calc(16px + constant(safe-area-inset-bottom)) + 45px
+    );
+    padding-bottom: calc(
+      32px + calc(16px + env(safe-area-inset-bottom)) + 45px
+    );
+
     image {
       width: 100%;
     }
@@ -128,5 +137,10 @@
       border-radius: 40px;
       height: 80px;
     }
+  }
+}
+.detail-content {
+  image {
+    vertical-align: top;
   }
 }

@@ -42,16 +42,11 @@ declare namespace tt {
     success: (res: { code: string }) => void;
     fail: (err: any) => void;
   }): void;
-  export function continueToPay(obj: {
-    orderId?: any;
-    outOrderNo?: any;
-    success: (res: { code: string }) => void;
-    fail: (err: any) => void;
-  }): void;
+  export function getSystemInfo(p: any): void;
   export function downloadFile(obj: {
     url: string;
-    success: (res: { tempFilePath: string }) => void;
-    fail: (err: any) => void;
+    success: (res: any) => void;
+    fail?: (err: any) => void;
   }): void;
   export function openDocument(obj: {
     filePath: string;

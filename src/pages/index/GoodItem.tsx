@@ -1,8 +1,11 @@
 import { View, Text } from "@tarojs/components";
 import { Image } from "@nutui/nutui-react-taro";
 import "./index.scss";
+import useThumbnailDimension from "@/hooks/useThumbnailDimension";
 
 const GoodItem = ({ src, name, retailPrice, counterPrice }) => {
+  const size = useThumbnailDimension();
+
   return (
     <View className="goodItem">
       <Image
@@ -12,6 +15,7 @@ const GoodItem = ({ src, name, retailPrice, counterPrice }) => {
         radius={4}
         fadeIn
         lazyLoad
+        height={size}
       />
       <Text className="goodItem-name">{name}</Text>
       <View className="goodItem-price">

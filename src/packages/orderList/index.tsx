@@ -42,7 +42,7 @@ const OrderList = () => {
     { title: "退款", key: 3 },
   ];
   const [currentOrder, setCurrentOrder] = useState<any>({});
-  const [activeTab, setActiveTab] = useState<any>(0);
+  const [activeTab, setActiveTab] = useState<any>(Number(type));
   const [visible, setVisible] = useState<boolean>(false);
   const {
     data,
@@ -51,9 +51,7 @@ const OrderList = () => {
   }: any = useRequest((parmams) => getOrderList(parmams), { manual: true });
 
   useEffect(() => {
-    if (isNumber(type)) {
-      setActiveTab(type);
-    }
+    setActiveTab(Number(type));
   }, [type]);
 
   useDidShow(() => {

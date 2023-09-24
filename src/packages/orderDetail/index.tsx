@@ -31,6 +31,9 @@ const OrderDetail = () => {
   });
 
   const { params } = useRouter();
+  const route = useRouter();
+  console.log(route);
+
   const { outOrderNo } = params;
   const [visible, setVisible] = useState<boolean>(false);
   const { data, refresh } = useRequest(() => getOrderInfo({ outOrderNo }), {
