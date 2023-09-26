@@ -35,7 +35,10 @@ function Detail() {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
   useRequireLogin();
   const { calculatedHeight } = useImageDimension(750, 750);
-
+  const [current, setCurrent] = useState(0);
+  const handleChange = (e) => {
+    setCurrent(e.detail.current);
+  };
   const result = useRequest(getIm, {
     manual: true,
   });
@@ -75,8 +78,15 @@ function Detail() {
         picUrl={goodDetail?.picUrl || ""}
         onClose={handleClose}
       />
+      <div className="page">
+        {current + 1} / {goodDetail.gallery?.split(",")?.length}
+      </div>
       {calculatedHeight > 0 ? (
-        <Swiper defaultValue={0} indicator height={calculatedHeight}>
+        <Swiper
+          defaultValue={0}
+          onChange={handleChange}
+          height={calculatedHeight}
+        >
           {goodDetail.gallery?.split(",").map((v, i) => (
             <SwiperItem key={i}>
               <Image

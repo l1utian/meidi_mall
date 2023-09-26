@@ -1147,9 +1147,9 @@
     regenerator-runtime "^0.14.0"
 
 "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
-  version "7.22.15"
-  resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.22.15.tgz#38f46494ccf6cf020bd4eed7124b425e83e523b8"
-  integrity sha512-T0O+aa+4w0u06iNmapipJXMV4HoUir03hpx3/YqXXhu9xim3w+dVphjFWl1OH8NbZHw5Lbm9k45drDkgq2VNNA==
+  version "7.23.1"
+  resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.23.1.tgz#72741dc4d413338a91dcb044a86f3c0bc402646d"
+  integrity sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -1380,9 +1380,9 @@
     classnames "^2.3.2"
 
 "@nutui/nutui-react-taro@^2.0.14":
-  version "2.0.17"
-  resolved "https://registry.npmmirror.com/@nutui/nutui-react-taro/-/nutui-react-taro-2.0.17.tgz#52748ccd941b3e9463aeea4f37599cb88d5ed41b"
-  integrity sha512-72LL3uKk7hhGQXOCHVEtxxS/CEgRIlk9jaZq8aa63z+N1wRJwWodcBVaZ5gObdwbAp/MKC9/5ZB6Wicf2eWhkw==
+  version "2.0.18"
+  resolved "https://registry.npmmirror.com/@nutui/nutui-react-taro/-/nutui-react-taro-2.0.18.tgz#c3356730373a9fe22d9464227a9dba199a3f2771"
+  integrity sha512-ZIhq/zxjweDgD14K9D45qORTn5L3JStDLt3mRRxbyPeZTf9v/dilJUvr3EVPPtBLagc/VkAH+g+h6OqeNFSzUQ==
   dependencies:
     "@babel/runtime" "^7.21.0"
     "@nutui/icons-react-taro" "0.0.1"
