@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SearchBar, Grid, Dialog } from "@nutui/nutui-react-taro";
+import { SearchBar, Dialog } from "@nutui/nutui-react-taro";
 import { useDidShow } from "@tarojs/taro";
 
 import Taro from "@tarojs/taro";
@@ -56,7 +56,13 @@ const Index = () => {
   });
 
   return (
-    <View className="home">
+    <View
+      className="home"
+      style={{
+        paddingLeft: "16px",
+        paddingRight: "16px",
+      }}
+    >
       <SearchBar
         onClear={() => setName("")}
         className="search-bar"
@@ -64,25 +70,24 @@ const Index = () => {
         onChange={handleSearch}
       />
       <Dialog id="postOrderRefundFailCount" />
-
-      <Grid columns={2}>
+      <View className="list">
         {data?.data?.length ? (
           data.data.map((v, i) => (
-            <Grid.Item key={i} onClick={() => handleClick(v.id)}>
+            <View key={i} onClick={() => handleClick(v.id)}>
               <GoodItem
                 src={completeImageUrl(v.picUrl, BASE_API_URL)}
                 name={v.name}
                 retailPrice={v.retailPrice}
                 counterPrice={v.counterPrice}
               />
-            </Grid.Item>
+            </View>
           ))
         ) : loading ? null : (
           <View className="indexListEmpty">
             <Empty />
           </View>
         )}
-      </Grid>
+      </View>
     </View>
   );
 };

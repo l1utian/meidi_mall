@@ -45,9 +45,11 @@ function Detail() {
   useDidShow(() => {
     result.runAsync();
   });
-
   const imId = useMemo(() => {
-    return result?.data?.data?.imId;
+    const ids = result?.data?.data?.imId;
+    if (!ids) return "";
+    const idArray = ids.split(",");
+    return idArray?.[0] || "";
   }, [result?.data]);
 
   const { params } = useRouter();

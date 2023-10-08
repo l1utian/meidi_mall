@@ -7,7 +7,12 @@ const GoodItem = ({ src, name, retailPrice, counterPrice }) => {
   const size = useThumbnailDimension();
 
   return (
-    <View className="goodItem">
+    <View
+      className="goodItem"
+      style={{
+        width: size,
+      }}
+    >
       <Image
         className="goodItem-img"
         src={src}
@@ -16,6 +21,7 @@ const GoodItem = ({ src, name, retailPrice, counterPrice }) => {
         fadeIn
         lazyLoad
         height={size}
+        width={size}
       />
       <Text className="goodItem-name">{name}</Text>
       <View className="goodItem-price">

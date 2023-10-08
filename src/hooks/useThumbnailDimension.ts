@@ -5,7 +5,7 @@ const useThumbnailDimension = () => {
   useEffect(() => {
     tt.getSystemInfo({
       success(res) {
-        const size = res.screenWidth - 18 * 2 - 8 * 2;
+        const size = res.screenWidth - 32 - 16;
         setSize(size / 2);
       },
     });
