@@ -67,6 +67,8 @@ const OrderItem = ({ info, onAction, onClick }) => {
           <Image
             src={completeImageUrl(info?.picUrl, BASE_API_URL)}
             className="orderItem-good-img"
+            fadeIn
+            lazyLoad
           />
           <View className="orderItem-good-detail">
             <Text className="orderItem-good-name">{info?.productName}</Text>

@@ -56,3 +56,15 @@ export const postOrderRefundFailCount = (): Promise<any> => {
 export const postOrderRefundFailRead = (): Promise<any> => {
   return post("/order/refundFailRead", {});
 };
+
+// 预下单
+// POST /trade/createOrderOptions
+export const postCreateOrderOptions = (params): Promise<any> => {
+  return post("/trade/createOrderOptions", params);
+};
+
+// 申请退款
+// POST /trade/createRefundOptions
+export const postCreateRefundOptions = (params): Promise<any> => {
+  return post("/trade/createRefundOptions", params);
+};

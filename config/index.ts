@@ -44,7 +44,7 @@ const config = {
     "@/constants": path.resolve(__dirname, "..", "src/constants"),
   },
   copy: {
-    patterns: [],
+    patterns: [{ from: "src/tt/package.json", to: "dist/package.json" }],
     options: {},
   },
   framework: "react",
