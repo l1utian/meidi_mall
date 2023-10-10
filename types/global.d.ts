@@ -28,7 +28,7 @@ declare namespace NodeJS {
 
 declare namespace tt {
   export function login(obj: {
-    force: boolean;
+    force?: boolean;
     success: (res: { code: string }) => void;
     fail: (err: any) => void;
   }): void;
@@ -48,6 +48,12 @@ declare namespace tt {
     success: (res: any) => void;
     fail?: (err: any) => void;
   }): void;
+  export function continueToPay(obj: {
+    orderId?: any;
+    outOrderNo?: any;
+    success: (res: any) => void;
+    fail: (err: any) => void;
+  }): void;
   export function openDocument(obj: {
     filePath: string;
     fileType: string;
@@ -58,5 +64,16 @@ declare namespace tt {
   export function checkSession(obj: {
     success: (res: { code: string }) => void;
     fail?: (err: any) => void;
+  }): void;
+  export function createOrder(obj: {
+    success: (res: any) => void;
+    fail?: (err: any) => void;
+    [key: string]: any;
+  }): void;
+
+  export function applyRefund(obj: {
+    success: (res: any) => void;
+    fail?: (err: any) => void;
+    [key: string]: any;
   }): void;
 }
