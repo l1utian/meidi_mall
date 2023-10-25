@@ -6,7 +6,7 @@ import useThumbnailDimension from "@/hooks/useThumbnailDimension";
 const GoodItem = ({ src, name, retailPrice, counterPrice }) => {
   const size = useThumbnailDimension();
 
-  return (
+  return size > 0 ? (
     <View
       className="goodItem"
       style={{
@@ -32,6 +32,6 @@ const GoodItem = ({ src, name, retailPrice, counterPrice }) => {
         <Text className="goodItem-price-count">￥{counterPrice}</Text>
       </View>
     </View>
-  );
+  ) : null;
 };
 export default GoodItem;
