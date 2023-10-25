@@ -3,7 +3,7 @@ import { Price, Input, InputNumber, Button } from "@nutui/nutui-react-taro";
 import { Text, View, Image } from "@tarojs/components";
 import { useRouter } from "@tarojs/taro";
 import { BASE_API_URL } from "@/config/base";
-import { postOrderCreate } from "@/api/order";
+import { postCreateOrderOptions } from "@/api/order";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { loginWithCheckSession } from "@/utils/TTUtil";
@@ -27,34 +27,200 @@ const Settlement = () => {
       title: "加载中",
       mask: true,
     });
-    postOrderCreate({ message, number, orderPrice, productCode })
-      .then((res: any) => {
-        const orderInfo = res?.data?.options?.orderInfo;
-        const orderNo = res?.data?.outOrderNo;
-        if (res?.code === 200) {
-          loginWithCheckSession()?.then(() => {
-            tt.pay({
-              orderInfo,
-              service: 5,
-              success: function (res: any) {
-                Taro.hideLoading();
+
+    postCreateOrderOptions({
+      productCode,
+      number,
+      orderPrice,
+      message,
+    })?.then((res) => {
+      if (res?.code === 200) {
+        const options = res?.data?.options;
+        loginWithCheckSession()?.then(() => {
+          tt.createOrder({
+            ...options,
+            success: (res) => {
+              const { orderId, outOrderNo } = res;
+              console.log("orderId", orderId, "outOrderNo", outOrderNo);
+              Taro.hideLoading();
+              onPayCallback({
+                redirectTo: `/packages/orderDetail/index?outOrderNo=${outOrderNo}`,
+              });
+            },
+            fail: (res) => {
+              Taro.hideLoading();
+              const { orderId, outOrderNo, errNo, errMsg, errLogId } = res;
+              if (errLogId) {
+                setTimeout(() => {
+                  Taro.showToast({
+                    title: "下单失败",
+                    icon: "none",
+                    duration: 1000,
+                  });
+                }, 300);
+                console.log("预下单失败", errNo, errMsg, errLogId);
+              }
+              if (orderId || outOrderNo) {
+                console.log("支付失败", errNo, errMsg, orderId, outOrderNo);
                 onPayCallback({
-                  redirectTo: `/packages/orderDetail/index?outOrderNo=${orderNo}`,
+                  redirectTo: `/packages/orderDetail/index?outOrderNo=${outOrderNo}`,
                 });
-              },
-              fail: function (err) {
-                console.log("支付失败", err);
-                Taro.hideLoading();
-              },
-            });
+              }
+              console.log(errNo, errMsg);
+            },
           });
-        } else {
-          Taro.hideLoading();
-        }
-      })
-      ?.catch(() => {
-        Taro.hideLoading();
-      });
+        });
+      }
+    });
+
+    // tt.createOrder({
+    //   goodsList: [
+    //     {
+    //       quantity: number, // 购买数量 必填
+    //       price: retailPrice * 100, // 商品价格 必填
+
+    //       goodsName: productName, // 商品名称 必填
+    //       goodsPhoto: completeImageUrl(url, BASE_API_URL as string) || "", // 商品图片链接 必填
+    //       goodsId: "7287173073286006821", // 商品ID 必填
+    //       // goodsId: "XYJ-BX00001", // 商品ID 必填
+    //       goodsType: 1, // 商品类型 必填
+
+    //       goodsLabels: [], // 商品标签 非必填
+    //       dateRule: "", // 使用规则 非必填
+    //     },
+    //   ],
+    //   callbackData: {
+    //     message,
+    //     userId: 1,
+    //     orderPrice,
+    //     productCode,
+    //   },
+    //   payment: {
+    //     totalAmount: orderPrice * 100, // 订单总价 必填
+    //   },
+    //   // contactInfo: {
+    //   //   phoneNumber: "12345678901", // 手机号 非必传
+    //   //   contactName: "test name", // 姓名 非必传
+    //   // },
+    //   note: message, // 备注 非必传
+
+    //   // storeInfo: {
+    //   //   storeName: "test store", // 商店名称 非必传
+    //   //   storeIcon:
+    //   //     "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.ibaotu.com%2Fgif%2F19%2F48%2F47%2F76Z888piCd6W.gif%21fwpaa50%2Ffw%2F700&refer=http%3A%2F%2Fpic.ibaotu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644654365&t=5fc9b5fdad0a16264a9a9c09c14b3af9", // 商店头像 非必填
+    //   // },
+    //   // callbackData: { test: 999999 }, // 透传数据，开发者自定义字段 非必传
+    //   // tradeOption: {
+    //   //   life_trade_flag: 1, // 0：非融合链路（默认值）  1：走融合链路（标准融合/完全融合）
+    //   // }, // 透传数据，开发者自定义字段 非必传
+
+    //   success: (res) => {
+    //     const { orderId, outOrderNo } = res;
+    //     console.log("success res", res);
+    //     console.log("orderId", orderId, "outOrderNo", outOrderNo);
+    //     // this.setData({ orderId, outOrderNo });
+    //   },
+    //   fail: (res) => {
+    //     const { orderId, outOrderNo, errNo, errMsg, errLogId } = res;
+    //     if (errLogId) {
+    //       console.log("预下单失败", errNo, errMsg, errLogId);
+    //     }
+    //     if (orderId || outOrderNo) {
+    //       console.log("支付失败", errNo, errMsg, orderId, outOrderNo);
+    //     }
+    //     console.log(errNo, errMsg);
+    //   },
+    // });
+    // postOrderCreate({ message, number, orderPrice, productCode })
+    //   .then((res: any) => {
+    //     const orderInfo = res?.data?.options?.orderInfo;
+    //     const orderNo = res?.data?.outOrderNo;
+    //     if (res?.code === 200) {
+    //       console.log("开始");
+
+    //       tt.createOrder({
+    //         goodsList: [
+    //           {
+    //             quantity: 1, // 购买数量 必填
+    //             price: 1, // 商品价格 必填
+
+    //             goodsName: "测试商品", // 商品名称 必填
+    //             goodsPhoto:
+    //               "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.ibaotu.com%2Fgif%2F19%2F48%2F47%2F76Z888piCd6W.gif%21fwpaa50%2Ffw%2F700&refer=http%3A%2F%2Fpic.ibaotu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644654365&t=5fc9b5fdad0a16264a9a9c09c14b3af9", // 商品图片链接 必填
+    //             goodsId: "7287173073286006821", // 商品ID 必填
+    //             // goodsId: "XYJ-BX00001", // 商品ID 必填
+    //             goodsType: 1, // 商品类型 必填
+
+    //             goodsLabels: ["不可退"], // 商品标签 非必填
+    //             dateRule: "", // 使用规则 非必填
+    //           },
+    //         ],
+    //         callbackData: {
+    //           message: "这是留言",
+    //           userId: 1,
+    //           orderPrice: 179,
+    //           productCode: "XYJ-BX00001",
+    //         },
+    //         payment: {
+    //           totalAmount: 17900, // 订单总价 必填
+    //         },
+    //         // contactInfo: {
+    //         //   phoneNumber: "12345678901", // 手机号 非必传
+    //         //   contactName: "test name", // 姓名 非必传
+    //         // },
+    //         note: "for future", // 备注 非必传
+
+    //         storeInfo: {
+    //           storeName: "test store", // 商店名称 非必传
+    //           storeIcon:
+    //             "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.ibaotu.com%2Fgif%2F19%2F48%2F47%2F76Z888piCd6W.gif%21fwpaa50%2Ffw%2F700&refer=http%3A%2F%2Fpic.ibaotu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644654365&t=5fc9b5fdad0a16264a9a9c09c14b3af9", // 商店头像 非必填
+    //         },
+    //         // callbackData: { test: 999999 }, // 透传数据，开发者自定义字段 非必传
+    //         // tradeOption: {
+    //         //   life_trade_flag: 1, // 0：非融合链路（默认值）  1：走融合链路（标准融合/完全融合）
+    //         // }, // 透传数据，开发者自定义字段 非必传
+
+    //         success: (res) => {
+    //           const { orderId, outOrderNo } = res;
+    //           console.log("success res", res);
+    //           console.log("orderId", orderId, "outOrderNo", outOrderNo);
+    //           // this.setData({ orderId, outOrderNo });
+    //         },
+    //         fail: (res) => {
+    //           const { orderId, outOrderNo, errNo, errMsg, errLogId } = res;
+    //           if (errLogId) {
+    //             console.log("预下单失败", errNo, errMsg, errLogId);
+    //           }
+    //           if (orderId || outOrderNo) {
+    //             console.log("支付失败", errNo, errMsg, orderId, outOrderNo);
+    //           }
+    //           console.log(errNo, errMsg);
+    //         },
+    //       });
+
+    //       // loginWithCheckSession()?.then(() => {
+    //       //   tt.pay({
+    //       //     orderInfo,
+    //       //     service: 5,
+    //       //     success: function (res: any) {
+    //       //       Taro.hideLoading();
+    //       //       onPayCallback({
+    //       //         redirectTo: `/packages/orderDetail/index?outOrderNo=${orderNo}`,
+    //       //       });
+    //       //     },
+    //       //     fail: function (err) {
+    //       //       console.log("支付失败", err);
+    //       //       Taro.hideLoading();
+    //       //     },
+    //       //   });
+    //       // });
+    //     } else {
+    //       Taro.hideLoading();
+    //     }
+    //   })
+    //   ?.catch(() => {
+    //     Taro.hideLoading();
+    //   });
   };
   return (
     <div className="settlement-container">

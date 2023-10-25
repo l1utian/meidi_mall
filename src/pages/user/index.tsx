@@ -50,9 +50,7 @@ function User() {
 
   // 退出登录
   const logout = () => {
-    Taro.removeStorage({
-      key: "token",
-    });
+    Taro.removeStorageSync("token");
     removeUserProfile();
   };
 

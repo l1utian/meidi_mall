@@ -75,29 +75,49 @@ const OrderDetail = () => {
         });
 
         loginWithCheckSession()?.then(() => {
-          tt.pay({
-            orderInfo: {
-              order_id: info?.payId,
-              order_token: info?.payToken,
-            },
-            service: 5,
-            success: function (res: any) {
-              onContinueToPayCallback({
-                code: res.code,
-                success() {
+          tt?.continueToPay({
+            outOrderNo,
+            success(res) {
+              const { outOrderNo } = res;
+              if (outOrderNo) {
+                Taro.showToast({
+                  title: "支付成功",
+                  icon: "success",
+                  duration: 1000,
+                });
+                setTimeout(() => {
                   Taro.hideLoading();
                   refresh();
-                },
-                fail() {
-                  Taro.hideLoading();
-                },
-              });
+                }, 1300);
+              }
             },
-            fail: function (err) {
-              console.log("支付失败", err);
+            fail() {
               Taro.hideLoading();
             },
           });
+          // tt.pay({
+          //   orderInfo: {
+          //     order_id: info?.payId,
+          //     order_token: info?.payToken,
+          //   },
+          //   service: 5,
+          //   success: function (res: any) {
+          //     onContinueToPayCallback({
+          //       code: res.code,
+          //       success() {
+          //         Taro.hideLoading();
+          //         refresh();
+          //       },
+          //       fail() {
+          //         Taro.hideLoading();
+          //       },
+          //     });
+          //   },
+          //   fail: function (err) {
+          //     console.log("支付失败", err);
+          //     Taro.hideLoading();
+          //   },
+          // });
         });
         break;
       // 售后/退款

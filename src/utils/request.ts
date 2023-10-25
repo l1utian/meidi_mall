@@ -78,6 +78,7 @@ const request = (
         // 未登录
         if (res?.data?.code === 401) {
           Taro.removeStorageSync("token");
+          Taro.removeStorageSync("USER_INFO");
         } else if (res?.data?.code) {
           Taro.showToast({
             title: res.data.msg || "服务器错误，请稍后再试",

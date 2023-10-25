@@ -81,16 +81,17 @@ const OrderList = () => {
         });
 
         loginWithCheckSession()?.then(() => {
-          tt.pay({
-            orderInfo: {
-              order_id: order?.payId,
-              order_token: order?.payToken,
-            },
-            service: 5,
-            success: function (res: any) {
-              onContinueToPayCallback({
-                code: res.code,
-                success() {
+          tt?.continueToPay({
+            outOrderNo: order.outOrderNo,
+            success(res) {
+              const { outOrderNo } = res;
+              if (outOrderNo) {
+                Taro.showToast({
+                  title: "支付成功",
+                  icon: "success",
+                  duration: 1000,
+                });
+                setTimeout(() => {
                   Taro.hideLoading();
                   getOrderListRun({
                     orderStatus:
@@ -99,17 +100,42 @@ const OrderList = () => {
                         : tabs.find((v) => v.key === activeTab)?.orderStatus,
                     refund: activeTab === 3 ? 1 : "",
                   });
-                },
-                fail() {
-                  Taro.hideLoading();
-                },
-              });
+                }, 1300);
+              }
             },
-            fail: function (err) {
-              console.log("fail", err);
+            fail() {
               Taro.hideLoading();
             },
           });
+          // tt.pay({
+          //   orderInfo: {
+          //     order_id: order?.payId,
+          //     order_token: order?.payToken,
+          //   },
+          //   service: 5,
+          //   success: function (res: any) {
+          //     onContinueToPayCallback({
+          //       code: res.code,
+          //       success() {
+          //         Taro.hideLoading();
+          //         getOrderListRun({
+          //           orderStatus:
+          //             activeTab === 3
+          //               ? ""
+          //               : tabs.find((v) => v.key === activeTab)?.orderStatus,
+          //           refund: activeTab === 3 ? 1 : "",
+          //         });
+          //       },
+          //       fail() {
+          //         Taro.hideLoading();
+          //       },
+          //     });
+          //   },
+          //   fail: function (err) {
+          //     console.log("fail", err);
+          //     Taro.hideLoading();
+          //   },
+          // });
         });
         break;
       // 售后/退款

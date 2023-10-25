@@ -11,6 +11,7 @@ import { Close } from "@nutui/icons-react-taro";
 import top from "@/assets/public/top.svg";
 import { data } from "./data";
 import "./modal.scss";
+import Taro from "@tarojs/taro";
 
 const ChooseModal = ({ visible, onClose, onConfirm, other, refundType }) => {
   const [reason, setReason] = useState<string[]>(refundType);
@@ -27,6 +28,13 @@ const ChooseModal = ({ visible, onClose, onConfirm, other, refundType }) => {
   };
 
   const handleConfirm = () => {
+    const maxItems = textArea ? 19 : 20;
+    if (reason?.length > maxItems) {
+      Taro.showModal({
+        title: "退款原因最多不能超过20项",
+      });
+      return;
+    }
     onConfirm && onConfirm({ reason, textArea });
   };
 
@@ -65,7 +73,7 @@ const ChooseModal = ({ visible, onClose, onConfirm, other, refundType }) => {
                 </View>
               ) : (
                 <TextArea
-                  maxLength={200}
+                  maxLength={60}
                   value={textArea}
                   placeholder="如以上选项均与您的服务取消原因不符，可在此填写反馈"
                   onChange={(value) => setTextArea(value)}

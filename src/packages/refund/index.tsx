@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
-import { getOrderInfo, postOrderRefund } from "@/api/order";
+import { getOrderInfo, postCreateRefundOptions } from "@/api/order";
 import { useRequest } from "ahooks";
 import { TextArea, Button } from "@nutui/nutui-react-taro";
 import { orderStatus } from "@/constants/order";
@@ -10,6 +10,7 @@ import ChooseModal from "./ChooseModal";
 import "./index.scss";
 import useRequireLogin from "@/hooks/useRequireLogin";
 import { multiply } from "@/utils/tool";
+import { loginWithCheckSession } from "@/utils/TTUtil";
 
 const Refund = () => {
   // 判断是否是登录状态，如果未登录会跳转到登录页面
@@ -23,7 +24,7 @@ const Refund = () => {
   const { data } = useRequest(() => getOrderInfo({ outOrderNo }), {
     refreshDeps: [outOrderNo],
   });
-  const { runAsync } = useRequest(postOrderRefund, { manual: true });
+  const { runAsync } = useRequest(postCreateRefundOptions, { manual: true });
 
   // 提交
   const handleSubmit = () => {
@@ -35,6 +36,10 @@ const Refund = () => {
       });
       return;
     }
+    Taro.showLoading({
+      title: "加载中",
+      mask: true,
+    });
     runAsync({
       refundType: `${refundType.join(";")}${
         other ? (refundType && refundType.length ? `;${other}` : other) : ""
@@ -43,14 +48,51 @@ const Refund = () => {
       outOrderNo,
     }).then((res) => {
       if (res?.code === 200) {
-        Taro.showToast({
-          title: "提交成功，请耐心等待",
-          icon: "success",
-          duration: 1000,
+        const options = res?.data?.options;
+        console.log("options", options);
+
+        loginWithCheckSession()?.then(() => {
+          tt.applyRefund({
+            ...options,
+            success: (res) => {
+              console.log("success", res);
+
+              if (res?.refundId) {
+                Taro.showToast({
+                  title: "提交成功，请耐心等待",
+                  icon: "success",
+                  duration: 1000,
+                });
+                setTimeout(() => {
+                  Taro.hideLoading();
+                  Taro.redirectTo({
+                    url: `/packages/orderDetail/index?outOrderNo=${outOrderNo}`,
+                  });
+                }, 1300);
+              }
+            },
+            fail: (res) => {
+              console.log("fail", res);
+              Taro.hideLoading();
+              const { errMsg } = res;
+              setTimeout(() => {
+                Taro.showToast({
+                  title: `申请失败, ${errMsg}`,
+                  duration: 1000,
+                });
+              }, 300);
+            },
+          });
         });
-        Taro.redirectTo({
-          url: `/packages/orderDetail/index?outOrderNo=${outOrderNo}`,
-        });
+
+        // Taro.showToast({
+        //   title: "提交成功，请耐心等待",
+        //   icon: "success",
+        //   duration: 1000,
+        // });
+        // Taro.redirectTo({
+        //   url: `/packages/orderDetail/index?outOrderNo=${outOrderNo}`,
+        // });
       }
     });
   };
