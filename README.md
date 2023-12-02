@@ -6,6 +6,14 @@
 
 在开始操作前，请确保您的计算机上已安装了 [Node.js](https://nodejs.org/) 以及 [npm](https://www.npmjs.com/) 或 [Yarn](https://yarnpkg.com/)。
 
+## 技术栈
+
+- Taro
+- React
+- 抖音 API
+- zustand
+- ahooks
+
 ## 📦 安装项目依赖
 
 首先，我们需要安装项目的依赖。依赖是项目运行所必需的外部库和框架。
@@ -71,11 +79,7 @@ TARO_APP_API_BASE_API_URL = http://example.com/api
 
 - **`TARO_APP_API_BASE_API_URL`**: 接口地址，用于连接后台数据。
 
-  - 示例: `TARO_APP_API_BASE_API_URL = http://nj.cirscn.com:15581/h5api`
-
-- **`TARO_APP_API_CUSTOMER_SERVICE_DY_ID`**: 客服抖音号。更多信息请查看[抖音 IM 客服接入指南](https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/open-capacity/operation/customer-service/1)。
-
-  - 示例: `TARO_APP_API_CUSTOMER_SERVICE_DY_ID = 1749153376`
+  - 示例: `TARO_APP_API_BASE_API_URL = https://mcts.midea.com/h5api`
 
 - **`TARO_APP_API_APP_ID`**: 抖音 AppID，这是应用在抖音平台的唯一标识。
 
@@ -85,3 +89,83 @@ TARO_APP_API_BASE_API_URL = http://example.com/api
   - 示例: `TARO_APP_API_APP_KEY = 9b7ac73e644348bcba8a834df41c70b2`
 
 > ⚠️ **重要提醒**: 在修改配置文件时，请确保您了解每个配置项的含义，避免不必要的错误。同时，务必保证`AppKey`的安全，避免泄露。
+
+## 文件目录结构
+
+```bash
+.
+├── .env.development #开发环境变量
+├── .env.production  #生产环境变量
+├── .gitignore       # git忽略欧洲
+├── README.md        #项目说明
+├── babel.config.js  #babel配置
+├── config           #webpack配置
+│   ├── dev.ts       #webpack开发配置
+│   ├── index.ts     #webpack统一配置
+│   └── prod.ts      #webpack生产配置
+├── package.json     #应用依赖文件
+├── project.config.json  # taro项目配置文件
+├── project.private.config.json
+├── project.tt.json   # taro 抖音陪着文件
+├── src              #主应用路径
+│   ├── api          #接口文件
+│   │   ├── address.ts  # 地址
+│   │   ├── assets.ts   # 获取公用资源
+│   │   ├── good.ts     # 商品
+│   │   ├── index.ts    # 主入口
+│   │   ├── login.ts    #登录和用户信息
+│   │   └── order.ts    # 订单
+│   ├── app.config.ts   # 小程序配置
+│   ├── app.scss        # 主样式文件
+│   ├── app.tsx         #应用主入口
+│   ├── assets          # 图片资源
+│   ├── components      # 组件
+│   │   ├── AboutContactSupport # 我的页面联系客服
+│   │   ├── AddressItem         # 地址组件
+│   │   ├── ButtonGroup         # 按钮组
+│   │   ├── ConfirmModal        # 确定弹窗
+│   │   ├── DetailContactSupport # 商品详情客服
+│   │   ├── OrderItem            #订单详情组件
+│   │   ├── OrderStatus          #订单状态
+│   │   └── PageLoading          # 页面loading
+│   ├── config           # 应用配置
+│   ├── constants        # 应用常量
+│   ├── hooks            # react钩子
+│   │   ├── useAddress   # 地址
+│   │   ├── useGetUserInfo #获取用户信息
+│   │   ├── useImageDimension # 图片自适应（根据系统尺寸）
+│   │   ├── useRequireLogin   # 是否需要登录
+│   │   └── useThumbnailDimension # 图片自适应
+│   ├── index.html
+│   ├── packages             # 二级目录
+│   │   ├── aboutPage        # 关于我们
+│   │   ├── addAddress       # 添加地址
+│   │   ├── addressList      # 选择地址
+│   │   ├── book             # 订单预约
+│   │   ├── chooseReason     # 选择退款原因
+│   │   ├── detail           # 商品详情
+│   │   ├── editAddress      # 地址编辑
+│   │   ├── login            # 登录
+│   │   ├── orderDetail      # 订单详情
+│   │   ├── orderList        # 订单列表
+│   │   ├── qualificationPage # 资质展示
+│   │   ├── refund           # 售后/退款
+│   │   └── settlement       # 结算页
+│   ├── pages
+│   │   ├── index             # 首页
+│   │   └── user              # 我的页面
+│   ├── store                 # 状态管理
+│   │   ├── address           # 地址
+│   │   └── user              #用户信息
+│   ├── tt                    # 编译后需要放到dist文件夹的内容
+│   └── utils                 # 项目工具
+│   │   ├── request           # 请求库
+│   │   ├── route             # 路由相关方法
+│   │   ├── tool              # 通用工具
+│   │   └── TTUtil            # 抖音api
+├── tsconfig.json             # ts陪着
+└──  types                    # ts类型定义
+    ├── global.d.ts
+    └── helperTypes.d.ts
+
+```
