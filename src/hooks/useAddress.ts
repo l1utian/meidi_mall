@@ -1,4 +1,5 @@
 import { getAvailableAddressList } from "@/api/address";
+import { isValidChineseEnglishInput } from "@/utils/tool";
 import { useSetState } from "ahooks";
 
 interface FormState {
@@ -73,6 +74,12 @@ const useAddress = () => {
         reject({
           status: "error",
           message: "请填写姓名",
+        });
+      }
+      if (!isValidChineseEnglishInput(name)) {
+        reject({
+          status: "error",
+          message: "姓名只能包含中文或英文字母",
         });
       }
       if (!tel) {

@@ -40,6 +40,8 @@ const OrderDetail = () => {
     refreshDeps: [outOrderNo],
   });
 
+  console.log("data", data, outOrderNo);
+
   const info = useMemo(() => {
     if (data?.data) {
       return {

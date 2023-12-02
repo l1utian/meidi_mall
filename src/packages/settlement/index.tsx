@@ -17,10 +17,11 @@ const Settlement = () => {
 
   const [number, setNumber] = useState<number | string>(1);
   const [message, setMessage] = useState<string>("");
-  const { url, productCode, productName, retailPrice }: any = params;
+  const { url, productCode, goodsId, productName, retailPrice }: any = params;
   const orderPrice = useMemo(() => {
     return multiply(retailPrice || 0, Number(number));
   }, [retailPrice, number]);
+  console.log(params);
 
   const handleSubmit = () => {
     Taro.showLoading({
@@ -28,7 +29,16 @@ const Settlement = () => {
       mask: true,
     });
 
+    if (Number(number) > 100) {
+      Taro.showToast({
+        title: "最多购买100件",
+        icon: "none",
+        duration: 1000,
+      });
+      return;
+    }
     postCreateOrderOptions({
+      goodsId,
       productCode,
       number,
       orderPrice,

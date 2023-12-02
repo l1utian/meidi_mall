@@ -36,6 +36,14 @@ export const data = {
       text: "退款/售后",
       key: "refund",
     },
+    // {
+    //   text: "确认服务完成",
+    //   key: "confirm",
+    //   type: "primary",
+    // },
+  ],
+  //已完工
+  204: [
     {
       text: "确认服务完成",
       key: "confirm",
@@ -43,7 +51,7 @@ export const data = {
     },
   ],
   //已完成
-  204: [],
+  205: [],
   //退款中
   301: [],
   //退款完成

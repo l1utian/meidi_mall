@@ -149,3 +149,8 @@ export function multiply(a: number, b: number): number {
     Math.pow(10, commonMultiple)
   );
 }
+
+export function isValidChineseEnglishInput(input: string): boolean {
+  const regex = /^[\u4e00-\u9fa5A-Za-z]+$/;
+  return regex.test(input);
+}

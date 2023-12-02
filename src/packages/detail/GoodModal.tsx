@@ -10,7 +10,7 @@ const GoodModal = ({ picUrl, visible, onClose, productList, selected }) => {
   const handleConfirm = () => {
     onClose && onClose(selectedProduct);
     Taro.navigateTo({
-      url: `/packages/settlement/index?url=${picUrl}&productCode=${selectedProduct.productCode}&productName=${selectedProduct.productName}&retailPrice=${selectedProduct.retailPrice}`,
+      url: `/packages/settlement/index?url=${picUrl}&productCode=${selectedProduct.productCode}&productName=${selectedProduct.productName}&retailPrice=${selectedProduct.retailPrice}&goodsId=${selectedProduct?.goodsId}`,
     });
   };
   useEffect(() => {

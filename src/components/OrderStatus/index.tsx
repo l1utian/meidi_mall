@@ -36,6 +36,13 @@ const OrderStatus = ({ status, validPayTime, onRefresh }: OrderStatusProps) => {
       icon: status_finish,
     },
     204: {
+      status: "已完工",
+      // tip: "订单已完成，致力于为您提供更好的服务",
+      // icon: status_service,
+      tip: "",
+      icon: status_service,
+    },
+    205: {
       status: "已完成",
       tip: "订单已完成，致力于为您提供更好的服务",
       icon: status_service,

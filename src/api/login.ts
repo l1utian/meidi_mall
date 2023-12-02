@@ -7,7 +7,7 @@ export const login = (params): Promise<any> => {
 
 //保存用户信息
 export const postUserInfo = (params) => {
-  return post("/updateUserInfo", params);
+  return post("/updateUserInfo", params, true);
 };
 
 //获取用户信息
