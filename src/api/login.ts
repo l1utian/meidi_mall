@@ -6,7 +6,7 @@ export const login = (params): Promise<any> => {
 };
 
 //保存用户信息
-export const postUserInfo = (params) => {
+export const postUserInfo = (params): Promise<any> => {
   return post("/updateUserInfo", params, true);
 };
 

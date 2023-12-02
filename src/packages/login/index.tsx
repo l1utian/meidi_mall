@@ -1,7 +1,7 @@
 import { View, Text, Image } from "@tarojs/components";
 import Taro, { useRouter, useDidShow } from "@tarojs/taro";
 import { Checkbox, Button } from "@nutui/nutui-react-taro";
-import { login, postUserInfo } from "@/api/login";
+import { login } from "@/api/login";
 import {
   loginAndGetPhoneNumber,
   checkLogin,
@@ -13,12 +13,10 @@ import { navigateToPage } from "@/utils/route";
 import useGetUserInfo from "@/hooks/useGetUserInfo";
 import { getDoc } from "@/api/assets";
 import { useSetState } from "ahooks";
-import ConfirmModal from "@/components/ConfirmModal";
 import "./index.scss";
 
 const Login = () => {
   const [code, setCode] = useState<any>("");
-  const [visible, setVisible] = useState(false);
   const [assetsUrl, setAssetsUrl] = useSetState({
     // 注册协议
     registerAgreement: "",
@@ -88,19 +86,14 @@ const Login = () => {
             const token = data?.token;
             if (token) Taro.setStorageSync("token", token);
 
-            // 如果不存在昵称，则跳转到完善信息弹窗
-            if (!data?.nickname) {
-              setVisible(true);
-            } else {
-              fetchUserInfo()?.then(() => {
-                Taro.showToast({
-                  title: "登录成功",
-                  icon: "success",
-                  duration: 1000,
-                });
-                goRouter();
+            fetchUserInfo()?.then(() => {
+              Taro.showToast({
+                title: "登录成功",
+                icon: "success",
+                duration: 1000,
               });
-            }
+              goRouter();
+            });
           }
         });
       })
@@ -117,47 +110,6 @@ const Login = () => {
             duration: 2000,
           });
       });
-  };
-
-  const handleCancel = () => {
-    // 取消则跳转到首页
-    setVisible(false);
-    fetchUserInfo()?.then(() => {
-      Taro.switchTab({
-        url: "/pages/index/index",
-      });
-    });
-  };
-  const handleConfirm = () => {
-    tt.getUserProfile({
-      success: (res) => {
-        postUserInfo({
-          nickName: res?.userInfo?.nickName,
-        })?.then((res) => {
-          if (res?.code === 200) {
-            fetchUserInfo()?.then(() => {
-              Taro.showToast({
-                title: "登录成功",
-                icon: "success",
-                duration: 1000,
-              });
-              goRouter();
-            });
-          }
-        });
-        console.log("success", res);
-      },
-      fail: () => {
-        fetchUserInfo()?.then(() => {
-          Taro.switchTab({
-            url: "/pages/index/index",
-          });
-        });
-      },
-      complete: () => {
-        setVisible(false);
-      },
-    });
   };
 
   return (
@@ -220,14 +172,6 @@ const Login = () => {
           onChange={setChecked}
         />
       </View>
-      <ConfirmModal
-        visible={visible}
-        onCancel={handleCancel}
-        onConfirm={handleConfirm}
-        title="提示"
-        confirmText="授权"
-        content="申请获取您的抖音昵称"
-      />
     </>
   );
 };
